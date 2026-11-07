@@ -321,7 +321,7 @@ const DEV=[
   "The neural tube (future brain and spinal cord) closes and the primitive heart tube begins to pulse.",
   "Tiny limb buds emerge alongside early optic cups and inner ear structures.",
   "Brain hemispheres grow rapidly; hands and feet appear as small paddle-shaped buds.",
-  "Webbed fingers and toes begin separating, and early Cartilage starts laying the blueprint for bones.",
+  "Webbed fingers and toes begin separating, and early cartilage starts laying the blueprint for bones.",
   "All essential organs have begun forming, marking the transition from embryo to fetus at week's end.",
   "Fingernails, toenails, and tooth buds form beneath the gums; kidneys begin producing urine.",
   "Fingers and toes are fully separated; the fetus can make tiny spontaneous stretches and movements.",
@@ -398,18 +398,23 @@ const toInputDate=d=>`${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart
 const fmt=(d,opt={month:"long",day:"numeric",year:"numeric"})=>new Intl.DateTimeFormat(undefined,{...opt,timeZone:"UTC"}).format(startOfDay(d));
 const inWindow=d=>{if(!lmp||!edd||!d)return false;const x=startOfDay(d);return x>=lmp&&x<=edd};
 
-const monthStart=m=>addDays(lmp,Math.ceil(m*30.44));
+// Obstetric month start days (Weeks 0, 5, 9, 14, 18, 23, 28, 32, 36)
+// Aligns Months 1-3 with 1st Trimester (W0-W13), Months 4-6 with 2nd Trimester (W14-W27), and Months 7-9 with 3rd Trimester (W28-W40)
+const M_STARTS=[0,35,63,98,126,161,196,224,252];
+const monthStart=m=>addDays(lmp,M_STARTS[Math.max(0,Math.min(8,m))]);
 const monthEnd=m=>m>=8?edd:addDays(monthStart(m+1),-1);
 const todayIn=()=>{const t=todayUTC();return inWindow(t)?t:null};
 
 function infoFor(d){
   const elapsed=diffDays(lmp,d),safe=Math.max(0,Math.min(280,elapsed));
   const week=Math.floor(safe/7),day0=safe%7,day=safe===280?0:day0+1;
-  const month=Math.min(8,Math.floor(safe/30.44));
-  const monthDay=safe-Math.ceil(month*30.44)+1;
+  let month=0;
+  for(let m=8;m>=0;m--){if(safe>=M_STARTS[m]){month=m;break}}
+  const monthDay=safe-M_STARTS[month]+1;
+  const monthLen=(month>=8?280:M_STARTS[month+1]-1)-M_STARTS[month]+1;
   const remaining=280-safe;
   const tri=safe<98?"1st":safe<196?"2nd":"3rd";
-  return{elapsed,safe,week,day0,day,month,monthDay,remaining,tri};
+  return{elapsed,safe,week,day0,day,month,monthDay,monthLen,remaining,tri};
 }
 
 // ---- LMP input bounds ----
@@ -451,7 +456,7 @@ function updateSelected(){
   $("selDate").textContent=fmt(selected,{weekday:"long",month:"long",day:"numeric",year:"numeric"});
   $("selWeek").textContent="Week "+x.week;
   $("selDay").textContent=x.safe===280?"Due date (40w 0d)":"Day "+x.day+" of 7 ("+x.week+"w "+x.day0+"d)";
-  $("selMonth").textContent="Month "+(x.month+1)+", day "+x.monthDay;
+  $("selMonth").textContent="Month "+(x.month+1)+" (day "+x.monthDay+" of "+x.monthLen+")";
   $("selTri").textContent=x.tri+" trimester";
   $("selDays").textContent="Day "+x.safe+" of 280 completed · "+x.remaining+" days left";
   const pct=Math.max(0,Math.min(100,x.safe/280*100));
@@ -501,12 +506,12 @@ function updateBaby(week){
 }
 
 function milestoneFor(x){
-  if(x.safe===0)return{txt:"LMP",title:"Start of 40-week gestational calendar",cls:"ms"};
+  if(x.safe===0)return{txt:"LMP · M1",title:"First day of last period · Month 1 & 1st trimester start",cls:"ms"};
   if(x.safe===280)return{txt:"EDD",title:"Estimated due date (40w 0d)",cls:"ms"};
-  if(x.safe===98)return{txt:"2nd Tri",title:"Second trimester starts (Week 14)",cls:"ms"};
-  if(x.safe===196)return{txt:"3rd Tri",title:"Third trimester starts (Week 28)",cls:"ms"};
+  if(x.safe===98)return{txt:"2nd Tri · M4",title:"Second trimester & Month 4 start (Week 14)",cls:"ms"};
+  if(x.safe===196)return{txt:"3rd Tri · M7",title:"Third trimester & Month 7 start (Week 28)",cls:"ms"};
   if(x.safe===259)return{txt:"Term",title:"Early term begins (Week 37)",cls:"ms"};
-  if(sameDay(addDays(lmp,x.safe),monthStart(x.month)))return{txt:"M"+(x.month+1),title:"Month "+(x.month+1)+" starts",cls:""};
+  if(sameDay(addDays(lmp,x.safe),monthStart(x.month)))return{txt:"M"+(x.month+1),title:"Month "+(x.month+1)+" starts (Week "+x.week+")",cls:""};
   return null;
 }
 
