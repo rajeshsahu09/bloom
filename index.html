@@ -3,716 +3,318 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#fbf7f6">
 <title>Bloom — Pregnancy Calendar</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap">
 <style>
-:root{--bg:#fbf7f6;--card:#fff;--ink:#2b2226;--muted:#7b6f74;--line:#eee5e5;--rose:#a8506a;--rose-s:#f7e8ec;--sage:#5f8070;--sage-s:#e5eee9;--sh:0 12px 34px rgba(80,45,58,.07);--serif:Fraunces,Georgia,"Times New Roman",serif;--sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171214;--card:#211a1d;--ink:#f3eaee;--muted:#a99ca2;--line:#382e33;--rose:#e08aa2;--rose-s:#3a2630;--sage:#9dc0ad;--sage-s:#233029;--sh:0 12px 34px rgba(0,0,0,.4)}}
-:root[data-theme="dark"]{--bg:#171214;--card:#211a1d;--ink:#f3eaee;--muted:#a99ca2;--line:#382e33;--rose:#e08aa2;--rose-s:#3a2630;--sage:#9dc0ad;--sage-s:#233029;--sh:0 12px 34px rgba(0,0,0,.4)}
+:root{--bg:#fbf6f4;--card:#fff;--ink:#2b2226;--mut:#7b6f74;--line:#efe4e4;--t1:#b4546e;--t1s:#f8e8ed;--t2:#5f8a74;--t2s:#e4efe9;--t3:#b9822c;--t3s:#f8eedb;--sh:0 14px 36px rgba(90,50,64,.08);--serif:Fraunces,Georgia,serif;--sans:Inter,system-ui,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171214;--card:#211a1d;--ink:#f3eaee;--mut:#a99ca2;--line:#382e33;--t1:#e48ba4;--t1s:#3a2630;--t2:#9dc7b0;--t2s:#223029;--t3:#e6b560;--t3s:#38301f;--sh:0 14px 36px rgba(0,0,0,.45)}}
+:root[data-theme="dark"]{--bg:#171214;--card:#211a1d;--ink:#f3eaee;--mut:#a99ca2;--line:#382e33;--t1:#e48ba4;--t1s:#3a2630;--t2:#9dc7b0;--t2s:#223029;--t3:#e6b560;--t3s:#38301f;--sh:0 14px 36px rgba(0,0,0,.45)}
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
-body{margin:0;background:radial-gradient(60% 35% at 8% 0,var(--rose-s),transparent),radial-gradient(45% 30% at 100% 28%,var(--sage-s),transparent),var(--bg);color:var(--ink);font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
-button,input{font:inherit;color:inherit}button{cursor:pointer}
-[hidden]{display:none!important}
-:focus-visible{outline:2px solid var(--rose);outline-offset:2px}
-.shell{width:min(960px,92%);margin-inline:auto}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;height:58px;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;min-height:100%;background:radial-gradient(60% 40% at 0 0,var(--t1s),transparent),radial-gradient(50% 35% at 100% 30%,var(--t2s),transparent),radial-gradient(50% 30% at 0 90%,var(--t3s),transparent),var(--bg);background-attachment:fixed;color:var(--ink);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+button,input{font:inherit;color:inherit}button{cursor:pointer}[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--t1);outline-offset:2px}
+.shell{width:min(940px,92%);margin-inline:auto}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;height:56px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 .nav{height:100%;display:flex;align-items:center;justify-content:space-between}
-.nav-act{display:flex;align-items:center;gap:12px}
-.brand{font:600 1.35rem var(--serif);letter-spacing:-.02em}.brand i{font-style:normal;color:var(--rose)}
-.link{border:0;background:none;color:var(--rose);font-weight:600;font-size:.82rem;padding:6px 2px}
-.icon-btn{height:34px;padding:0 10px;border:1px solid var(--line);border-radius:99px;background:var(--card);color:var(--muted);font-size:.78rem;font-weight:600;display:inline-flex;align-items:center;gap:5px}
-.icon-btn:hover{border-color:var(--rose);color:var(--ink)}
-.muted{color:var(--muted)}
+.brand{font:600 1.4rem var(--serif);letter-spacing:-.02em}.brand i{color:var(--t1);font-style:normal}
+.act{display:flex;gap:8px}
+.pill{height:34px;padding:0 13px;border:1px solid var(--line);border-radius:99px;background:var(--card);color:var(--mut);font-size:.8rem;font-weight:600}
+.pill:hover{color:var(--ink);border-color:var(--t1)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;box-shadow:var(--sh)}
+h3{font:400 1.2rem var(--serif);margin:0}
+/* landing */
+.land{min-height:calc(100svh - 120px);display:grid;place-content:center;text-align:center;gap:26px;padding:20px 0}
+.land h1{font:400 clamp(3rem,13vw,6rem)/.95 var(--serif);letter-spacing:-.04em;margin:0}
+.land h1 em{color:var(--t1)}
+.flower{font-size:3.4rem;animation:sway 4s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(6deg) scale(1.06)}}
+.form{width:min(420px,92vw);margin:auto;padding:14px;display:grid;gap:10px;text-align:left}
+.form label{font-size:.82rem;font-weight:600;padding:2px 4px}
+input[type=date]{height:50px;width:100%;padding:0 14px;border:1px solid var(--line);border-radius:14px;background:var(--bg);font-size:16px}
+.go{height:50px;border:0;border-radius:14px;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-weight:700;letter-spacing:.01em}
+.go:active{transform:scale(.98)}
+#err{margin:0;padding:0 4px;color:var(--t1);font-size:.8rem;font-weight:600;min-height:1.2em}
+body.has .land{display:none}
+/* app */
+#app{display:grid;gap:16px;padding:16px 0 40px}
 
-/* Landing */
-.hero{padding:clamp(40px,8vw,84px) 0 30px;text-align:center}
-.hero h1{font:400 clamp(2.6rem,8vw,5rem)/1 var(--serif);letter-spacing:-.035em;margin:0 0 16px}
-.hero h1 em{color:var(--rose)}
-.hero p{max-width:560px;margin:0 auto 26px;color:var(--muted);font-size:1.02rem}
-.setup{width:min(440px,100%);margin:auto;padding:18px;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--sh)}
-.setup label{display:block;font-weight:600;font-size:.85rem;margin-bottom:8px}
-.row{display:flex;gap:8px}
-input[type=date]{flex:1;min-width:0;height:46px;padding:0 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font-size:16px}
-.btn{height:46px;padding:0 18px;border:0;border-radius:12px;background:var(--ink);color:var(--bg);font-weight:600;white-space:nowrap}
-.setup small{display:block;margin-top:9px;color:var(--muted);font-size:.75rem}
-.err{color:var(--rose)!important;font-weight:600}
-.feat{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0;margin:24px 0 0}
-.feat li{padding:7px 13px;border-radius:99px;background:var(--card);border:1px solid var(--line);font-size:.82rem;color:var(--muted)}
-body.has .hero{padding:26px 0 8px}
-body.has .hero h1,body.has .hero p,body.has .feat{display:none}
-body.has .setup{box-shadow:none}
+.ringbox{position:relative;width:250px;height:250px;margin:auto}
+.ringbox svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.rbg{fill:none;stroke:var(--line);stroke-width:9}
+.rfg{fill:none;stroke:url(#g);stroke-width:9;stroke-linecap:round;stroke-dasharray:578.05;stroke-dashoffset:578.05;transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.2,1)}
+.fruit{width:140px;height:140px;margin:0 auto;display:grid;place-items:center;font-size:5.6rem;line-height:1;transition:transform .4s cubic-bezier(.3,1.5,.5,1)}.ringbox #unit{position:absolute;top:2px;right:-6px;z-index:2;height:28px;padding:0 10px;font-size:.72rem}
+.fruit svg{position:static;transform:none;width:92px;height:92px}
+.fruit.pop{transform:scale(1.15) rotate(-6deg)}
+.age{position:absolute;inset:0;display:grid;place-content:center;text-align:center}.age b{font:400 3.2rem/1 var(--serif);letter-spacing:-.04em}#age b{display:block;font:400 2.5rem/1 var(--serif);letter-spacing:-.04em}#age span{display:block;color:var(--mut);font-size:.85rem;font-weight:600;margin:4px 0 0}.age .bn{font:400 1.1rem/1.2 var(--serif);color:var(--t1);margin-top:8px}
+.age span{color:var(--mut);font-weight:600;font-size:.8rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.chip{padding:5px 12px;border-radius:99px;font-size:.78rem;font-weight:700;background:var(--t1s);color:var(--t1)}
+.chip.m{background:var(--t2s);color:var(--t2)}.chip.d{background:var(--t3s);color:var(--t3)}
+.stats{margin-bottom:2px}
 
-/* App */
-#app{display:grid;gap:16px;padding:8px 0 48px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:24px;box-shadow:var(--sh)}
-.label{font-size:.8rem;font-weight:600;color:var(--muted)}
-.ov{display:grid;grid-template-columns:1.6fr 1fr;overflow:hidden}
-.ov-main{padding:26px}.due{padding:26px;background:var(--rose-s);display:flex;flex-direction:column;gap:4px}
-.ov-top{display:flex;justify-content:space-between;align-items:center;min-height:28px}
-.ov h2{font:400 1.05rem var(--serif);margin:2px 0 14px}
-.big{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
-.big b{font:400 clamp(3rem,9vw,4.8rem)/1 var(--serif);letter-spacing:-.04em}
-.big span{color:var(--muted);font-weight:500}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0 20px}
-.chips span{padding:5px 11px;border-radius:99px;background:var(--rose-s);color:var(--rose);font-size:.8rem;font-weight:600}
-.chips span+span{background:var(--sage-s);color:var(--sage)}
-.track{position:relative;height:8px;border-radius:99px;background:var(--line)}
-#fill{position:absolute;inset:0 auto 0 0;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--rose-s),var(--rose));transition:width .4s ease}
-#dot{position:absolute;top:50%;left:0;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--card);border:4px solid var(--rose);box-shadow:0 2px 8px rgba(0,0,0,.15);transition:left .4s ease}
-.tick{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--card)}
-.ends{display:grid;grid-template-columns:35% 35% 30%;margin-top:8px;font-size:.75rem;color:var(--muted)}
-#selDays{margin:12px 0 0;font-size:.85rem;color:var(--muted)}
-.due strong{font:400 1.4rem/1.2 var(--serif)}
-.due p{margin:0;font-size:.85rem;color:var(--muted)}
-.clock{margin-top:auto;padding-top:16px;font-variant-numeric:tabular-nums}
-.clock b{display:block;font-size:1rem}.clock small{color:var(--muted);font-size:.75rem}
-#outNote{margin-top:10px}
-
+.stats small{display:block;color:var(--mut);font-size:.7rem;font-weight:600}.stats b{display:block;font:400 1.35rem/1.15 var(--serif)}
+.bar{position:relative;height:8px;border-radius:9px;margin-top:16px;background:linear-gradient(90deg,var(--t1s) 35%,var(--t2s) 35% 70%,var(--t3s) 70%)}
+.bar i{position:absolute;inset:0 auto 0 0;border-radius:9px;background:linear-gradient(90deg,var(--t1),var(--t2) 50%,var(--t3));transition:width .5s}
+.back{margin-top:12px;border:0;background:none;color:var(--t1);font-weight:700;font-size:.82rem;padding:4px 0}
+/* weeks */
+.grp{overflow:hidden;display:flex;flex-direction:column;align-items:center;gap:14px;padding:24px}.mt{margin-top:2px}.dev{text-align:center}.info{text-align:center;margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:0 12px;align-items:center}.info .chips,.info .bar{grid-column:1/-1}.mt,.dev,.info{width:100%;max-width:460px}.chips{justify-content:center}.weeks{position:relative;display:flex;gap:6px;overflow-x:auto;padding:14px;scrollbar-width:none;scroll-behavior:smooth}
+.weeks::-webkit-scrollbar{display:none}
+.wk{flex:0 0 auto;width:46px;height:56px;border:1px solid var(--line);border-radius:14px;background:var(--bg);display:grid;place-content:center;text-align:center;line-height:1.1;color:var(--mut);transition:transform .15s}
+.wk small{font-size:.56rem;font-weight:600;text-transform:uppercase}.wk b{font-size:1rem;color:var(--ink)}
+.wk.p1{background:var(--t1s)}.wk.p2{background:var(--t2s)}.wk.p3{background:var(--t3s)}
+.wk:hover{transform:translateY(-2px)}
+.wk.on{background:var(--ink);border-color:var(--ink)}.wk.on b,.wk.on small{color:var(--bg)}
+.wk.now{box-shadow:0 0 0 2px var(--t1)}
+/* baby */
+.baby{padding:22px;display:grid;gap:14px}
+.bh{display:flex;align-items:center;gap:14px}.bt{display:flex;justify-content:space-between;align-items:center;gap:8px}.bt .pill{height:26px;padding:0 10px;font-size:.7rem}.bi{flex:1;min-width:0}.bi small{color:var(--t1);font-weight:700;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em}
+.bn{font:400 1.8rem/1.1 var(--serif);text-align:center;color:var(--t1)}
+.dev{margin:0;padding:12px 14px;border-radius:14px;background:var(--t1s);font-size:.9rem}
+.mt{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.mt div{padding:10px 12px;border-radius:16px;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);display:flex;align-items:center;gap:10px}.mt .mi{font-size:1.3rem}
+.mt small{display:block;color:var(--mut);font-size:.72rem;font-weight:600}.mt b{display:block;font-size:1.15rem}
+/* calendar */
 .cal{overflow:hidden}
-.calhead{display:flex;align-items:center;justify-content:space-between;padding:12px 14px}
-.calhead h3{margin:0;font:400 1.15rem var(--serif);display:flex;align-items:center;gap:8px}
-.badge{padding:3px 8px;border-radius:99px;background:var(--sage-s);color:var(--sage);font:600 .7rem var(--sans)}
-.calhead button{width:38px;height:38px;border:1px solid var(--line);background:none;border-radius:50%;font-size:1.2rem;color:var(--muted)}
-.dow,.days{display:grid;grid-template-columns:repeat(7,1fr);padding:0 10px}
-.dow{text-align:center;font-size:.72rem;font-weight:600;color:var(--muted);padding-bottom:6px}
-.days{gap:4px;padding-bottom:12px;touch-action:pan-y;-webkit-user-select:none;user-select:none}
-.day{position:relative;min-height:56px;padding:6px;text-align:left;border:1px solid transparent;border-radius:12px;background:var(--bg);transition:transform .15s,border-color .15s}
-.day .num{display:block;font-weight:600;font-size:.85rem}
-.day .gw{display:block;margin-top:3px;font-size:.62rem;color:var(--muted)}
-.day.out{background:none;opacity:.3;cursor:not-allowed}
-.day:not(.out):hover{transform:translateY(-2px);border-color:var(--rose)}
-.day.today{box-shadow:inset 0 0 0 1.5px var(--sage)}
-.day.selected{background:var(--rose);color:#fff;box-shadow:0 6px 14px rgba(168,80,106,.3)}
-.day.selected .gw{color:#fbe4ea}
-.day .mk{position:absolute;top:5px;right:5px;padding:1px 5px;border-radius:99px;background:var(--rose-s);color:var(--rose);font-size:.58rem;font-weight:700}
-.day .mk.ms{background:var(--sage-s);color:var(--sage)}
-.day.selected .mk{background:#fff;color:var(--rose)}
-.months{display:flex;gap:6px;padding:12px 14px 14px;border-top:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
-.months::-webkit-scrollbar{display:none}
-.months button{flex:0 0 auto;padding:7px 13px;border:1px solid var(--line);border-radius:99px;background:none;font-size:.8rem;color:var(--muted)}
-.months button.active{background:var(--sage-s);border-color:transparent;color:var(--sage);font-weight:700}
-
-.baby{padding:24px}
-.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
-.head h3{font:400 1.35rem var(--serif);margin:0}
-.head p{margin:2px 0 0;color:var(--muted);font-size:.85rem}
-.head-pills{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.pill{padding:6px 12px;border-radius:99px;background:var(--rose-s);color:var(--rose);font-weight:700;font-size:.8rem;white-space:nowrap}
-.stage{position:relative;display:grid;place-items:center;height:220px;margin:8px 0}
-.ring-svg{position:absolute;width:212px;height:212px;transform:rotate(-90deg);pointer-events:none}
-.ring-bg{fill:none;stroke:var(--line);stroke-width:4}
-.ring-in{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:4 4}
-.ring-fg{fill:none;stroke:var(--rose);stroke-width:4.5;stroke-linecap:round;transition:stroke-dashoffset .4s cubic-bezier(.2,.8,.2,1)}
-.scale-tag{position:absolute;bottom:6px;padding:2px 9px;border-radius:99px;background:var(--bg);border:1px solid var(--line);font-size:.68rem;font-weight:600;color:var(--muted)}
-.fruit{position:relative;z-index:1;font-size:6rem;line-height:1;transform:scale(var(--fscale,1));transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.fruit svg{width:112px;height:112px;display:block}
-.stage.pulse .fruit{transform:scale(calc(var(--fscale,1) * 1.08)) rotate(-4deg)}
-.fname{text-align:center;font:400 1.3rem var(--serif)}
-.fsub{text-align:center;color:var(--muted);font-size:.8rem;min-height:1.2em;margin-bottom:8px}
-.dev-box{max-width:540px;margin:0 auto 14px;padding:10px 14px;border-radius:14px;background:var(--rose-s);color:var(--ink);font-size:.83rem;text-align:center;line-height:1.45}
-.dev-box b{color:var(--rose);font-weight:700}
-.metrics{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.metrics div{padding:12px;border-radius:14px;background:var(--bg);text-align:center}
-.metrics span{display:block;font-size:.75rem;color:var(--muted)}.metrics b{font-size:1.1rem}
-.slide{display:flex;align-items:center;gap:10px;margin-top:16px}
-.slide input{flex:1;accent-color:var(--rose)}
-.step{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:none;font-size:1.1rem;color:var(--rose)}
-.baby-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:12px}
-.note{margin:0;font-size:.75rem;color:var(--muted);flex:1;min-width:220px}
-
-.ms-card{padding:24px}
-.ms-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px;margin-top:16px}
-.ms-item{text-align:left;padding:13px 14px;border:1px solid var(--line);border-radius:16px;background:var(--bg);display:flex;flex-direction:column;gap:4px;transition:border-color .15s,transform .15s}
-.ms-item:hover{border-color:var(--rose);transform:translateY(-1px)}
-.ms-item.now{background:var(--rose-s);border-color:var(--rose)}
-.ms-item.done{opacity:.72}
-.ms-top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:.74rem;font-weight:700;color:var(--rose)}
-.ms-item.done .ms-top{color:var(--sage)}
-.ms-stat{padding:2px 7px;border-radius:99px;background:var(--card);font-size:.66rem;color:var(--muted)}
-.ms-item.now .ms-stat{color:var(--rose);font-weight:700}
-.ms-item.done .ms-stat{color:var(--sage)}
-.ms-item strong{font:600 .92rem/1.25 var(--sans);color:var(--ink);margin-top:2px}
-.ms-item span{font:400 .92rem/1.25 var(--serif);color:var(--ink)}
-.ms-item small{font-size:.73rem;color:var(--muted)}
-
-.shower{padding:24px}
-.wins{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
-.win{text-align:left;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--bg);transition:border-color .15s}
-.win:hover{border-color:var(--rose)}
-.win.main{background:var(--rose-s)}
-.win .top{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:.85rem}
-.tag{padding:2px 8px;border-radius:99px;background:var(--card);color:var(--rose);font-size:.68rem}
-.win.alt .tag{color:var(--sage)}
-.win strong{display:block;margin-top:10px;font:400 1.05rem/1.3 var(--serif)}
-.win small{color:var(--muted);font-size:.75rem}
-#showerNote{margin:14px 0 0;padding:10px 12px;border-radius:12px;background:var(--bg);color:var(--muted);font-size:.82rem}
-.footer{text-align:center;color:var(--muted);font-size:.75rem;padding:8px 0 28px}
-
-@media(max-width:640px){
-  .row{flex-direction:column}
-  .ov{grid-template-columns:1fr}.ov-main,.due{padding:20px}
-  .day{min-height:50px;padding:5px 4px}.day .gw{font-size:.55rem}.day .mk{font-size:.5rem;padding:1px 3px;top:3px;right:3px}
-  .wins,.ms-grid{grid-template-columns:1fr}.baby,.shower,.ms-card{padding:18px}
-}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:14px}
+.ch button{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--mut);font-size:1.2rem}.cn{display:flex;gap:6px;align-items:center}.ch .tdy{width:auto;padding:0 14px;border-radius:99px;font-size:.78rem;font-weight:700;color:var(--t1);border-color:var(--t1);background:var(--t1s)}
+.dow,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 10px}
+.dow{text-align:center;font-size:.7rem;font-weight:700;color:var(--mut);padding-bottom:6px}
+.days{padding-bottom:12px;touch-action:pan-y;user-select:none}
+.day{position:relative;min-height:54px;padding:5px;text-align:left;border:1px solid transparent;border-radius:12px;background:var(--bg);transition:transform .15s}
+.day b{font-size:.85rem}.day small{display:block;font-size:.58rem;font-weight:700;color:var(--mut)}
+.day.t1{background:var(--t1s)}.day.t2{background:var(--t2s)}.day.t3{background:var(--t3s)}
+.day.out{background:none;opacity:.25;cursor:default}
+.day:not(.out):hover{transform:translateY(-2px);border-color:var(--ink)}
+.day.today{box-shadow:inset 0 0 0 2px var(--ink)}
+.day.sel{background:var(--ink);color:var(--bg)}.day.sel small{color:var(--bg)}
+.day em{position:absolute;top:4px;right:4px;font:700 .5rem var(--sans);font-style:normal;padding:1px 4px;border-radius:9px;background:var(--card);color:var(--t1)}
+.day i{position:absolute;bottom:5px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--t3)}
+.mon{position:relative;display:flex;gap:6px;overflow-x:auto;padding:12px 14px;border-top:1px solid var(--line);scrollbar-width:none;scroll-behavior:smooth}
+.mon::-webkit-scrollbar{display:none}
+.mon button{flex:0 0 auto;padding:7px 13px;border:1px solid var(--line);border-radius:99px;background:none;font-size:.8rem;color:var(--mut)}
+.mon button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+/* timeline */
+.tl{padding:22px}
+.tll{list-style:none;margin:14px 0 0;padding:0 0 0 16px;border-left:2px solid var(--line);display:grid;gap:8px}
+.it{position:relative;width:100%;text-align:left;padding:12px 64px 12px 14px;border:1px solid var(--line);border-radius:16px;background:var(--bg);display:flex;align-items:center;gap:12px;transition:transform .15s}.it:hover{transform:translateX(3px)}
+.it::before{content:"";position:absolute;left:-25px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--card);border:3px solid var(--mut)}
+.it:hover{border-color:var(--t1)}
+.it.now{background:var(--t1s);border-color:var(--t1)}.it.now::before{border-color:var(--t1);background:var(--t1)}
+.it.done{opacity:.6}.it.done::before{border-color:var(--t2);background:var(--t2)}
+.it b,.it span{display:block}.it b{font-size:.92rem}.it span{font-size:.78rem;color:var(--mut)}.it .ic{flex:0 0 auto;width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:var(--card);font-style:normal;font-size:1.25rem}
+.it u{position:absolute;right:12px;top:12px;text-decoration:none;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--card);color:var(--mut)}
+.it.now u{color:var(--t1)}
+.sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.bd{position:absolute;inset:0;background:rgba(20,10,15,.5);backdrop-filter:blur(6px);opacity:0;transition:opacity .25s}
+.pn{position:relative;width:min(520px,100%);max-height:90svh;overflow:auto;border-radius:30px 30px 0 0;background:var(--card);box-shadow:0 -20px 60px rgba(0,0,0,.3);transform:translateY(100%);transition:transform .34s cubic-bezier(.2,.9,.25,1);padding-bottom:env(safe-area-inset-bottom,0px)}
+.sheet.open .bd{opacity:1}.sheet.open .pn{transform:none}
+@media(min-width:700px){.sheet{align-items:center}.pn{border-radius:30px;transform:translateY(30px) scale(.96);opacity:0;transition:transform .3s,opacity .25s}.sheet.open .pn{opacity:1;transform:none}}
+.ph{position:relative;padding:26px 24px 22px;background:linear-gradient(135deg,var(--t1s),var(--t3s) 70%,var(--t2s))}
+.ph>i{display:grid;place-items:center;width:64px;height:64px;border-radius:20px;background:var(--card);font-style:normal;font-size:2rem;box-shadow:var(--sh)}
+.ph h4{font:400 1.7rem/1.15 var(--serif);margin:14px 0 4px}.ph span{color:var(--mut);font-size:.85rem;font-weight:500}
+.x{position:absolute;top:14px;right:14px;width:34px;height:34px;border:0;border-radius:50%;background:var(--card);color:var(--mut)}
+.sc{display:inline-block;margin:0 0 10px;padding:3px 10px;border-radius:99px;background:var(--card);font-size:.72rem;font-weight:700;color:var(--mut)}
+.ph .sc{display:block;width:max-content;margin-top:14px}
+.sc.now{color:var(--t1)}.sc.done{color:var(--t2)}
+.pb{padding:20px 24px 24px;display:grid;gap:14px}
+.pr{height:6px;border-radius:9px;background:var(--line);overflow:hidden}.pr i{display:block;height:100%;background:linear-gradient(90deg,var(--t1),var(--t3));border-radius:9px}
+.pb p{margin:0}.pb h5{margin:0;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.pb ul{list-style:none;margin:-4px 0 0;padding:0;display:grid;gap:6px}
+.ck{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);text-align:left;font-size:.88rem}
+.ck i{flex:0 0 auto;width:20px;height:20px;border-radius:7px;border:2px solid var(--mut);display:grid;place-items:center;font-size:.7rem;color:#fff}
+.ck.on{color:var(--mut);text-decoration:line-through}.ck.on i{background:var(--t2);border-color:var(--t2)}.ck.on i::after{content:"✓"}
+.pa{display:grid;grid-template-columns:1.4fr 1fr;gap:8px;margin-top:4px}.pa .pill{height:50px;border-radius:14px}.pa .go{display:grid;place-items:center;text-decoration:none}
+.foot{text-align:center;color:var(--mut);font-size:.72rem}
+@media(max-width:680px){.grp{padding:20px}.chips{justify-content:center}.ringbox{width:250px;height:250px}.day{min-height:48px;padding:4px 3px}.day em{font-size:.44rem;padding:1px 3px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header>
-  <div class="shell nav">
-    <span class="brand">bloom<i>•</i></span>
-    <div class="nav-act">
-      <button class="link" id="change" type="button" hidden>Change date</button>
-      <button class="icon-btn" id="themeBtn" type="button" aria-label="Toggle color theme">🌙 Theme</button>
-    </div>
-  </div>
-</header>
+<header><div class="shell nav"><span class="brand">bloom<i>•</i></span><div class="act"><button class="pill" id="chg" hidden>Change LMP</button><button class="pill" id="thm" aria-label="Toggle theme">🌙</button></div></div></header>
 <main class="shell">
-<section class="hero">
-  <h1>One date. <em>One clear journey.</em></h1>
-  <p>Enter the first day of your last period and Bloom maps every day, week and month of your pregnancy, plus baby's size, developmental milestones, and shower timing.</p>
-  <div class="setup">
-    <label for="lmp">First day of your last menstrual period</label>
-    <div class="row"><input id="lmp" type="date"><button class="btn" id="start" type="button">Show my pregnancy</button></div>
-    <small id="setupHint">Uses standard 40-week / 280-day dating.</small>
+<section class="land">
+  <div class="flower">🌸</div>
+  <h1>Meet your<br><em>due date.</em></h1>
+  <div class="card form">
+    <label for="lmp">First day of last menstrual period</label>
+    <input id="lmp" type="date">
+    <button class="go" id="go">Show my pregnancy</button>
+    <p id="err"></p>
   </div>
-  <ul class="feat"><li>📅 Every day, week and month</li><li>🍓 Proportional baby growth</li><li>🩺 Care & ultrasound windows</li><li>🎀 Baby shower windows</li></ul>
 </section>
-
 <div id="app" hidden>
-  <section class="card ov" aria-live="polite">
-    <div class="ov-main">
-      <div class="ov-top"><span class="label" id="selLabel">Today</span><button class="link" id="today" type="button" hidden>Back to today</button></div>
-      <h2 id="selDate">—</h2>
-      <div class="big"><b id="selWeek">—</b><span id="selDay">—</span></div>
-      <div class="chips"><span id="selMonth">—</span><span id="selTri">—</span></div>
-      <div class="track"><div id="fill"></div><span class="tick" style="left:35%"></span><span class="tick" style="left:70%"></span><span id="dot"></span></div>
-      <div class="ends"><span>1st trimester</span><span>2nd</span><span>3rd</span></div>
-      <p id="selDays">—</p>
+  <section class="card grp">
+    <div class="ringbox">
+      <svg viewBox="0 0 212 212"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9708c"/><stop offset=".55" stop-color="#7fae95"/><stop offset="1" stop-color="#d4a04a"/></linearGradient></defs><circle class="rbg" cx="106" cy="106" r="92"/><circle class="rfg" id="rfg" cx="106" cy="106" r="92"/></svg>
+      <div class="age"><div class="fruit" id="fruit"></div></div>
+      <button class="pill" id="unit">cm / g</button>
     </div>
-    <aside class="due">
-      <span class="label">Estimated due date</span>
-      <strong id="edd">—</strong>
-      <p id="dueInfo">—</p>
-      <div class="clock"><b id="clock">—</b><small id="clockSub">elapsed since LMP</small></div>
-      <p id="outNote" hidden>Today is outside your LMP to due-date window.</p>
-    </aside>
+    <div class="bn" id="bn"></div><small id="bw" hidden></small>
+    <div class="mt"><div><span class="mi">📏</span><span><small id="lenL">Length</small><b id="len"></b></span></div><div><span class="mi">⚖️</span><span><small>Weight</small><b id="wt"></b></span></div></div>
+    <p class="dev" id="dev"></p>
+    <div class="info">
+      <div id="age"></div>
+      <div class="stats"><small>Estimated due date</small><b id="edd"></b></div>
+      <div class="chips" id="chips"></div>
+      <div class="bar"><i id="fill"></i></div>
+    </div>
   </section>
-
+  <section class="card weeks" id="weeks" aria-label="Weeks"></section>
   <section class="card cal">
-    <div class="calhead"><button id="prev" type="button" aria-label="Previous month">‹</button><h3 id="calTitle">—</h3><button id="next" type="button" aria-label="Next month">›</button></div>
-    <div class="dow"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
+    <div class="ch"><h3 id="ct"></h3><div class="cn"><button class="tdy" id="back" hidden>Today</button><button id="prev" aria-label="Previous month">‹</button><button id="next" aria-label="Next month">›</button></div></div>
+    <div class="dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
     <div class="days" id="days"></div>
-    <div class="months" id="monthbar" aria-label="Jump to pregnancy month"></div>
+    <div class="mon" id="mon"></div>
   </section>
-
-  <section class="card baby" id="babyCard">
-    <div class="head">
-      <div><h3>Baby size & development</h3><p>Slide through the weeks to see relative growth and milestones.</p></div>
-      <div class="head-pills">
-        <button class="icon-btn" id="unitBtn" type="button" aria-label="Switch measurement units">cm / g</button>
-        <span class="pill" id="bWeek">Week 0</span>
-      </div>
-    </div>
-    <div class="stage" aria-live="polite">
-      <svg class="ring-svg" viewBox="0 0 212 212" aria-hidden="true">
-        <circle class="ring-bg" cx="106" cy="106" r="98"></circle>
-        <circle class="ring-in" cx="106" cy="106" r="72"></circle>
-        <circle class="ring-fg" id="ringFg" cx="106" cy="106" r="98" stroke-dasharray="615.75" stroke-dashoffset="615.75"></circle>
-      </svg>
-      <div class="fruit" id="fruit" role="img"></div>
-      <span class="scale-tag" id="scaleTag">Week 0 of 40</span>
-    </div>
-    <div class="fname" id="fname">—</div><div class="fsub" id="fsub"></div>
-    <div class="dev-box" id="bDev">—</div>
-    <div class="metrics"><div><span id="bLenLbl">Approx. length</span><b id="bLen">—</b></div><div><span>Approx. weight</span><b id="bWt">—</b></div></div>
-    <div class="slide">
-      <button class="step" id="bPrev" type="button" aria-label="Previous week">−</button>
-      <input id="slider" type="range" min="0" max="40" value="0" step="1" aria-label="Pregnancy week">
-      <button class="step" id="bNext" type="button" aria-label="Next week">+</button>
-    </div>
-    <div class="baby-foot">
-      <p class="note">Playful, approximate reference (produce names follow NHS week-by-week guidance). Individual growth varies; your care team's measurements are more precise.</p>
-      <button class="link" id="bJump" type="button" hidden>View this week on calendar →</button>
-    </div>
-  </section>
-
-  <section class="card ms-card">
-    <div class="head">
-      <div><h3>Key milestones & care windows</h3><p>Tap any milestone to jump straight to that date on your calendar.</p></div>
-    </div>
-    <div class="ms-grid" id="msGrid"></div>
-  </section>
-
-  <section class="card shower">
-    <div class="head"><div><h3>Baby shower planner</h3><p>Many families pick month 7; month 9 is the alternative.</p></div></div>
-    <div class="wins">
-      <button class="win main" id="shower7" type="button"><div class="top">Month 7 <span class="tag">Suggested</span></div><strong id="s7d">—</strong><small id="s7n">—</small></button>
-      <button class="win alt" id="shower9" type="button"><div class="top">Month 9 <span class="tag">Alternative</span></div><strong id="s9d">—</strong><small id="s9n">—</small></button>
-    </div>
-    <p id="showerNote">—</p>
-  </section>
-  <div class="footer">Educational pregnancy dating only. Your healthcare professional may adjust the due date based on your history or ultrasound.</div>
+  <section class="card tl"><h3>Care windows</h3><ul class="tll" id="tl"></ul></section>
+  <div class="foot">Care windows follow ICMR/MoHFW guidance and common Indian practice. Educational only; your clinician may adjust them.</div>
 </div>
 </main>
+<div class="sheet" id="sheet" hidden><div class="bd" id="bd"></div><div class="pn" id="pn" role="dialog" aria-modal="true"></div></div>
 <script>
 (()=>{
 const $=id=>document.getElementById(id);
-const store={
-  get(k="bloom-lmp"){try{return localStorage.getItem(k)}catch(e){return null}},
-  set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-};
+const st={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+// week: [name, emoji, length cm, weight g]
+const R=[["Cycle begins","🌱",0,0],["Follicle growth","🌱",0,0],["Fertilization","✨",0,0],["Blastocyst","🫧",0,0],["Poppy seed","🌱",.2,.1],["Sesame seed","🌾",.2,.2],["Pea","🫛",.6,.2],["Grape","🍇",1,.5],["Raspberry","",1.6,1],["Strawberry","🍓",2.2,2],["Apricot","🍑",3,4],["Fig","",4.1,7],["Plum","",5.4,14],["Peach","🍑",7.4,23],["Kiwi","🥝",8.5,43],["Apple","🍎",10.1,70],["Avocado","🥑",11.6,100],["Pomegranate","",12,140],["Bell pepper","🫑",14.2,190],["Tomato","🍅",15.3,240],["Banana","🍌",25.6,300],["Carrot","🥕",26.7,360],["Sweet potato","",27.8,430],["Mango","🥭",28.9,500],["Corn on the cob","🌽",30,600],["Courgette","🥒",34.6,700],["Cucumber","🥒",35.6,760],["Cauliflower","🥦",36.6,875],["Aubergine","🍆",37.6,1000],["Butternut squash","",38.6,1150],["Cabbage","🥬",39.9,1300],["Coconut","🥥",41.1,1500],["Papaya","",42.4,1700],["Pineapple","🍍",43.7,1950],["Cantaloupe","🍈",45,2150],["Honeydew","🍈",46.2,2400],["Romaine","🥬",47.4,2600],["Leek","",48.6,2900],["Rhubarb","",49.8,3100],["Watermelon","🍉",50.7,3300],["Pumpkin","🎃",51.2,3400]];
+const DEV=["Cycle begins; the uterine lining renews.","Estrogen rises; a follicle matures.","Ovulation and fertilization: the zygote forms.","The blastocyst implants in the uterine wall.","Amniotic and yolk sacs form.","Neural tube closes; the heart starts beating.","Limb buds, eyes and inner ears start forming.","Brain grows fast; hands and feet look like paddles.","Fingers and toes begin to separate.","Essential organs formed; embryo becomes fetus.","Nails and tooth buds form; kidneys start working.","Fingers and toes fully separate; first stretches.","Reflexes appear; fingers curl and toes flex.","Fingerprints form; bones keep hardening.","Second trimester: facial expressions and fine lanugo hair.","Joints move actively; ears settle into position.","Eyes move side to side; the heart pumps strongly.","Skeleton hardens from cartilage; brown fat forms.","Hearing begins; first flutters may be felt.","Protective vernix coats the skin.","Halfway. Legs lengthen, so length is now crown-to-heel.","Taste buds form; eyebrows and eyelids define.","Touch sense develops; grip strengthens.","Inner ear matures: balance and motion sense.","Lungs begin making surfactant.","Skin pinkens as capillaries form; nostrils open.","Responds to familiar voices and loud sounds.","Brain grooves form; eyelids partly open.","Third trimester: blinking, eyelashes, REM sleep.","Bones absorb calcium; iron stores build.","Bone marrow now makes red blood cells.","All five senses work; pupils react to light.","Nails complete; fat plumps arms and legs.","Skull stays flexible for birth; other bones firm.","Antibodies cross the placenta; vernix thickens.","Kidneys mature; liver processes waste.","Lanugo sheds; practises sucking and swallowing.","Early term: final lung and brain maturation.","Firm grasp; organs ready for life outside.","Full term: fat layers ready to keep baby warm.","Due week: fully developed and ready."];
+const G={Raspberry:"#c83e5b",Fig:"#a56d92",Plum:"#68447e",Pomegranate:"#b83948",Leek:"#6f9c62",Rhubarb:"#d96a72","Sweet potato":"#c77b4a","Butternut squash":"#d58a3d",Papaya:"#e58c3a"};
+const svgFruit=n=>`<svg viewBox="0 0 180 180"><ellipse cx="90" cy="100" rx="${n==="Leek"||n==="Rhubarb"?22:58}" ry="${n==="Leek"||n==="Rhubarb"?62:50}" fill="${G[n]}"/><path d="M90 48c4-14 14-20 28-18-2 14-12 20-28 18Z" fill="#64845b"/></svg>`;
+// Care windows in gestational days (ACOG/NICE-aligned)
+const CARE=[
+["Dating scan","6w–9w",42,69,"📡","Confirms the heartbeat, number of babies and your due date. Best done between 6 and 9 weeks.",["Ask if a full bladder is needed"]],
+["Booking visit (ANC 1)","By 12w",42,83,"🩺","Register your pregnancy early. Essential tests are haemoglobin, urine and blood group with Rh. Syphilis, HIV and hepatitis B tests and a first diabetes test are also advised.",["Haemoglobin, urine, ABO & Rh","VDRL/RPR, HIV, HBsAg","First diabetes test (DIPSI/OGTT)"]],
+["Td dose 1","Early pregnancy",42,83,"💉","Tetanus toxoid (Td) is given early in pregnancy. If you were fully immunised within the last 3 years, one booster dose is enough.",["Carry your immunisation record"]],
+["Level 1 scan (NT)","11w–13w6d",77,97,"📡","The first-trimester scan measures nuchal translucency and checks early anatomy, usually alongside a blood test. Names vary by clinic.",["Ask about the paired blood test"]],
+["ANC visit 2","14w–26w",98,181,"📋","Second minimum check-up: weight, BP, fundal height and haemoglobin. Free check-ups run on the 9th of each month at government facilities (PMSMA).",["Ask about your haemoglobin"]],
+["Td dose 2","14w–26w",98,181,"💉","The second tetanus dose, given at least 4 weeks after the first.",["Keep a 4+ week gap"]],
+["Quad test (optional)","15w–22w6d",105,160,"🔬","An optional blood screening test, offered where counselling is available.",["Ask for counselling first"]],
+["Level 2 scan (anomaly)","18w–22w",126,154,"🫧","A detailed anomaly scan (TIFFA) checking the baby’s organs, spine and limbs, plus the placenta. National guidance lists 18–20 weeks.",["Book it ahead"]],
+["Diabetes test (DIPSI)","24w–28w6d",168,202,"🍬","Repeat the glucose test after 24 weeks, at least 4 weeks after the first one. DIPSI uses a single 75 g glucose drink.",["Ask if fasting is needed"]],
+["ANC visit 3","28w–34w",196,238,"📋","Third minimum check-up: BP, haemoglobin, urine albumin, fundal height and baby’s heartbeat.",["Learn the danger signs","Discuss your birth plan"]],
+["Level 3 scan (growth)","28w–32w",196,224,"📈","A third-trimester growth scan checks baby’s size, fluid and placenta. Timing and naming vary by clinic.",["Ask if Doppler is needed"]],
+["Baby shower","28w–31w6d",196,223,"🎀","A comfortable window before travel gets harder. Send invites 3–4 weeks ahead.",["Pick a date and venue"]],
+["Hospital bag & plan","34w–36w6d",238,258,"🧳","Pack your bag, choose your delivery facility and plan transport while you still have energy.",["Pack ID and health records","Plan transport","Save emergency numbers"]],
+["ANC visit 4","36w+",252,280,"📋","Final minimum check-up: confirm where you will deliver, how you will get there and which danger signs need immediate care.",["Confirm the delivery facility","Arrange transport"]],
+["Term (37w+)","37w–40w",259,280,"🎉","From 37 completed weeks a baby is considered term. Due dates are estimates, so keep your bag ready and watch for labour signs.",["Know the signs of labour"]]];
+const MS=[0,35,63,98,126,161,196,224,252];
+const LBL={0:"LMP",98:"T2",196:"T3",259:"Term",280:"EDD"};
+let lmp,edd,sel,view,imp=st.g("bloom-unit")==="imp";
+const U=d=>new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));
+const today=()=>{const n=new Date();return new Date(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate()))};
+const add=(d,n)=>{const x=U(d);x.setUTCDate(x.getUTCDate()+n);return x};
+const diff=(a,b)=>Math.round((U(b)-U(a))/864e5);
+const same=(a,b)=>U(a).getTime()===U(b).getTime();
+const parse=s=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(s||""))return null;const[y,m,d]=s.split("-").map(Number),t=new Date(Date.UTC(y,m-1,d));return t.getUTCMonth()===m-1&&t.getUTCDate()===d?t:null};
+const iso=d=>d.toISOString().slice(0,10);
+const fmt=(d,o={month:"short",day:"numeric",year:"numeric"})=>new Intl.DateTimeFormat(undefined,{...o,timeZone:"UTC"}).format(d);
+const inW=d=>d>=lmp&&d<=edd;
+function info(d){const s=Math.max(0,Math.min(280,diff(lmp,d)));let m=0;for(let i=8;i>=0;i--)if(s>=MS[i]){m=i;break}
+return{s,w:Math.floor(s/7),d:s%7,m,tri:s<98?1:s<196?2:3}}
+// theme
+const dark=()=>{const t=document.documentElement.dataset.theme;return t?t==="dark":matchMedia("(prefers-color-scheme:dark)").matches};
+const th=()=>{$("thm").textContent=dark()?"☀️":"🌙"};
+if(["dark","light"].includes(st.g("bloom-theme")))document.documentElement.dataset.theme=st.g("bloom-theme");th();
+$("thm").onclick=()=>{const n=dark()?"light":"dark";document.documentElement.dataset.theme=n;st.s("bloom-theme",n);th()};
+$("unit").onclick=()=>{imp=!imp;st.s("bloom-unit",imp?"imp":"met");baby(info(sel).w)};
+// bounds
+const t0=today();$("lmp").max=iso(t0);$("lmp").min=iso(add(t0,-294));
 
-// [name, emoji, length cm, weight g] indexed by week 0..40
-const R=[
-  ["Pre-conception cycle","🌱",0,0],
-  ["Preparing for ovulation","🌱",0,0],
-  ["Ovulation & fertilization","✨",0.01,0],
-  ["Implanting blastocyst","🫧",0.02,0],
-  ["Poppy seed","🌱",0.2,0.1],
-  ["Sesame seed","🌾",0.2,0.2],
-  ["Pea","🫛",0.6,0.2],
-  ["Grape","🍇",1.0,0.5],
-  ["Raspberry","",1.6,1],
-  ["Strawberry","🍓",2.2,2],
-  ["Apricot","🍑",3.0,4],
-  ["Fig","",4.1,7],
-  ["Plum","",5.4,14],
-  ["Peach","🍑",7.4,23],
-  ["Kiwi fruit","🥝",8.5,43],
-  ["Apple","🍎",10.1,70],
-  ["Avocado","🥑",11.6,100],
-  ["Pomegranate","",12.0,140],
-  ["Bell pepper","🫑",14.2,190],
-  ["Beef tomato","🍅",15.3,240],
-  ["Banana","🍌",25.6,300],
-  ["Carrot","🥕",26.7,360],
-  ["Sweet potato","",27.8,430],
-  ["Large mango","🥭",28.9,500],
-  ["Corn on the cob","🌽",30.0,600],
-  ["Courgette","🥒",34.6,700],
-  ["Cucumber","🥒",35.6,760],
-  ["Cauliflower","🥦",36.6,875],
-  ["Aubergine","🍆",37.6,1000],
-  ["Butternut squash","",38.6,1150],
-  ["Cabbage","🥬",39.9,1300],
-  ["Coconut","🥥",41.1,1500],
-  ["Papaya","",42.4,1700],
-  ["Pineapple","🍍",43.7,1950],
-  ["Cantaloupe melon","🍈",45.0,2150],
-  ["Honeydew melon","🍈",46.2,2400],
-  ["Romaine lettuce","🥬",47.4,2600],
-  ["Leek","",48.6,2900],
-  ["Rhubarb","",49.8,3100],
-  ["Watermelon","🍉",50.7,3300],
-  ["Pumpkin","🎃",51.2,3400]
-];
-
-// Clinically grounded developmental highlights for Weeks 0..40
-const DEV=[
-  "The uterine lining refreshes as a new ovarian follicle prepares to mature.",
-  "Estrogen rises and the uterus builds a nutrient-rich lining ahead of ovulation.",
-  "Ovulation releases an egg; fertilization forms a single-celled zygote with a complete genetic blueprint.",
-  "The rapidly dividing blastocyst travels down the fallopian tube and implants into the uterine wall.",
-  "The amniotic sac and yolk sac form as the embryo differentiates into three distinct cell layers.",
-  "The neural tube (future brain and spinal cord) closes and the primitive heart tube begins to pulse.",
-  "Tiny limb buds emerge alongside early optic cups and inner ear structures.",
-  "Brain hemispheres grow rapidly; hands and feet appear as small paddle-shaped buds.",
-  "Webbed fingers and toes begin separating, and early cartilage starts laying the blueprint for bones.",
-  "All essential organs have begun forming, marking the transition from embryo to fetus at week's end.",
-  "Fingernails, toenails, and tooth buds form beneath the gums; kidneys begin producing urine.",
-  "Fingers and toes are fully separated; the fetus can make tiny spontaneous stretches and movements.",
-  "Reflexes emerge—fingers can curl, toes can flex, and vocal cords begin to form.",
-  "Unique fingerprints are forming on the fingertips and bone tissue continues hardening.",
-  "Welcome to the 2nd trimester: facial muscles can squint or grimace, and fine lanugo hair appears.",
-  "Limb joints can flex actively, and the ears are moving toward their final position on the head.",
-  "The heart pumps around 25 quarts of blood daily, and eyes begin making small side-to-side movements.",
-  "Cartilage in the skeleton steadily ossifies into bone, and brown fat begins forming for warmth.",
-  "Ears can begin detecting internal sounds like your heartbeat; early flutter movements ('quickening') may be felt.",
-  "A protective creamy coating called vernix caseosa forms over the delicate skin.",
-  "Halfway mark! Measurements switch from crown-to-rump to crown-to-heel as legs lengthen.",
-  "Taste buds are formed, and eyebrows and eyelids are increasingly defined.",
-  "Touch receptors develop across the skin, and grip strength grows stronger.",
-  "Inner ear vestibular structures mature, allowing the fetus to sense orientation and movement.",
-  "Lungs begin developing specialized cells that produce surfactant to help air sacs inflate after birth.",
-  "Capillaries form under the skin, giving it a pinker hue, and nostrils begin opening.",
-  "Auditory pathways mature so the fetus may respond to familiar voices or sudden sounds with movement.",
-  "The brain surface starts developing characteristic grooves, and eyelids can open partially.",
-  "Welcome to the 3rd trimester: eyes can blink, eyelashes are present, and REM sleep cycles begin.",
-  "Muscles and lungs continue maturing while bones absorb calcium and iron stores build.",
-  "Bone marrow takes over red blood cell production, and the brain helps regulate body temperature.",
-  "All five senses are functional; pupils can constrict and dilate in response to dim light.",
-  "Toenails and fingernails are complete, and subcutaneous fat plumps the arms and legs.",
-  "Skull bones remain flexible to ease passage through the birth canal while other bones firm up.",
-  "Vernix coating thickens and the immune system receives protective antibodies across the placenta.",
-  "Kidneys are fully developed and the liver can process waste products.",
-  "Most fine lanugo hair sheds as the baby practices breathing, sucking, and swallowing reflexes.",
-  "Early term begins: lungs and brain continue final maturation while weight gain averages ~25–30 g a day.",
-  "Grasp reflex is firm, and organs are ready for life outside the womb.",
-  "Full term: chest becomes more prominent and fat layers are ready to maintain warmth after birth.",
-  "Estimated due date week! Your baby is fully developed and ready to meet you."
-];
-
-// Fruits without a distinct emoji get a clean drawn SVG shape: [colour, shape]
-const G={
-  "Raspberry":["#c83e5b","r"],
-  "Fig":["#a56d92","o"],
-  "Plum":["#68447e","c"],
-  "Pomegranate":["#b83948","c"],
-  "Leek":["#6f9c62","s"],
-  "Rhubarb":["#d96a72","s"],
-  "Sweet potato":["#c77b4a","o"],
-  "Butternut squash":["#d58a3d","o"],
-  "Papaya":["#e58c3a","o"]
-};
-const drawFruit=n=>{
-  const[c,s]=G[n];
-  const b=s==="r"
-    ?`<circle cx="72" cy="82" r="22" fill="${c}"/><circle cx="108" cy="82" r="22" fill="${c}"/><circle cx="64" cy="110" r="22" fill="${c}"/><circle cx="90" cy="108" r="24" fill="${c}"/><circle cx="116" cy="110" r="22" fill="${c}"/><circle cx="78" cy="134" r="20" fill="${c}"/><circle cx="102" cy="134" r="20" fill="${c}"/>`
-    :s==="c"
-    ?`<circle cx="90" cy="98" r="56" fill="${c}"/>`
-    :s==="o"
-    ?`<ellipse cx="90" cy="98" rx="66" ry="50" fill="${c}"/>`
-    :`<rect x="70" y="36" width="40" height="124" rx="18" fill="${c}"/>`;
-  return`<svg viewBox="0 0 180 180" aria-hidden="true">${b}<path d="M90 46c4-14 14-20 28-18-2 14-12 20-28 18Z" fill="#64845b"/></svg>`;
-};
-
-let lmp=null,edd=null,selected=null,view=null,imperial=store.get("bloom-unit")==="imp";
-
-// ---- Timezone-safe date maths ----
-const startOfDay=d=>new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));
-const todayUTC=()=>{const n=new Date();return new Date(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate()))};
-const addDays=(d,n)=>{const x=startOfDay(d);x.setUTCDate(x.getUTCDate()+n);return x};
-const diffDays=(a,b)=>Math.round((startOfDay(b)-startOfDay(a))/86400000);
-const sameDay=(a,b)=>Boolean(a&&b&&startOfDay(a).getTime()===startOfDay(b).getTime());
-const dateFromInput=s=>{
-  if(!s||!/^\d{4}-\d{2}-\d{2}$/.test(s))return null;
-  const[y,m,d]=s.split("-").map(Number);
-  const dt=new Date(Date.UTC(y,m-1,d));
-  return dt.getUTCFullYear()===y&&dt.getUTCMonth()===m-1&&dt.getUTCDate()===d?dt:null;
-};
-const toInputDate=d=>`${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,"0")}-${String(d.getUTCDate()).padStart(2,"0")}`;
-const fmt=(d,opt={month:"long",day:"numeric",year:"numeric"})=>new Intl.DateTimeFormat(undefined,{...opt,timeZone:"UTC"}).format(startOfDay(d));
-const inWindow=d=>{if(!lmp||!edd||!d)return false;const x=startOfDay(d);return x>=lmp&&x<=edd};
-
-// Obstetric month start days (Weeks 0, 5, 9, 14, 18, 23, 28, 32, 36)
-// Aligns Months 1-3 with 1st Trimester (W0-W13), Months 4-6 with 2nd Trimester (W14-W27), and Months 7-9 with 3rd Trimester (W28-W40)
-const M_STARTS=[0,35,63,98,126,161,196,224,252];
-const monthStart=m=>addDays(lmp,M_STARTS[Math.max(0,Math.min(8,m))]);
-const monthEnd=m=>m>=8?edd:addDays(monthStart(m+1),-1);
-const todayIn=()=>{const t=todayUTC();return inWindow(t)?t:null};
-
-function infoFor(d){
-  const elapsed=diffDays(lmp,d),safe=Math.max(0,Math.min(280,elapsed));
-  const week=Math.floor(safe/7),day0=safe%7,day=safe===280?0:day0+1;
-  let month=0;
-  for(let m=8;m>=0;m--){if(safe>=M_STARTS[m]){month=m;break}}
-  const monthDay=safe-M_STARTS[month]+1;
-  const monthLen=(month>=8?280:M_STARTS[month+1]-1)-M_STARTS[month]+1;
-  const remaining=280-safe;
-  const tri=safe<98?"1st":safe<196?"2nd":"3rd";
-  return{elapsed,safe,week,day0,day,month,monthDay,monthLen,remaining,tri};
+function baby(w){
+  const[n,e,l,g]=R[w];
+  $("unit").textContent=imp?"in / lb":"cm / g";
+  $("bn").textContent=n;$("bw").textContent="Week "+w;$("dev").textContent="✨ "+DEV[w];
+  $("lenL").textContent=w>=20?"Height":"Length";
+  $("len").textContent=w<4?"—":imp?(l/2.54).toFixed(1)+" in":l.toFixed(1)+" cm";
+  const oz=g*.03527396;
+  $("wt").textContent=w<4?"—":imp?(oz<16?oz.toFixed(oz<1?2:1)+" oz":Math.floor(oz/16)+" lb "+Math.round(oz%16)+" oz"):g<1000?(g<10?g.toFixed(1):Math.round(g))+" g":(g/1000).toFixed(2)+" kg";
+  const f=$("fruit");f.innerHTML=G[n]?svgFruit(n):e;f.classList.add("pop");setTimeout(()=>f.classList.remove("pop"),260);
 }
-
-// ---- LMP input bounds ----
-function applyLmpBounds(){
-  const t=todayUTC();
-  $("lmp").min=toInputDate(addDays(t,-730));
-  $("lmp").max=toInputDate(addDays(t,7));
-  $("setupHint").textContent="Uses standard 40-week / 280-day dating.";
-  $("setupHint").classList.remove("err");
+function render(){
+  const x=info(sel),t=today();
+  $("age").innerHTML=`<b>${x.w}w ${x.d}d</b><span>${fmt(sel,{weekday:"short",month:"short",day:"numeric"})}</span>`;
+  const late=x.s===280&&t>edd,left=280-x.s;
+  $("chips").innerHTML=`<span class="chip">Trimester ${x.tri}</span><span class="chip m">Month ${x.m+1}</span><span class="chip d">${late?diff(edd,t)+" days past due":x.s===280?"Due date":left+" days to go"}</span>`;
+  $("fill").style.width=x.s/280*100+"%";$("rfg").style.strokeDashoffset=578.05*(1-x.s/280);
+  
+  baby(x.w);
+  document.querySelectorAll(".wk").forEach(b=>{const on=+b.dataset.w===x.w;b.classList.toggle("on",on);if(on)$("weeks").scrollTo({left:b.offsetLeft-$("weeks").clientWidth/2+23})});
+  document.querySelectorAll("#mon button").forEach(b=>{const on=+b.dataset.m===x.m;b.classList.toggle("on",on);if(on)$("mon").scrollTo({left:b.offsetLeft-$("mon").clientWidth/2+b.offsetWidth/2})});
+  cal();
 }
-
-// ---- Theme & Units ----
-function applyTheme(t){
-  if(t==="dark"||t==="light")document.documentElement.dataset.theme=t;
-  const isDark=document.documentElement.dataset.theme==="dark"||(!document.documentElement.dataset.theme&&window.matchMedia("(prefers-color-scheme:dark)").matches);
-  $("themeBtn").textContent=isDark?"☀️ Light":"🌙 Dark";
-}
-applyTheme(store.get("bloom-theme"));
-$("themeBtn").addEventListener("click",()=>{
-  const isDark=document.documentElement.dataset.theme==="dark"||(!document.documentElement.dataset.theme&&window.matchMedia("(prefers-color-scheme:dark)").matches);
-  const next=isDark?"light":"dark";
-  store.set("bloom-theme",next);
-  applyTheme(next);
-});
-
-$("unitBtn").textContent=imperial?"in / lb":"cm / g";
-$("unitBtn").addEventListener("click",()=>{
-  imperial=!imperial;
-  store.set("bloom-unit",imperial?"imp":"met");
-  $("unitBtn").textContent=imperial?"in / lb":"cm / g";
-  updateBaby(Number($("slider").value));
-});
-
-// ---- UI ----
-function updateSelected(){
-  const x=infoFor(selected),t=todayUTC(),isToday=sameDay(selected,t);
-  $("selLabel").textContent=isToday?"Today":"Selected day";
-  $("today").hidden=isToday||!inWindow(t);
-  $("selDate").textContent=fmt(selected,{weekday:"long",month:"long",day:"numeric",year:"numeric"});
-  $("selWeek").textContent="Week "+x.week;
-  $("selDay").textContent=x.safe===280?"Due date (40w 0d)":"Day "+x.day+" of 7 ("+x.week+"w "+x.day0+"d)";
-  $("selMonth").textContent="Month "+(x.month+1)+" (day "+x.monthDay+" of "+x.monthLen+")";
-  $("selTri").textContent=x.tri+" trimester";
-  $("selDays").textContent="Day "+x.safe+" of 280 completed · "+x.remaining+" days left";
-  const pct=Math.max(0,Math.min(100,x.safe/280*100));
-  $("fill").style.width=pct+"%";$("dot").style.left=pct+"%";
-  updateBaby(x.week);
-  document.querySelectorAll("#monthbar button").forEach(b=>b.classList.toggle("active",Number(b.dataset.month)===x.month));
-}
-
-function fmtLen(cm,w){
-  if(w<2)return"—";
-  if(w<4)return imperial?"< 0.01 in":"< 0.1 cm";
-  return imperial?(cm/2.54).toFixed(1)+" in":cm.toFixed(1)+" cm";
-}
-function fmtWt(g,w){
-  if(w<4)return"—";
-  if(imperial){
-    const oz=g*0.03527396;
-    if(oz<1)return oz.toFixed(2)+" oz";
-    if(oz>=16){const lb=Math.floor(oz/16),remOz=Math.round(oz-lb*16);return remOz===16?(lb+1)+" lb":lb+" lb "+remOz+" oz"}
-    return oz.toFixed(1)+" oz";
-  }
-  return g<10?g.toFixed(1)+" g":g>=1000?(g/1000).toFixed(2)+" kg":Math.round(g)+" g";
-}
-
-function updateBaby(week){
-  const w=Math.max(0,Math.min(40,Math.round(Number(week)||0))),r=R[w],[name,emoji,len,wt]=r;
-  $("slider").value=w;$("bWeek").textContent="Week "+w;
-  $("bLenLbl").textContent=w>=20?"Approx. length (crown-to-heel)":w>=4?"Approx. length (crown-to-rump)":"Approx. length";
-  $("bLen").textContent=fmtLen(len,w);
-  $("bWt").textContent=fmtWt(wt,w);
-  $("fname").textContent=name;
-  $("fsub").textContent=w<4?"Early cellular & implantation stage":w===4?"About the size of a tiny seed":"About the size of this";
-  $("bDev").innerHTML=`<b>Week ${w} development:</b> ${DEV[w]}`;
-  $("fruit").innerHTML=G[name]?drawFruit(name):emoji;
-  $("fruit").setAttribute("aria-label","Week "+w+": "+name);
-
-  // Proportional visual growth scale (0.42x at Week 0..4 up to 1.12x at Week 40) + radial ring progress
-  const scale=w<4?0.42:+(0.46+Math.pow((w-4)/36,0.65)*0.66).toFixed(3);
-  $("fruit").style.setProperty("--fscale",String(scale));
-  const circ=615.75,offset=circ*(1-w/40);
-  $("ringFg").style.strokeDashoffset=String(offset.toFixed(2));
-  $("scaleTag").textContent=`Week ${w} of 40 · ${Math.round(w/40*100)}%`;
-
-  const curW=selected?infoFor(selected).week:w;
-  $("bJump").hidden=!lmp||curW===w;
-  const s=document.querySelector(".stage");s.classList.remove("pulse");void s.offsetWidth;s.classList.add("pulse");
-}
-
-function milestoneFor(x){
-  if(x.safe===0)return{txt:"LMP · M1",title:"First day of last period · Month 1 & 1st trimester start",cls:"ms"};
-  if(x.safe===280)return{txt:"EDD",title:"Estimated due date (40w 0d)",cls:"ms"};
-  if(x.safe===98)return{txt:"2nd Tri · M4",title:"Second trimester & Month 4 start (Week 14)",cls:"ms"};
-  if(x.safe===196)return{txt:"3rd Tri · M7",title:"Third trimester & Month 7 start (Week 28)",cls:"ms"};
-  if(x.safe===259)return{txt:"Term",title:"Early term begins (Week 37)",cls:"ms"};
-  if(sameDay(addDays(lmp,x.safe),monthStart(x.month)))return{txt:"M"+(x.month+1),title:"Month "+(x.month+1)+" starts (Week "+x.week+")",cls:""};
-  return null;
-}
-
-function renderCalendar(){
-  if(!view)return;
-  const today=todayUTC();
-  const cur1=view.getUTCFullYear()===today.getUTCFullYear()&&view.getUTCMonth()===today.getUTCMonth();
-  $("calTitle").innerHTML=fmt(view,{month:"long",year:"numeric"})+(cur1?'<span class="badge">This month</span>':"");
-  const grid=$("days");grid.innerHTML="";
-  const first=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth(),1));
-  const start=addDays(first,-first.getUTCDay());
+function cal(){
+  const t=today();$("ct").textContent=fmt(view,{month:"long",year:"numeric"});$("back").hidden=!inW(t)||(same(sel,t)&&view.getUTCMonth()===t.getUTCMonth()&&view.getUTCFullYear()===t.getUTCFullYear());
+  const g=$("days");g.innerHTML="";const st0=add(view,-view.getUTCDay());
   for(let i=0;i<42;i++){
-    const cur=addDays(start,i),cell=document.createElement("button");
-    const inside=cur.getUTCMonth()===view.getUTCMonth(),allowed=inWindow(cur);
-    const isSel=sameDay(cur,selected),isTod=sameDay(cur,today);
-    cell.type="button";
-    cell.className="day"+(allowed?"":" out")+(isSel?" selected":"")+(isTod?" today":"");
-    if(isTod)cell.setAttribute("aria-current","date");
-    if(allowed){
-      const x=infoFor(cur),mk=milestoneFor(x);
-      const gwText=x.safe===280?"W40 · EDD":"W"+x.week+" · D"+x.day;
-      cell.innerHTML='<span class="num">'+cur.getUTCDate()+'</span><span class="gw">'+gwText+'</span>'+(mk?'<span class="mk '+mk.cls+'" title="'+mk.title+'">'+mk.txt+'</span>':"");
-      cell.setAttribute("aria-label",fmt(cur)+", week "+x.week+(x.safe===280?" due date":" day "+x.day)+(mk?", "+mk.title:""));
-      cell.setAttribute("aria-pressed",isSel?"true":"false");
-      cell.dataset.iso=toInputDate(cur);
-      cell.addEventListener("click",()=>{
-        selected=new Date(cur);
-        if(!inside)view=new Date(Date.UTC(cur.getUTCFullYear(),cur.getUTCMonth(),1));
-        updateSelected();renderCalendar();
-      });
-    }else{
-      cell.innerHTML='<span class="num">'+cur.getUTCDate()+'</span>';
-      cell.disabled=true;
+    const c=add(st0,i),b=document.createElement("button");b.type="button";
+    if(!inW(c)){b.className="day out";b.innerHTML=`<b>${c.getUTCDate()}</b>`;b.disabled=true}
+    else{const x=info(c);
+      b.className=`day t${x.tri}`+(same(c,sel)?" sel":"")+(same(c,t)?" today":"");
+      b.innerHTML=`<b>${c.getUTCDate()}</b>${x.s%7===0&&x.s<280?`<small>${x.w}w</small>`:""}${LBL[x.s]?`<em>${LBL[x.s]}</em>`:""}${CARE.some(r=>r[2]===x.s&&r[2]!==r[3])?"<i></i>":""}`;
+      b.setAttribute("aria-label",`${fmt(c)}, ${x.w} weeks ${x.d} days`);
+      b.onclick=()=>{sel=c;if(c.getUTCMonth()!==view.getUTCMonth())view=new Date(Date.UTC(c.getUTCFullYear(),c.getUTCMonth(),1));render()};
     }
-    grid.appendChild(cell);
+    g.appendChild(b);
   }
 }
-
-function goTo(d){
-  if(!inWindow(d))return;
-  selected=startOfDay(d);
-  view=new Date(Date.UTC(selected.getUTCFullYear(),selected.getUTCMonth(),1));
-  updateSelected();renderCalendar();
-  document.querySelector(".cal").scrollIntoView({behavior:"smooth",block:"nearest"});
+function go(d){if(!inW(d))d=d<lmp?lmp:edd;sel=U(d);view=new Date(Date.UTC(sel.getUTCFullYear(),sel.getUTCMonth(),1));render()}
+function build(){
+  const t=today();
+  $("edd").textContent=fmt(edd,{month:"short",day:"numeric",year:"numeric"});
+  
+  
+  $("weeks").innerHTML="";
+  for(let w=0;w<=40;w++){const b=document.createElement("button");b.className="wk p"+(w<14?1:w<28?2:3);b.dataset.w=w;b.innerHTML=`<small>Wk</small><b>${w}</b>`;
+    if(inW(t)&&info(t).w===w)b.classList.add("now");b.onclick=()=>go(add(lmp,w*7));$("weeks").appendChild(b)}
+  $("mon").innerHTML="";
+  for(let m=0;m<9;m++){const b=document.createElement("button");b.dataset.m=m;b.textContent="Month "+(m+1);b.onclick=()=>go(add(lmp,MS[m]));$("mon").appendChild(b)}
+  $("tl").innerHTML="";
+  CARE.forEach((c,i)=>{const[n,w,s,e,ic]=c,ds=add(lmp,s),de=add(lmp,e),b=document.createElement("button");b.className="it";
+    const{tag,cl}=stat(c);
+    
+    if(cl)b.classList.add(cl);
+    b.innerHTML=`<i class="ic">${ic}</i><div><b>${n}</b><span>${w} · ${rng(ds,de)}</span></div><u>${tag}</u>`;
+    b.onclick=()=>openSheet(i);const li=document.createElement("li");li.appendChild(b);$("tl").appendChild(li)});
 }
-
-function renderMonths(){
-  const bar=$("monthbar");bar.innerHTML="";
-  for(let m=0;m<=8;m++){
-    const b=document.createElement("button");
-    b.type="button";b.dataset.month=m;b.textContent="Month "+(m+1);
-    b.title="Month "+(m+1)+": "+fmt(monthStart(m),{month:"short",day:"numeric"})+" to "+fmt(monthEnd(m),{month:"short",day:"numeric"});
-    b.addEventListener("click",()=>goTo(monthStart(m)));
-    bar.appendChild(b);
-  }
+const rng=(a,b)=>same(a,b)?fmt(a):fmt(a,{month:"short",day:"numeric"})+" – "+fmt(b,{month:"short",day:"numeric"});
+function stat(c){const t=today(),ds=add(lmp,c[2]),de=add(lmp,c[3]);if(t>de)return{tag:"Done",cl:"done",txt:"Completed"};if(t>=ds)return{tag:"Now",cl:"now",txt:"Active now"};const a=diff(t,ds);return{tag:a<=60?a+"d":fmt(ds,{month:"short",year:"numeric"}),cl:"",txt:"Starts in "+a+" days"}}
+let cur=0,lastF=null;
+function openSheet(i){cur=i;lastF=document.activeElement;
+const c=CARE[i],[n,w,s,e,ic,about,tips]=c,ds=add(lmp,s),de=add(lmp,e),x=stat(c),len=diff(ds,de)+1,t=today();
+const pct=x.cl==="now"?Math.round((diff(ds,t)+1)/len*100):x.cl==="done"?100:0;
+const ymd=d=>iso(d).replace(/-/g,"");
+const url="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Bloom: "+n)+"&dates="+ymd(ds)+"/"+ymd(add(de,1))+"&details="+encodeURIComponent(about);
+$("pn").innerHTML=`<div class="ph"><i>${ic}</i><button class="x" id="x" aria-label="Close">✕</button><small class="sc ${x.cl}">${x.txt}</small><h4>${n}</h4><span>${w} · ${rng(ds,de)}</span></div><div class="pb"><div class="pr"><i style="width:${pct}%"></i></div><p>${about}</p>${tips.length?`<h5>Prepare</h5><ul>${tips.map(k=>`<li><button type="button" class="ck"><i></i>${k}</button></li>`).join("")}</ul>`:""}<div class="pa"><a class="go" href="${url}" target="_blank" rel="noopener">＋ Add to calendar</a><button class="pill" id="sc">Show on calendar</button></div></div>`;
+$("sheet").hidden=false;document.body.style.overflow="hidden";void $("pn").offsetWidth;$("sheet").classList.add("open");$("x").focus()}
+function closeSheet(){$("sheet").classList.remove("open");document.body.style.overflow="";setTimeout(()=>{if(!$("sheet").classList.contains("open"))$("sheet").hidden=true},260);lastF&&lastF.focus&&lastF.focus()}
+function begin(v,scroll){
+  const p=parse(v);if(!p)return false;
+  lmp=p;edd=add(lmp,280);document.body.classList.add("has");$("app").hidden=false;$("chg").hidden=false;
+  build();const t=today();go(inW(t)?t:t<lmp?lmp:edd);
+  if(scroll)window.scrollTo({top:0,behavior:"smooth"});return true;
 }
-
-function renderMilestones(){
-  const items=[
-    {w:"Weeks 6–8",title:"Early Ultrasound & Heartbeat",s:42,e:56,desc:"Confirm dating & early cardiac activity"},
-    {w:"Weeks 10–13",title:"1st Trimester & NIPT Window",s:70,e:97,desc:"Nuchal translucency & cell-free DNA screening"},
-    {w:"Week 14",title:"2nd Trimester Begins",s:98,e:98,desc:"Day 98 · Energy often rebounds"},
-    {w:"Weeks 18–22",title:"Mid-Pregnancy Anatomy Scan",s:126,e:154,desc:"Detailed ultrasound of fetal organs & growth"},
-    {w:"Week 20",title:"Halfway Milestone",s:140,e:140,desc:"140 days completed · 140 days to go"},
-    {w:"Weeks 24–28",title:"Glucose Screening Window",s:168,e:196,desc:"Routine gestational diabetes check"},
-    {w:"Week 28",title:"3rd Trimester Begins",s:196,e:196,desc:"Final trimester & kick-count awareness"},
-    {w:"Week 37",title:"Early Term Reached",s:259,e:272,desc:"Lungs & organs nearing full readiness"},
-    {w:"Weeks 39–40",title:"Full Term & Due Date",s:273,e:280,desc:"Full-term window leading up to EDD"}
-  ];
-  const grid=$("msGrid");grid.innerHTML="";
-  const t=todayUTC();
-  items.forEach(it=>{
-    const ds=addDays(lmp,it.s),de=addDays(lmp,it.e);
-    const btn=document.createElement("button");
-    btn.type="button";
-    let state="up",statTxt="";
-    if(t>de){state="done";statTxt="Completed"}
-    else if(t>=ds&&t<=de){state="now";statTxt="Active now"}
-    else{
-      const away=diffDays(t,ds);
-      statTxt=away<=90?`In ${away}d`:fmt(ds,{month:"short",year:"numeric"});
-    }
-    btn.className="ms-item "+(state==="now"?"now":state==="done"?"done":"");
-    const dateStr=it.s===it.e?fmt(ds,{month:"short",day:"numeric",year:"numeric"}):`${fmt(ds,{month:"short",day:"numeric"})} – ${fmt(de,{month:"short",day:"numeric",year:"numeric"})}`;
-    btn.innerHTML=`<div class="ms-top"><span>${it.w}</span><span class="ms-stat">${statTxt}</span></div><strong>${it.title}</strong><span>${dateStr}</span><small>${it.desc}</small>`;
-    btn.addEventListener("click",()=>goTo(ds));
-    grid.appendChild(btn);
-  });
-}
-
-function updateShower(){
-  const s7=monthStart(6),e7=monthEnd(6),s9=monthStart(8),e9=monthEnd(8);
-  const range=(a,b)=>fmt(a,{month:"short",day:"numeric"})+" – "+fmt(b,{month:"short",day:"numeric",year:"numeric"});
-  $("s7d").textContent=range(s7,e7);$("s7n").textContent=(diffDays(s7,e7)+1)+" day window · tap to view";
-  $("s9d").textContent=range(s9,e9);$("s9n").textContent=(diffDays(s9,e9)+1)+" day window · tap to view";
-  const t=todayUTC();let n;
-  if(t<s7)n="Month 7 begins in "+diffDays(t,s7)+" days.";
-  else if(t<=e7)n="You are currently in the Month 7 shower window.";
-  else if(t<s9)n="The Month 7 window has passed. The Month 9 alternative begins in "+diffDays(t,s9)+" days.";
-  else if(t<=e9)n="You are currently in the Month 9 alternative window.";
-  else n="Both suggested windows have passed. Your calendar remains available for planning any date.";
-  $("showerNote").textContent=n;
-}
-
-function updateLive(){
-  if(!lmp)return;
-  const t=todayUTC(),rem=diffDays(t,edd);
-  $("edd").textContent=fmt(edd,{weekday:"long",month:"long",day:"numeric",year:"numeric"});
-  $("dueInfo").textContent=rem>0?rem+" days until estimated due date":rem===0?"Estimated due date is today":Math.abs(rem)+" days past estimated due date";
-  $("outNote").hidden=!!todayIn();
-  const lmpLocal=new Date(lmp.getUTCFullYear(),lmp.getUTCMonth(),lmp.getUTCDate(),0,0,0,0);
-  const eddLocalEnd=new Date(edd.getUTCFullYear(),edd.getUTCMonth(),edd.getUTCDate(),23,59,59,999);
-  const now=Date.now(),ms=now-lmpLocal.getTime();
-  if(ms<0){
-    $("clock").textContent="Not started";
-    $("clockSub").textContent="starts on "+fmt(lmp,{month:"short",day:"numeric"});
-    return;
-  }
-  if(now>eddLocalEnd.getTime()){
-    $("clock").textContent="280d 00h 00m 00s";
-    $("clockSub").textContent="full 40-week term completed";
-    return;
-  }
-  $("clockSub").textContent="elapsed in 40-week window";
-  let s=Math.floor(ms/1000);const d=Math.floor(s/86400);s%=86400;
-  const h=Math.floor(s/3600);s%=3600;const m=Math.floor(s/60);s%=60;
-  const p=n=>String(n).padStart(2,"0");
-  $("clock").textContent=d+"d "+p(h)+"h "+p(m)+"m "+p(s)+"s";
-}
-
-function begin(value,scroll){
-  const parsed=dateFromInput(value);
-  if(!parsed)return false;
-  lmp=parsed;edd=addDays(lmp,280);
-  const t=todayUTC();
-  selected=inWindow(t)?t:new Date(lmp);
-  view=new Date(Date.UTC(selected.getUTCFullYear(),selected.getUTCMonth(),1));
-  document.body.classList.add("has");
-  $("app").hidden=false;$("change").hidden=false;
-  renderMonths();renderMilestones();updateSelected();renderCalendar();updateShower();updateLive();
-  if(scroll)setTimeout(()=>$("app").scrollIntoView({behavior:"smooth"}),20);
-  return true;
-}
-
-setInterval(updateLive,1000);
-applyLmpBounds();
-
-$("start").addEventListener("click",()=>{
-  const v=$("lmp").value,dt=dateFromInput(v),hint=$("setupHint");
-  if(!dt){
-    hint.textContent="Please enter a valid date for the first day of your last period.";
-    hint.classList.add("err");
-    $("lmp").focus();
-    return;
-  }
-  applyLmpBounds();
-  store.set("bloom-lmp",v);
-  begin(v,true);
-});
-$("lmp").addEventListener("keydown",e=>{if(e.key==="Enter")$("start").click()});
-$("slider").addEventListener("input",e=>updateBaby(Number(e.target.value)));
-$("bPrev").addEventListener("click",()=>updateBaby(Math.max(0,Number($("slider").value)-1)));
-$("bNext").addEventListener("click",()=>updateBaby(Math.min(40,Number($("slider").value)+1)));
-$("bJump").addEventListener("click",()=>{
-  if(!lmp)return;
-  const w=Math.max(0,Math.min(40,Number($("slider").value)||0));
-  goTo(addDays(lmp,w*7));
-});
-const shift=n=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()+n,1));renderCalendar()};
-$("prev").addEventListener("click",()=>shift(-1));
-$("next").addEventListener("click",()=>shift(1));
-
-// Keyboard navigation across calendar days
-$("days").addEventListener("keydown",e=>{
-  const step={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[e.key];
-  if(!step||!selected)return;
-  const nextDate=addDays(selected,step);
-  if(!inWindow(nextDate))return;
-  e.preventDefault();
-  selected=nextDate;
-  view=new Date(Date.UTC(selected.getUTCFullYear(),selected.getUTCMonth(),1));
-  updateSelected();renderCalendar();
-  const btn=$("days").querySelector(`[data-iso="${toInputDate(selected)}"]`);
-  if(btn)btn.focus();
-});
-
+$("go").onclick=()=>{
+  const v=$("lmp").value,p=parse(v),e=$("err");
+  if(!p){e.textContent="Enter a valid date.";return}
+  if(p>today()){e.textContent="LMP can’t be in the future.";return}
+  if(diff(p,today())>294){e.textContent="That’s over 42 weeks ago.";return}
+  e.textContent="";st.s("bloom-lmp",v);begin(v,true);
+};
+$("lmp").onkeydown=e=>{if(e.key==="Enter")$("go").click()};
+$("prev").onclick=()=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()-1,1));cal()};
+$("next").onclick=()=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()+1,1));cal()};
+$("back").onclick=()=>go(today());
+$("chg").onclick=()=>{document.body.classList.remove("has");$("app").hidden=true;$("chg").hidden=true;$("lmp").focus()};
 let sx=0,sy=0;
-$("days").addEventListener("touchstart",e=>{if(e.touches.length){sx=e.touches[0].clientX;sy=e.touches[0].clientY}},{passive:true});
-$("days").addEventListener("touchend",e=>{
-  if(!e.changedTouches.length)return;
-  const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;
-  if(Math.abs(dx)<55||Math.abs(dx)<Math.abs(dy)*1.3)return;
-  shift(dx<0?1:-1);
-},{passive:true});
-$("today").addEventListener("click",()=>{const t=todayIn();if(t)goTo(t)});
-$("shower7").addEventListener("click",()=>goTo(monthStart(6)));
-$("shower9").addEventListener("click",()=>goTo(monthStart(8)));
-$("change").addEventListener("click",()=>{window.scrollTo({top:0,behavior:"smooth"});$("lmp").focus()});
-
-const saved=store.get("bloom-lmp");
-if(saved&&dateFromInput(saved)){$("lmp").value=saved;begin(saved,false)}
+$("days").addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+$("days").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.3)(dx<0?$("next"):$("prev")).click()},{passive:true});
+$("days").addEventListener("keydown",e=>{const s={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[e.key];if(!s)return;const n=add(sel,s);if(!inW(n))return;e.preventDefault();go(n);const b=$("days").querySelector(".sel");b&&b.focus()});
+$("bd").onclick=closeSheet;
+$("pn").addEventListener("click",e=>{const k=e.target.closest(".ck");if(k)k.classList.toggle("on");if(e.target.closest("#x"))closeSheet();if(e.target.closest("#sc")){closeSheet();go(add(lmp,CARE[cur][2]));document.querySelector(".cal").scrollIntoView({behavior:"smooth",block:"center"})}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("sheet").hidden)closeSheet()});
+const sv=st.g("bloom-lmp");if(sv&&parse(sv)){$("lmp").value=sv;begin(sv,false)}
 })();
 </script>
 </body>
