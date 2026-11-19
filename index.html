@@ -6,79 +6,269 @@
 <title>Bloom — Pregnancy Calendar</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap">
 <style>
-:root{--bg:#fbf6f4;--card:#fff;--ink:#2b2226;--mut:#7b6f74;--line:#efe4e4;--t1:#b4546e;--t1s:#f8e8ed;--t2:#5f8a74;--t2s:#e4efe9;--t3:#b9822c;--t3s:#f8eedb;--sh:0 14px 36px rgba(90,50,64,.08);--serif:Fraunces,Georgia,serif;--sans:Inter,system-ui,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171214;--card:#211a1d;--ink:#f3eaee;--mut:#a99ca2;--line:#382e33;--t1:#e48ba4;--t1s:#3a2630;--t2:#9dc7b0;--t2s:#223029;--t3:#e6b560;--t3s:#38301f;--sh:0 14px 36px rgba(0,0,0,.45)}}
-:root[data-theme="dark"]{--bg:#171214;--card:#211a1d;--ink:#f3eaee;--mut:#a99ca2;--line:#382e33;--t1:#e48ba4;--t1s:#3a2630;--t2:#9dc7b0;--t2s:#223029;--t3:#e6b560;--t3s:#38301f;--sh:0 14px 36px rgba(0,0,0,.45)}
+:root{
+  --bg:#fbf6f4;--card:#fff;--ink:#2b2226;--mut:#7b6f74;--line:#efe4e4;
+  --t1:#b4546e;--t1s:#f8e8ed;--t2:#5f8a74;--t2s:#e4efe9;--t3:#b9822c;--t3s:#f8eedb;
+  --sh:0 14px 36px rgba(90,50,64,.08);
+  --sh-pop:0 20px 50px rgba(43,34,38,.18);
+  --serif:Fraunces,Georgia,serif;
+  --sans:Inter,system-ui,-apple-system,sans-serif;
+  --emoji:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#171214;--card:#211a1d;--ink:#f3eaee;--mut:#a99ca2;--line:#382e33;
+    --t1:#e48ba4;--t1s:#3a2630;--t2:#9dc7b0;--t2s:#223029;--t3:#e6b560;--t3s:#38301f;
+    --sh:0 14px 36px rgba(0,0,0,.45);
+    --sh-pop:0 24px 60px rgba(0,0,0,.65);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#171214;--card:#211a1d;--ink:#f3eaee;--mut:#a99ca2;--line:#382e33;
+  --t1:#e48ba4;--t1s:#3a2630;--t2:#9dc7b0;--t2s:#223029;--t3:#e6b560;--t3s:#38301f;
+  --sh:0 14px 36px rgba(0,0,0,.45);
+  --sh-pop:0 24px 60px rgba(0,0,0,.65);
+}
 *,*::before,*::after{box-sizing:border-box}
 html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
-body{margin:0;min-height:100%;background:radial-gradient(60% 40% at 0 0,var(--t1s),transparent),radial-gradient(50% 35% at 100% 30%,var(--t2s),transparent),radial-gradient(50% 30% at 0 90%,var(--t3s),transparent),var(--bg);background-attachment:fixed;color:var(--ink);font:15px/1.5 var(--sans);-webkit-font-smoothing:antialiased}
+body{
+  margin:0;min-height:100%;
+  background:radial-gradient(60% 40% at 0 0,var(--t1s),transparent),
+             radial-gradient(50% 35% at 100% 30%,var(--t2s),transparent),
+             radial-gradient(50% 30% at 0 90%,var(--t3s),transparent),var(--bg);
+  background-attachment:fixed;color:var(--ink);font:15px/1.5 var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
-button,input{font:inherit;color:inherit}button{cursor:pointer}[hidden]{display:none!important}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}[hidden]{display:none!important}
 :focus-visible{outline:2px solid var(--t1);outline-offset:2px}
+
 .shell{width:min(940px,92%);margin-inline:auto}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;height:56px;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+header{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:15;height:56px;
+  background:color-mix(in srgb,var(--bg) 82%,transparent);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+}
 .nav{height:100%;display:flex;align-items:center;justify-content:space-between}
 .brand{font:600 1.4rem var(--serif);letter-spacing:-.02em}.brand i{color:var(--t1);font-style:normal}
-.act{display:flex;gap:8px}
-.pill{height:34px;padding:0 13px;border:1px solid var(--line);border-radius:99px;background:var(--card);color:var(--mut);font-size:.8rem;font-weight:600}
+.act{display:flex;gap:8px;align-items:center}
+.pill{
+  height:36px;padding:0 14px;border:1px solid var(--line);border-radius:99px;
+  background:var(--card);color:var(--mut);font-size:.8rem;font-weight:600;
+  transition:border-color .15s,color .15s,background .15s;
+}
 .pill:hover{color:var(--ink);border-color:var(--t1)}
+#thm{
+  width:36px;height:36px;padding:0;display:grid;place-items:center;
+  font-family:var(--emoji);font-size:1.15rem;line-height:1;
+}
 .card{background:var(--card);border:1px solid var(--line);border-radius:26px;box-shadow:var(--sh)}
 h3{font:400 1.2rem var(--serif);margin:0}
+
 /* landing */
 .land{min-height:calc(100svh - 120px);display:grid;place-content:center;text-align:center;gap:26px;padding:20px 0}
 .land h1{font:400 clamp(3rem,13vw,6rem)/.95 var(--serif);letter-spacing:-.04em;margin:0}
 .land h1 em{color:var(--t1)}
-.flower{font-size:3.4rem;animation:sway 4s ease-in-out infinite}
+.flower{font-family:var(--emoji);font-size:4rem;line-height:1;animation:sway 4s ease-in-out infinite}
 @keyframes sway{50%{transform:rotate(6deg) scale(1.06)}}
-.form{width:min(420px,92vw);margin:auto;padding:14px;display:grid;gap:10px;text-align:left}
+.form{width:min(420px,92vw);margin:auto;padding:16px;display:grid;gap:10px;text-align:left}
 .form label{font-size:.82rem;font-weight:600;padding:2px 4px}
 input[type=date]{height:50px;width:100%;padding:0 14px;border:1px solid var(--line);border-radius:14px;background:var(--bg);font-size:16px}
 .go{height:50px;border:0;border-radius:14px;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-weight:700;letter-spacing:.01em}
 .go:active{transform:scale(.98)}
 #err{margin:0;padding:0 4px;color:var(--t1);font-size:.8rem;font-weight:600;min-height:1.2em}
 body.has .land{display:none}
+
 /* app */
 #app{display:grid;gap:16px;padding:16px 0 40px}
 
-.ringbox{position:relative;width:250px;height:250px;margin:auto}
-.ringbox svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+/* hero card */
+.grp{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;padding:22px 24px 26px}
+.wkwrap{position:relative;width:100%;max-width:460px;z-index:20}
+.wkctrl{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:6px;border-radius:99px;background:var(--bg);border:1px solid var(--line);
+}
+.wkbtn{
+  flex:0 0 auto;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
+  background:var(--card);color:var(--ink);display:grid;place-items:center;
+  box-shadow:0 2px 8px rgba(0,0,0,.05);transition:transform .12s,border-color .15s,color .15s,opacity .15s;
+}
+.wkbtn:hover:not(:disabled){border-color:var(--t1);color:var(--t1)}
+.wkbtn:active:not(:disabled){transform:scale(.94)}
+.wkbtn:disabled{opacity:.32;cursor:not-allowed;box-shadow:none}
+.wkbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
+
+.wkmid{
+  flex:1;min-width:0;height:44px;border:0;border-radius:99px;background:transparent;
+  display:flex;align-items:center;justify-content:center;gap:7px;padding:0 12px;
+  transition:background .15s;
+}
+.wkmid:hover,.wkmid[aria-expanded="true"]{background:color-mix(in srgb,var(--card) 88%,transparent)}
+.wkmid b{font:600 1.25rem/1 var(--serif);letter-spacing:-.02em;color:var(--ink)}
+.wkmid .wk-sub{font-size:.74rem;font-weight:700;color:var(--mut);padding:3px 8px;border-radius:99px;background:var(--card);border:1px solid var(--line)}
+.wkmid svg{
+  width:16px;height:16px;stroke:var(--mut);fill:none;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto;
+  transition:transform .2s cubic-bezier(.2,.8,.2,1);
+}
+.wkmid[aria-expanded="true"] svg{transform:rotate(180deg);stroke:var(--t1)}
+
+/* custom theme-matched week picker popover */
+.wkpop{
+  position:absolute;top:calc(100% + 10px);left:0;right:0;
+  background:var(--card);border:1px solid var(--line);border-radius:24px;
+  box-shadow:var(--sh-pop);padding:14px 14px 16px;
+  opacity:0;transform:translateY(-8px) scale(.98);pointer-events:none;
+  transition:opacity .18s ease,transform .22s cubic-bezier(.2,.9,.25,1);
+}
+.wkpop.open{opacity:1;transform:none;pointer-events:auto}
+.wkpop-head{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:2px 4px 12px;border-bottom:1px solid var(--line);margin-bottom:12px;
+}
+.wkpop-prev{display:flex;align-items:center;gap:8px;min-width:0}
+.wkpop-prev i{font-family:var(--emoji);font-style:normal;font-size:1.35rem;line-height:1}
+.wkpop-prev span{font-size:.86rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wkpop-prev small{color:var(--mut);font-weight:600;margin-left:4px}
+.wkpop-x{
+  flex:0 0 auto;width:30px;height:30px;border:1px solid var(--line);border-radius:50%;
+  background:var(--bg);color:var(--mut);font-size:.82rem;display:grid;place-items:center;
+}
+.wkpop-x:hover{color:var(--ink);border-color:var(--t1)}
+.wkpop-body{display:grid;gap:12px;max-height:min(54svh,360px);overflow-y:auto;padding-right:2px}
+.wkg-lbl{
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--mut);margin:0 0 6px 2px;
+}
+.wkg-lbl b{font-weight:700}
+.wkg-lbl.t1 b{color:var(--t1)}.wkg-lbl.t2 b{color:var(--t2)}.wkg-lbl.t3 b{color:var(--t3)}
+.wkg-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.wkp{
+  position:relative;height:38px;border:1px solid transparent;border-radius:12px;
+  font-size:.84rem;font-weight:700;color:var(--ink);display:grid;place-items:center;
+  transition:transform .12s,border-color .15s,background .15s;
+}
+.wkp.p1{background:var(--t1s)}.wkp.p2{background:var(--t2s)}.wkp.p3{background:var(--t3s)}
+.wkp:hover{transform:translateY(-1px);border-color:var(--ink)}
+.wkp.now::after{
+  content:"";position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
+  width:5px;height:5px;border-radius:50%;background:var(--t1);
+}
+.wkp.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.wkp.on.now::after{background:var(--bg)}
+
+.wkjump{
+  display:inline-flex;align-items:center;gap:6px;margin-top:-6px;
+  height:30px;padding:0 12px;border-radius:99px;border:1px solid var(--t1);
+  background:var(--t1s);color:var(--t1);font-size:.76rem;font-weight:700;
+  transition:transform .12s,filter .15s;
+}
+.wkjump:hover{filter:brightness(.97)}
+.wkjump:active{transform:scale(.97)}
+
+.ringbox{position:relative;width:254px;height:254px;margin:2px auto 0}
+.ringbox > svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .rbg{fill:none;stroke:var(--line);stroke-width:9}
-.rfg{fill:none;stroke:url(#g);stroke-width:9;stroke-linecap:round;stroke-dasharray:578.05;stroke-dashoffset:578.05;transition:stroke-dashoffset .6s cubic-bezier(.2,.8,.2,1)}
-.fruit{width:140px;height:140px;margin:0 auto;display:grid;place-items:center;font-size:5.6rem;line-height:1;transition:transform .4s cubic-bezier(.3,1.5,.5,1)}.ringbox #unit{position:absolute;top:2px;right:-6px;z-index:2;height:28px;padding:0 10px;font-size:.72rem}
-.fruit svg{position:static;transform:none;width:92px;height:92px}
-.fruit.pop{transform:scale(1.15) rotate(-6deg)}
-.age{position:absolute;inset:0;display:grid;place-content:center;text-align:center}.age b{font:400 3.2rem/1 var(--serif);letter-spacing:-.04em}#age b{display:block;font:400 2.5rem/1 var(--serif);letter-spacing:-.04em}#age span{display:block;color:var(--mut);font-size:.85rem;font-weight:600;margin:4px 0 0}.age .bn{font:400 1.1rem/1.2 var(--serif);color:var(--t1);margin-top:8px}
-.age span{color:var(--mut);font-weight:600;font-size:.8rem}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0}
+.rfg{
+  fill:none;stroke:url(#g);stroke-width:9;stroke-linecap:round;
+  stroke-dasharray:578.05;stroke-dashoffset:578.05;
+  transition:stroke-dashoffset .45s cubic-bezier(.2,.8,.2,1);
+}
+.ringbox #unit{
+  position:absolute;top:0;right:-10px;z-index:2;height:30px;padding:0 11px;font-size:.74rem;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+.age{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.fruit-wrap{
+  width:154px;height:154px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 45%,var(--bg) 55%,transparent 75%);
+}
+.fruit{
+  width:136px;height:136px;display:grid;place-items:center;
+  font-family:var(--emoji);font-size:6.2rem;line-height:1;
+  transition:transform .34s cubic-bezier(.3,1.5,.5,1);
+  will-change:transform;user-select:none;
+}
+.fruit > span{display:inline-block;line-height:1;transform:scale(var(--sc,1))}
+.fruit svg{position:static;transform:none;width:116px;height:116px;display:block}
+.fruit.pop{transform:scale(1.12) rotate(-4deg)}
+
+.bn-block{text-align:center;margin-top:-4px}
+.bn{font:600 1.85rem/1.12 var(--serif);color:var(--t1);letter-spacing:-.02em}
+.bn-cap{font-size:.76rem;font-weight:600;color:var(--mut);margin-top:2px}
+
+.mt{width:100%;max-width:460px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mt div{
+  padding:11px 13px;border-radius:18px;background:var(--bg);border:1px solid var(--line);
+  display:flex;align-items:center;gap:11px;
+}
+.mt .mi{
+  flex:0 0 auto;width:42px;height:42px;border-radius:13px;background:var(--card);
+  border:1px solid var(--line);display:grid;place-items:center;
+  font-family:var(--emoji);font-size:1.5rem;line-height:1;
+}
+.mt small{display:block;color:var(--mut);font-size:.72rem;font-weight:600}
+.mt b{display:block;font-size:1.12rem;line-height:1.2}
+
+.dev{
+  width:100%;max-width:460px;margin:0;padding:12px 15px;border-radius:16px;
+  background:var(--t1s);font-size:.9rem;display:flex;align-items:flex-start;gap:10px;text-align:left;
+}
+.dev .di{flex:0 0 auto;font-family:var(--emoji);font-size:1.3rem;line-height:1.25}
+.dev span:last-child{flex:1}
+
+.info{
+  width:100%;max-width:460px;text-align:center;margin-top:2px;
+  display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;align-items:center;
+}
+.info .chips,.info .scrubber{grid-column:1/-1}
+#age b{display:block;font:600 2.3rem/1 var(--serif);letter-spacing:-.03em}
+#age span{display:block;color:var(--mut);font-size:.82rem;font-weight:600;margin-top:4px}
+.stats small{display:block;color:var(--mut);font-size:.72rem;font-weight:600}
+.stats b{display:block;font:600 1.32rem/1.2 var(--serif);margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:2px 0}
 .chip{padding:5px 12px;border-radius:99px;font-size:.78rem;font-weight:700;background:var(--t1s);color:var(--t1)}
 .chip.m{background:var(--t2s);color:var(--t2)}.chip.d{background:var(--t3s);color:var(--t3)}
-.stats{margin-bottom:2px}
 
-.stats small{display:block;color:var(--mut);font-size:.7rem;font-weight:600}.stats b{display:block;font:400 1.35rem/1.15 var(--serif)}
-.bar{position:relative;height:8px;border-radius:9px;margin-top:16px;background:linear-gradient(90deg,var(--t1s) 35%,var(--t2s) 35% 70%,var(--t3s) 70%)}
-.bar i{position:absolute;inset:0 auto 0 0;border-radius:9px;background:linear-gradient(90deg,var(--t1),var(--t2) 50%,var(--t3));transition:width .5s}
-.back{margin-top:12px;border:0;background:none;color:var(--t1);font-weight:700;font-size:.82rem;padding:4px 0}
-/* weeks */
-.grp{overflow:hidden;display:flex;flex-direction:column;align-items:center;gap:14px;padding:24px}.mt{margin-top:2px}.dev{text-align:center}.info{text-align:center;margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:0 12px;align-items:center}.info .chips,.info .bar{grid-column:1/-1}.mt,.dev,.info{width:100%;max-width:460px}.chips{justify-content:center}.weeks{position:relative;display:flex;gap:6px;overflow-x:auto;padding:14px;scrollbar-width:none;scroll-behavior:smooth}
-.weeks::-webkit-scrollbar{display:none}
-.wk{flex:0 0 auto;width:46px;height:56px;border:1px solid var(--line);border-radius:14px;background:var(--bg);display:grid;place-content:center;text-align:center;line-height:1.1;color:var(--mut);transition:transform .15s}
-.wk small{font-size:.56rem;font-weight:600;text-transform:uppercase}.wk b{font-size:1rem;color:var(--ink)}
-.wk.p1{background:var(--t1s)}.wk.p2{background:var(--t2s)}.wk.p3{background:var(--t3s)}
-.wk:hover{transform:translateY(-2px)}
-.wk.on{background:var(--ink);border-color:var(--ink)}.wk.on b,.wk.on small{color:var(--bg)}
-.wk.now{box-shadow:0 0 0 2px var(--t1)}
-/* baby */
-.baby{padding:22px;display:grid;gap:14px}
-.bh{display:flex;align-items:center;gap:14px}.bt{display:flex;justify-content:space-between;align-items:center;gap:8px}.bt .pill{height:26px;padding:0 10px;font-size:.7rem}.bi{flex:1;min-width:0}.bi small{color:var(--t1);font-weight:700;font-size:.74rem;text-transform:uppercase;letter-spacing:.06em}
-.bn{font:400 1.8rem/1.1 var(--serif);text-align:center;color:var(--t1)}
-.dev{margin:0;padding:12px 14px;border-radius:14px;background:var(--t1s);font-size:.9rem}
-.mt{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.mt div{padding:10px 12px;border-radius:16px;background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);display:flex;align-items:center;gap:10px}.mt .mi{font-size:1.3rem}
-.mt small{display:block;color:var(--mut);font-size:.72rem;font-weight:600}.mt b{display:block;font-size:1.15rem}
+/* journey timeline progress bar (no manual slider) */
+.scrubber{padding-top:6px;text-align:left}
+.scrub-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:.72rem;font-weight:700;color:var(--mut)}
+.scrub-track{position:relative;height:16px;display:flex;align-items:center}
+.scrub-rail{
+  position:relative;width:100%;height:10px;border-radius:99px;
+  background:linear-gradient(90deg,var(--t1s) 35%,var(--t2s) 35% 70%,var(--t3s) 70%);
+  overflow:hidden;
+}
+.scrub-rail i{
+  position:absolute;inset:0 auto 0 0;border-radius:99px;
+  background:linear-gradient(90deg,var(--t1),var(--t2) 50%,var(--t3));
+  transition:width .35s cubic-bezier(.2,.8,.2,1);
+}
+.scrub-now{
+  position:absolute;top:50%;width:12px;height:12px;border-radius:50%;
+  background:var(--card);border:2.5px solid var(--ink);
+  transform:translate(-50%,-50%);pointer-events:none;z-index:1;
+}
+.scrub-marks{display:flex;justify-content:space-between;margin-top:8px;gap:4px}
+.scrub-marks button{
+  border:0;background:none;padding:3px 6px;border-radius:8px;
+  font-size:.7rem;font-weight:700;color:var(--mut);transition:color .15s,background .15s;
+}
+.scrub-marks button:hover{color:var(--ink);background:var(--bg)}
+.scrub-marks button.on{color:var(--t1);background:var(--t1s)}
+
 /* calendar */
 .cal{overflow:hidden}
 .ch{display:flex;align-items:center;justify-content:space-between;padding:14px}
-.ch button{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--mut);font-size:1.2rem}.cn{display:flex;gap:6px;align-items:center}.ch .tdy{width:auto;padding:0 14px;border-radius:99px;font-size:.78rem;font-weight:700;color:var(--t1);border-color:var(--t1);background:var(--t1s)}
+.ch button{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--mut);font-size:1.2rem}
+.cn{display:flex;gap:6px;align-items:center}
+.ch .tdy{width:auto;padding:0 14px;border-radius:99px;font-size:.78rem;font-weight:700;color:var(--t1);border-color:var(--t1);background:var(--t1s)}
 .dow,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 10px}
 .dow{text-align:center;font-size:.7rem;font-weight:700;color:var(--mut);padding-bottom:6px}
 .days{padding-bottom:12px;touch-action:pan-y;user-select:none}
@@ -91,30 +281,67 @@ body.has .land{display:none}
 .day.sel{background:var(--ink);color:var(--bg)}.day.sel small{color:var(--bg)}
 .day em{position:absolute;top:4px;right:4px;font:700 .5rem var(--sans);font-style:normal;padding:1px 4px;border-radius:9px;background:var(--card);color:var(--t1)}
 .day i{position:absolute;bottom:5px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--t3)}
-.mon{position:relative;display:flex;gap:6px;overflow-x:auto;padding:12px 14px;border-top:1px solid var(--line);scrollbar-width:none;scroll-behavior:smooth}
+
+/* month strip — properly centered on both wide & narrow screens */
+.mon-wrap{position:relative;border-top:1px solid var(--line)}
+.mon{
+  position:relative;display:flex;align-items:center;gap:6px;
+  overflow-x:auto;padding:12px 16px;scrollbar-width:none;
+}
 .mon::-webkit-scrollbar{display:none}
-.mon button{flex:0 0 auto;padding:7px 13px;border:1px solid var(--line);border-radius:99px;background:none;font-size:.8rem;color:var(--mut)}
+.mon::before,.mon::after{content:"";flex:1 0 0}
+.mon button{
+  flex:0 0 auto;padding:7px 14px;border:1px solid var(--line);border-radius:99px;
+  background:none;font-size:.8rem;font-weight:600;color:var(--mut);
+  transition:background .15s,color .15s,border-color .15s;
+}
+.mon button:hover{color:var(--ink);border-color:var(--t1)}
 .mon button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
 /* timeline */
 .tl{padding:22px}
 .tll{list-style:none;margin:14px 0 0;padding:0 0 0 16px;border-left:2px solid var(--line);display:grid;gap:8px}
-.it{position:relative;width:100%;text-align:left;padding:12px 64px 12px 14px;border:1px solid var(--line);border-radius:16px;background:var(--bg);display:flex;align-items:center;gap:12px;transition:transform .15s}.it:hover{transform:translateX(3px)}
-.it::before{content:"";position:absolute;left:-25px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--card);border:3px solid var(--mut)}
-.it:hover{border-color:var(--t1)}
+.it{
+  position:relative;width:100%;text-align:left;padding:12px 68px 12px 14px;
+  border:1px solid var(--line);border-radius:16px;background:var(--bg);
+  display:flex;align-items:center;gap:12px;transition:transform .15s,border-color .15s;
+}
+.it:hover{transform:translateX(3px);border-color:var(--t1)}
+.it::before{content:"";position:absolute;left:-25px;top:21px;width:12px;height:12px;border-radius:50%;background:var(--card);border:3px solid var(--mut)}
 .it.now{background:var(--t1s);border-color:var(--t1)}.it.now::before{border-color:var(--t1);background:var(--t1)}
 .it.done{opacity:.6}.it.done::before{border-color:var(--t2);background:var(--t2)}
-.it b,.it span{display:block}.it b{font-size:.92rem}.it span{font-size:.78rem;color:var(--mut)}.it .ic{flex:0 0 auto;width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:var(--card);font-style:normal;font-size:1.25rem}
-.it u{position:absolute;right:12px;top:12px;text-decoration:none;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:99px;background:var(--card);color:var(--mut)}
+.it b,.it span{display:block}.it b{font-size:.92rem}.it span{font-size:.78rem;color:var(--mut)}
+.it .ic{
+  flex:0 0 auto;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
+  background:var(--card);border:1px solid var(--line);
+  font-family:var(--emoji);font-style:normal;font-size:1.6rem;line-height:1;
+}
+.it u{position:absolute;right:12px;top:12px;text-decoration:none;font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--card);color:var(--mut)}
 .it.now u{color:var(--t1)}
+
+/* sheet */
 .sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center}
 .bd{position:absolute;inset:0;background:rgba(20,10,15,.5);backdrop-filter:blur(6px);opacity:0;transition:opacity .25s}
-.pn{position:relative;width:min(520px,100%);max-height:90svh;overflow:auto;border-radius:30px 30px 0 0;background:var(--card);box-shadow:0 -20px 60px rgba(0,0,0,.3);transform:translateY(100%);transition:transform .34s cubic-bezier(.2,.9,.25,1);padding-bottom:env(safe-area-inset-bottom,0px)}
+.pn{
+  position:relative;width:min(520px,100%);max-height:90svh;overflow:auto;
+  border-radius:30px 30px 0 0;background:var(--card);box-shadow:0 -20px 60px rgba(0,0,0,.3);
+  transform:translateY(100%);transition:transform .34s cubic-bezier(.2,.9,.25,1);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
 .sheet.open .bd{opacity:1}.sheet.open .pn{transform:none}
-@media(min-width:700px){.sheet{align-items:center}.pn{border-radius:30px;transform:translateY(30px) scale(.96);opacity:0;transition:transform .3s,opacity .25s}.sheet.open .pn{opacity:1;transform:none}}
+@media(min-width:700px){
+  .sheet{align-items:center}
+  .pn{border-radius:30px;transform:translateY(30px) scale(.96);opacity:0;transition:transform .3s,opacity .25s}
+  .sheet.open .pn{opacity:1;transform:none}
+}
 .ph{position:relative;padding:26px 24px 22px;background:linear-gradient(135deg,var(--t1s),var(--t3s) 70%,var(--t2s))}
-.ph>i{display:grid;place-items:center;width:64px;height:64px;border-radius:20px;background:var(--card);font-style:normal;font-size:2rem;box-shadow:var(--sh)}
+.ph>i{
+  display:grid;place-items:center;width:68px;height:68px;border-radius:22px;
+  background:var(--card);font-family:var(--emoji);font-style:normal;font-size:2.4rem;line-height:1;
+  box-shadow:var(--sh);
+}
 .ph h4{font:400 1.7rem/1.15 var(--serif);margin:14px 0 4px}.ph span{color:var(--mut);font-size:.85rem;font-weight:500}
-.x{position:absolute;top:14px;right:14px;width:34px;height:34px;border:0;border-radius:50%;background:var(--card);color:var(--mut)}
+.x{position:absolute;top:14px;right:14px;width:36px;height:36px;border:0;border-radius:50%;background:var(--card);color:var(--mut);font-size:1rem}
 .sc{display:inline-block;margin:0 0 10px;padding:3px 10px;border-radius:99px;background:var(--card);font-size:.72rem;font-weight:700;color:var(--mut)}
 .ph .sc{display:block;width:max-content;margin-top:14px}
 .sc.now{color:var(--t1)}.sc.done{color:var(--t2)}
@@ -127,15 +354,32 @@ body.has .land{display:none}
 .ck.on{color:var(--mut);text-decoration:line-through}.ck.on i{background:var(--t2);border-color:var(--t2)}.ck.on i::after{content:"✓"}
 .pa{display:grid;grid-template-columns:1.4fr 1fr;gap:8px;margin-top:4px}.pa .pill{height:50px;border-radius:14px}.pa .go{display:grid;place-items:center;text-decoration:none}
 .foot{text-align:center;color:var(--mut);font-size:.72rem}
-@media(max-width:680px){.grp{padding:20px}.chips{justify-content:center}.ringbox{width:250px;height:250px}.day{min-height:48px;padding:4px 3px}.day em{font-size:.44rem;padding:1px 3px}}
+
+@media(max-width:680px){
+  .grp{padding:18px 16px 22px}
+  .ringbox{width:244px;height:244px}
+  .fruit{font-size:5.8rem}
+  .fruit svg{width:108px;height:108px}
+  .day{min-height:48px;padding:4px 3px}.day em{font-size:.44rem;padding:1px 3px}
+  .wkmid b{font-size:1.15rem}
+  .wkg-grid{grid-template-columns:repeat(5,1fr)}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<header><div class="shell nav"><span class="brand">bloom<i>•</i></span><div class="act"><button class="pill" id="chg" hidden>Change LMP</button><button class="pill" id="thm" aria-label="Toggle theme">🌙</button></div></div></header>
+<header>
+  <div class="shell nav">
+    <span class="brand">bloom<i>•</i></span>
+    <div class="act">
+      <button class="pill" id="chg" hidden>Change LMP</button>
+      <button class="pill" id="thm" aria-label="Toggle theme">🌙</button>
+    </div>
+  </div>
+</header>
 <main class="shell">
 <section class="land">
-  <div class="flower">🌸</div>
+  <div class="flower" aria-hidden="true">🌸</div>
   <h1>Meet your<br><em>due date.</em></h1>
   <div class="card form">
     <label for="lmp">First day of last menstrual period</label>
@@ -145,63 +389,190 @@ body.has .land{display:none}
   </div>
 </section>
 <div id="app" hidden>
-  <section class="card grp">
-    <div class="ringbox">
-      <svg viewBox="0 0 212 212"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d9708c"/><stop offset=".55" stop-color="#7fae95"/><stop offset="1" stop-color="#d4a04a"/></linearGradient></defs><circle class="rbg" cx="106" cy="106" r="92"/><circle class="rfg" id="rfg" cx="106" cy="106" r="92"/></svg>
-      <div class="age"><div class="fruit" id="fruit"></div></div>
-      <button class="pill" id="unit">cm / g</button>
+  <section class="card grp" id="heroCard" aria-label="Pregnancy progress and week selector">
+    <div class="wkwrap" id="wkWrap">
+      <div class="wkctrl">
+        <button type="button" class="wkbtn" id="wkPrev" aria-label="Previous week">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button type="button" class="wkmid" id="wkToggle" aria-expanded="false" aria-controls="wkPop" aria-label="Choose pregnancy week">
+          <b id="wkTitle">Week 0</b>
+          <span class="wk-sub" id="wkTri">T1</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <button type="button" class="wkbtn" id="wkNext" aria-label="Next week">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <div class="wkpop" id="wkPop" role="dialog" aria-label="Select a week" hidden>
+        <div class="wkpop-head">
+          <div class="wkpop-prev">
+            <i id="wpEm" aria-hidden="true">🌱</i>
+            <span id="wpTxt">Week 0 <small>· Cycle begins</small></span>
+          </div>
+          <button type="button" class="wkpop-x" id="wkClose" aria-label="Close week picker">✕</button>
+        </div>
+        <div class="wkpop-body" id="wkPopBody"></div>
+      </div>
     </div>
-    <div class="bn" id="bn"></div><small id="bw" hidden></small>
-    <div class="mt"><div><span class="mi">📏</span><span><small id="lenL">Length</small><b id="len"></b></span></div><div><span class="mi">⚖️</span><span><small>Weight</small><b id="wt"></b></span></div></div>
-    <p class="dev" id="dev"></p>
+
+    <button type="button" class="wkjump" id="wkToday" hidden>↩ Back to current week</button>
+
+    <div class="ringbox">
+      <svg viewBox="0 0 212 212" aria-hidden="true">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#d9708c"/>
+            <stop offset=".55" stop-color="#7fae95"/>
+            <stop offset="1" stop-color="#d4a04a"/>
+          </linearGradient>
+        </defs>
+        <circle class="rbg" cx="106" cy="106" r="92"/>
+        <circle class="rfg" id="rfg" cx="106" cy="106" r="92"/>
+      </svg>
+      <div class="age">
+        <div class="fruit-wrap">
+          <div class="fruit" id="fruit" aria-hidden="true"></div>
+        </div>
+      </div>
+      <button type="button" class="pill" id="unit">cm / g</button>
+    </div>
+
+    <div class="bn-block">
+      <div class="bn" id="bn"></div>
+      <div class="bn-cap" id="bw"></div>
+    </div>
+
+    <div class="mt">
+      <div><span class="mi" aria-hidden="true">📏</span><span><small id="lenL">Length</small><b id="len"></b></span></div>
+      <div><span class="mi" aria-hidden="true">⚖️</span><span><small>Weight</small><b id="wt"></b></span></div>
+    </div>
+
+    <p class="dev"><span class="di" aria-hidden="true">✨</span><span id="dev"></span></p>
+
     <div class="info">
       <div id="age"></div>
       <div class="stats"><small>Estimated due date</small><b id="edd"></b></div>
       <div class="chips" id="chips"></div>
-      <div class="bar"><i id="fill"></i></div>
+      <div class="scrubber">
+        <div class="scrub-top">
+          <span>Journey timeline</span>
+          <span id="pctLbl">0% complete</span>
+        </div>
+        <div class="scrub-track" aria-hidden="true">
+          <div class="scrub-rail"><i id="fill"></i></div>
+          <span class="scrub-now" id="scrubNow" hidden title="Current week"></span>
+        </div>
+        <div class="scrub-marks" id="scrubMarks">
+          <button type="button" data-w="0">0w · Start</button>
+          <button type="button" data-w="14">14w · T2</button>
+          <button type="button" data-w="28">28w · T3</button>
+          <button type="button" data-w="40">40w · Due</button>
+        </div>
+      </div>
     </div>
   </section>
-  <section class="card weeks" id="weeks" aria-label="Weeks"></section>
+
   <section class="card cal">
-    <div class="ch"><h3 id="ct"></h3><div class="cn"><button class="tdy" id="back" hidden>Today</button><button id="prev" aria-label="Previous month">‹</button><button id="next" aria-label="Next month">›</button></div></div>
+    <div class="ch">
+      <h3 id="ct"></h3>
+      <div class="cn">
+        <button class="tdy" id="back" hidden>Today</button>
+        <button id="prev" aria-label="Previous month">‹</button>
+        <button id="next" aria-label="Next month">›</button>
+      </div>
+    </div>
     <div class="dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
     <div class="days" id="days"></div>
-    <div class="mon" id="mon"></div>
+    <div class="mon-wrap"><div class="mon" id="mon"></div></div>
   </section>
-  <section class="card tl"><h3>Care windows</h3><ul class="tll" id="tl"></ul></section>
+
+  <section class="card tl">
+    <h3>Care windows</h3>
+    <ul class="tll" id="tl"></ul>
+  </section>
   <div class="foot">Care windows follow ICMR/MoHFW guidance and common Indian practice. Educational only; your clinician may adjust them.</div>
 </div>
 </main>
-<div class="sheet" id="sheet" hidden><div class="bd" id="bd"></div><div class="pn" id="pn" role="dialog" aria-modal="true"></div></div>
+<div class="sheet" id="sheet" hidden>
+  <div class="bd" id="bd"></div>
+  <div class="pn" id="pn" role="dialog" aria-modal="true"></div>
+</div>
 <script>
 (()=>{
 const $=id=>document.getElementById(id);
 const st={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+
 // week: [name, emoji, length cm, weight g]
-const R=[["Cycle begins","🌱",0,0],["Follicle growth","🌱",0,0],["Fertilization","✨",0,0],["Blastocyst","🫧",0,0],["Poppy seed","🌱",.2,.1],["Sesame seed","🌾",.2,.2],["Pea","🫛",.6,.2],["Grape","🍇",1,.5],["Raspberry","",1.6,1],["Strawberry","🍓",2.2,2],["Apricot","🍑",3,4],["Fig","",4.1,7],["Plum","",5.4,14],["Peach","🍑",7.4,23],["Kiwi","🥝",8.5,43],["Apple","🍎",10.1,70],["Avocado","🥑",11.6,100],["Pomegranate","",12,140],["Bell pepper","🫑",14.2,190],["Tomato","🍅",15.3,240],["Banana","🍌",25.6,300],["Carrot","🥕",26.7,360],["Sweet potato","",27.8,430],["Mango","🥭",28.9,500],["Corn on the cob","🌽",30,600],["Courgette","🥒",34.6,700],["Cucumber","🥒",35.6,760],["Cauliflower","🥦",36.6,875],["Aubergine","🍆",37.6,1000],["Butternut squash","",38.6,1150],["Cabbage","🥬",39.9,1300],["Coconut","🥥",41.1,1500],["Papaya","",42.4,1700],["Pineapple","🍍",43.7,1950],["Cantaloupe","🍈",45,2150],["Honeydew","🍈",46.2,2400],["Romaine","🥬",47.4,2600],["Leek","",48.6,2900],["Rhubarb","",49.8,3100],["Watermelon","🍉",50.7,3300],["Pumpkin","🎃",51.2,3400]];
-const DEV=["Cycle begins; the uterine lining renews.","Estrogen rises; a follicle matures.","Ovulation and fertilization: the zygote forms.","The blastocyst implants in the uterine wall.","Amniotic and yolk sacs form.","Neural tube closes; the heart starts beating.","Limb buds, eyes and inner ears start forming.","Brain grows fast; hands and feet look like paddles.","Fingers and toes begin to separate.","Essential organs formed; embryo becomes fetus.","Nails and tooth buds form; kidneys start working.","Fingers and toes fully separate; first stretches.","Reflexes appear; fingers curl and toes flex.","Fingerprints form; bones keep hardening.","Second trimester: facial expressions and fine lanugo hair.","Joints move actively; ears settle into position.","Eyes move side to side; the heart pumps strongly.","Skeleton hardens from cartilage; brown fat forms.","Hearing begins; first flutters may be felt.","Protective vernix coats the skin.","Halfway. Legs lengthen, so length is now crown-to-heel.","Taste buds form; eyebrows and eyelids define.","Touch sense develops; grip strengthens.","Inner ear matures: balance and motion sense.","Lungs begin making surfactant.","Skin pinkens as capillaries form; nostrils open.","Responds to familiar voices and loud sounds.","Brain grooves form; eyelids partly open.","Third trimester: blinking, eyelashes, REM sleep.","Bones absorb calcium; iron stores build.","Bone marrow now makes red blood cells.","All five senses work; pupils react to light.","Nails complete; fat plumps arms and legs.","Skull stays flexible for birth; other bones firm.","Antibodies cross the placenta; vernix thickens.","Kidneys mature; liver processes waste.","Lanugo sheds; practises sucking and swallowing.","Early term: final lung and brain maturation.","Firm grasp; organs ready for life outside.","Full term: fat layers ready to keep baby warm.","Due week: fully developed and ready."];
-const G={Raspberry:"#c83e5b",Fig:"#a56d92",Plum:"#68447e",Pomegranate:"#b83948",Leek:"#6f9c62",Rhubarb:"#d96a72","Sweet potato":"#c77b4a","Butternut squash":"#d58a3d",Papaya:"#e58c3a"};
-const svgFruit=n=>`<svg viewBox="0 0 180 180"><ellipse cx="90" cy="100" rx="${n==="Leek"||n==="Rhubarb"?22:58}" ry="${n==="Leek"||n==="Rhubarb"?62:50}" fill="${G[n]}"/><path d="M90 48c4-14 14-20 28-18-2 14-12 20-28 18Z" fill="#64845b"/></svg>`;
-// Care windows in gestational days (ACOG/NICE-aligned)
+const R=[
+  ["Cycle begins","🌱",0,0],["Follicle growth","🌱",0,0],["Fertilization","✨",0,0],["Blastocyst","🫧",0,0],
+  ["Poppy seed","🌱",.2,.1],["Sesame seed","🌾",.2,.2],["Pea","🫛",.6,.2],["Grape","🍇",1,.5],
+  ["Raspberry","🫐",1.6,1],["Strawberry","🍓",2.2,2],["Apricot","🍑",3,4],["Fig","🟣",4.1,7],
+  ["Plum","🟣",5.4,14],["Peach","🍑",7.4,23],["Kiwi","🥝",8.5,43],["Apple","🍎",10.1,70],
+  ["Avocado","🥑",11.6,100],["Pomegranate","🔴",12,140],["Bell pepper","🫑",14.2,190],["Tomato","🍅",15.3,240],
+  ["Banana","🍌",25.6,300],["Carrot","🥕",26.7,360],["Sweet potato","🍠",27.8,430],["Mango","🥭",28.9,500],
+  ["Corn on the cob","🌽",30,600],["Courgette","🥒",34.6,700],["Cucumber","🥒",35.6,760],["Cauliflower","🥦",36.6,875],
+  ["Aubergine","🍆",37.6,1000],["Butternut squash","🟠",38.6,1150],["Cabbage","🥬",39.9,1300],["Coconut","🥥",41.1,1500],
+  ["Papaya","🟠",42.4,1700],["Pineapple","🍍",43.7,1950],["Cantaloupe","🍈",45,2150],["Honeydew","🍈",46.2,2400],
+  ["Romaine","🥬",47.4,2600],["Leek","🌿",48.6,2900],["Rhubarb","🌿",49.8,3100],["Watermelon","🍉",50.7,3300],
+  ["Pumpkin","🎃",51.2,3400]
+];
+
+const EMOJI_SCALE={
+  "🌱":1.14,"✨":1.12,"🫧":1.14,"🌾":1.15,"🫛":1.14,"🍇":1.06,"🍓":1.08,
+  "🥕":1.12,"🌽":1.1,"🥒":1.12,"🍌":1.06,"🫑":1.08,"🥝":1.06
+};
+
+const DEV=[
+  "Cycle begins; the uterine lining renews.","Estrogen rises; a follicle matures.","Ovulation and fertilization: the zygote forms.","The blastocyst implants in the uterine wall.",
+  "Amniotic and yolk sacs form.","Neural tube closes; the heart starts beating.","Limb buds, eyes and inner ears start forming.","Brain grows fast; hands and feet look like paddles.",
+  "Fingers and toes begin to separate.","Essential organs formed; embryo becomes fetus.","Nails and tooth buds form; kidneys start working.","Fingers and toes fully separate; first stretches.",
+  "Reflexes appear; fingers curl and toes flex.","Fingerprints form; bones keep hardening.","Second trimester: facial expressions and fine lanugo hair.","Joints move actively; ears settle into position.",
+  "Eyes move side to side; the heart pumps strongly.","Skeleton hardens from cartilage; brown fat forms.","Hearing begins; first flutters may be felt.","Protective vernix coats the skin.",
+  "Halfway. Legs lengthen, so length is now crown-to-heel.","Taste buds form; eyebrows and eyelids define.","Touch sense develops; grip strengthens.","Inner ear matures: balance and motion sense.",
+  "Lungs begin making surfactant.","Skin pinkens as capillaries form; nostrils open.","Responds to familiar voices and loud sounds.","Brain grooves form; eyelids partly open.",
+  "Third trimester: blinking, eyelashes, REM sleep.","Bones absorb calcium; iron stores build.","Bone marrow now makes red blood cells.","All five senses work; pupils react to light.",
+  "Nails complete; fat plumps arms and legs.","Skull stays flexible for birth; other bones firm.","Antibodies cross the placenta; vernix thickens.","Kidneys mature; liver processes waste.",
+  "Lanugo sheds; practises sucking and swallowing.","Early term: final lung and brain maturation.","Firm grasp; organs ready for life outside.","Full term: fat layers ready to keep baby warm.",
+  "Due week: fully developed and ready."
+];
+
+const SVG_FRUITS={
+  Raspberry:`<svg viewBox="0 0 180 180"><g fill="#c83e5b"><circle cx="90" cy="64" r="19"/><circle cx="67" cy="76" r="19"/><circle cx="113" cy="76" r="19"/><circle cx="62" cy="100" r="19"/><circle cx="90" cy="94" r="20"/><circle cx="118" cy="100" r="19"/><circle cx="74" cy="122" r="18"/><circle cx="106" cy="122" r="18"/><circle cx="90" cy="136" r="17"/></g><g fill="#e56984" opacity=".45"><circle cx="85" cy="59" r="6"/><circle cx="63" cy="72" r="5"/><circle cx="109" cy="72" r="5"/><circle cx="85" cy="90" r="6"/></g><path d="M90 50c-14-14-30-12-36-2 12 4 22 4 36 2Zm0 0c14-14 30-12 36-2-12 4-22 4-36 2Zm0 0c-3-16 3-26 12-30-2 12-6 22-12 30Z" fill="#5e8757"/></svg>`,
+  Fig:`<svg viewBox="0 0 180 180"><path d="M90 30c9 22 48 44 48 80 0 28-21 46-48 46s-48-18-48-46c0-36 39-58 48-80Z" fill="#7c4e74"/><path d="M90 42c6 18 35 37 35 67 0 21-15 35-35 35" fill="none" stroke="#a8769f" stroke-width="8" stroke-linecap="round" opacity=".35"/><path d="M90 30c-2-10 4-16 10-18" stroke="#5f7c54" stroke-width="6" stroke-linecap="round" fill="none"/></svg>`,
+  Plum:`<svg viewBox="0 0 180 180"><ellipse cx="90" cy="102" rx="54" ry="56" fill="#6b4282"/><path d="M90 46c-12 28-12 84 0 112" stroke="#4f2d63" stroke-width="5" fill="none" opacity=".45"/><ellipse cx="68" cy="84" rx="11" ry="20" transform="rotate(-18 68 84)" fill="#a074b8" opacity=".35"/><path d="M90 48c4-14 16-22 30-19-3 14-15 21-30 19Z" fill="#628958"/><path d="M90 48V28" stroke="#6c5042" stroke-width="6" stroke-linecap="round"/></svg>`,
+  Pomegranate:`<svg viewBox="0 0 180 180"><path d="M74 44l6-18 10 10 10-10 6 18Z" fill="#a82f3e"/><circle cx="90" cy="102" r="56" fill="#bf3646"/><ellipse cx="68" cy="84" rx="12" ry="22" transform="rotate(-22 68 84)" fill="#ea7581" opacity=".35"/><circle cx="110" cy="116" r="14" fill="#8f2130" opacity=".25"/></svg>`,
+  "Sweet potato":`<svg viewBox="0 0 180 180"><path d="M32 126c14-42 52-76 112-80 10 20-8 72-54 92-28 12-48 4-58-12Z" fill="#c96b3b"/><path d="M58 112c18-24 44-42 74-48" stroke="#e49464" stroke-width="8" stroke-linecap="round" fill="none" opacity=".4"/><path d="M74 128c14-10 30-22 44-36" stroke="#994b24" stroke-width="5" stroke-linecap="round" fill="none" opacity=".3"/></svg>`,
+  "Butternut squash":`<svg viewBox="0 0 180 180"><path d="M90 36c20 0 30 14 30 34 0 16 24 22 24 50 0 24-22 38-54 38s-54-14-54-38c0-28 24-34 24-50 0-20 10-34 30-34Z" fill="#dd9140"/><ellipse cx="70" cy="116" rx="11" ry="20" transform="rotate(-12 70 116)" fill="#f5bc77" opacity=".45"/><path d="M90 38c0-10 4-16 10-18" stroke="#6f7d4c" stroke-width="8" stroke-linecap="round" fill="none"/></svg>`,
+  Papaya:`<svg viewBox="0 0 180 180"><path d="M92 30c28 2 50 38 44 82-5 32-24 46-48 46s-44-16-46-48c-2-42 22-82 50-80Z" fill="#e58c3a"/><ellipse cx="90" cy="104" rx="22" ry="34" fill="#f5b864" opacity=".55"/><g fill="#3a2923"><circle cx="84" cy="96" r="4"/><circle cx="96" cy="96" r="4"/><circle cx="90" cy="108" r="4"/><circle cx="84" cy="118" r="4"/><circle cx="96" cy="118" r="4"/></g><path d="M92 32V20" stroke="#628554" stroke-width="6" stroke-linecap="round"/></svg>`,
+  Leek:`<svg viewBox="0 0 180 180"><path d="M74 154h32l-4-68H78Z" fill="#eef1e4"/><path d="M78 86L50 32c14-4 24 6 32 24l8-32c10 0 14 12 12 32 10-18 20-26 32-22l-32 52Z" fill="#6b9e5e"/><path d="M76 154c4 6 24 6 28 0" stroke="#c8cfbc" stroke-width="5" stroke-linecap="round" fill="none"/></svg>`,
+  Rhubarb:`<svg viewBox="0 0 180 180"><path d="M78 156L62 60h18l12 96Z" fill="#d95f6c"/><path d="M92 156l14-96h18l-18 96Z" fill="#c94b5a"/><path d="M62 62c-18-10-20-28 0-34 12-4 22 6 26 16 6-14 20-20 34-14 14 6 14 24-4 32Z" fill="#648d59"/></svg>`
+};
+
 const CARE=[
-["Dating scan","6w–9w",42,69,"📡","Confirms the heartbeat, number of babies and your due date. Best done between 6 and 9 weeks.",["Ask if a full bladder is needed"]],
-["Booking visit (ANC 1)","By 12w",42,83,"🩺","Register your pregnancy early. Essential tests are haemoglobin, urine and blood group with Rh. Syphilis, HIV and hepatitis B tests and a first diabetes test are also advised.",["Haemoglobin, urine, ABO & Rh","VDRL/RPR, HIV, HBsAg","First diabetes test (DIPSI/OGTT)"]],
-["Td dose 1","Early pregnancy",42,83,"💉","Tetanus toxoid (Td) is given early in pregnancy. If you were fully immunised within the last 3 years, one booster dose is enough.",["Carry your immunisation record"]],
-["Level 1 scan (NT)","11w–13w6d",77,97,"📡","The first-trimester scan measures nuchal translucency and checks early anatomy, usually alongside a blood test. Names vary by clinic.",["Ask about the paired blood test"]],
-["ANC visit 2","14w–26w",98,181,"📋","Second minimum check-up: weight, BP, fundal height and haemoglobin. Free check-ups run on the 9th of each month at government facilities (PMSMA).",["Ask about your haemoglobin"]],
-["Td dose 2","14w–26w",98,181,"💉","The second tetanus dose, given at least 4 weeks after the first.",["Keep a 4+ week gap"]],
-["Quad test (optional)","15w–22w6d",105,160,"🔬","An optional blood screening test, offered where counselling is available.",["Ask for counselling first"]],
-["Level 2 scan (anomaly)","18w–22w",126,154,"🫧","A detailed anomaly scan (TIFFA) checking the baby’s organs, spine and limbs, plus the placenta. National guidance lists 18–20 weeks.",["Book it ahead"]],
-["Diabetes test (DIPSI)","24w–28w6d",168,202,"🍬","Repeat the glucose test after 24 weeks, at least 4 weeks after the first one. DIPSI uses a single 75 g glucose drink.",["Ask if fasting is needed"]],
-["ANC visit 3","28w–34w",196,238,"📋","Third minimum check-up: BP, haemoglobin, urine albumin, fundal height and baby’s heartbeat.",["Learn the danger signs","Discuss your birth plan"]],
-["Level 3 scan (growth)","28w–32w",196,224,"📈","A third-trimester growth scan checks baby’s size, fluid and placenta. Timing and naming vary by clinic.",["Ask if Doppler is needed"]],
-["Baby shower","28w–31w6d",196,223,"🎀","A comfortable window before travel gets harder. Send invites 3–4 weeks ahead.",["Pick a date and venue"]],
-["Hospital bag & plan","34w–36w6d",238,258,"🧳","Pack your bag, choose your delivery facility and plan transport while you still have energy.",["Pack ID and health records","Plan transport","Save emergency numbers"]],
-["ANC visit 4","36w+",252,280,"📋","Final minimum check-up: confirm where you will deliver, how you will get there and which danger signs need immediate care.",["Confirm the delivery facility","Arrange transport"]],
-["Term (37w+)","37w–40w",259,280,"🎉","From 37 completed weeks a baby is considered term. Due dates are estimates, so keep your bag ready and watch for labour signs.",["Know the signs of labour"]]];
+  ["Dating scan","6w–9w",42,69,"📡","Confirms the heartbeat, number of babies and your due date. Best done between 6 and 9 weeks.",["Ask if a full bladder is needed"]],
+  ["Booking visit (ANC 1)","By 12w",42,83,"🩺","Register your pregnancy early. Essential tests are haemoglobin, urine and blood group with Rh. Syphilis, HIV and hepatitis B tests and a first diabetes test are also advised.",["Haemoglobin, urine, ABO & Rh","VDRL/RPR, HIV, HBsAg","First diabetes test (DIPSI/OGTT)"]],
+  ["Td dose 1","Early pregnancy",42,83,"💉","Tetanus toxoid (Td) is given early in pregnancy. If you were fully immunised within the last 3 years, one booster dose is enough.",["Carry your immunisation record"]],
+  ["Level 1 scan (NT)","11w–13w6d",77,97,"📡","The first-trimester scan measures nuchal translucency and checks early anatomy, usually alongside the dual marker blood test. Names vary by clinic.",["Ask about pairing with the dual marker test"]],
+  ["Dual marker test","11w–13w6d",77,97,"🧪","First-trimester blood screening (Free β-hCG and PAPP-A) combined with the NT scan to estimate risk for chromosomal conditions like trisomy 21, 18 and 13.",["Schedule on the same day or within 48 hrs of your NT scan","Carry your NT scan report to the lab","No fasting is usually required"]],
+  ["ANC visit 2","14w–26w",98,181,"📋","Second minimum check-up: weight, BP, fundal height and haemoglobin. Free check-ups run on the 9th of each month at government facilities (PMSMA).",["Ask about your haemoglobin"]],
+  ["Td dose 2","14w–26w",98,181,"💉","The second tetanus dose, given at least 4 weeks after the first.",["Keep a 4+ week gap"]],
+  ["Quad test (optional)","15w–22w6d",105,160,"🔬","An optional second-trimester blood screening test, offered if the first-trimester dual marker was missed or where counselling is advised.",["Ask for counselling first"]],
+  ["Level 2 scan (anomaly)","18w–22w",126,154,"🫧","A detailed anomaly scan (TIFFA) checking the baby’s organs, spine and limbs, plus the placenta. National guidance lists 18–20 weeks.",["Book it ahead"]],
+  ["Diabetes test (DIPSI)","24w–28w6d",168,202,"🍬","Repeat the glucose test after 24 weeks, at least 4 weeks after the first one. DIPSI uses a single 75 g glucose drink.",["Ask if fasting is needed"]],
+  ["ANC visit 3","28w–34w",196,238,"📋","Third minimum check-up: BP, haemoglobin, urine albumin, fundal height and baby’s heartbeat.",["Learn the danger signs","Discuss your birth plan"]],
+  ["Level 3 scan (growth)","28w–32w",196,224,"📈","A third-trimester growth scan checks baby’s size, fluid and placenta. Timing and naming vary by clinic.",["Ask if Doppler is needed"]],
+  ["Baby shower","28w–31w6d",196,223,"🎀","A comfortable window before travel gets harder. Send invites 3–4 weeks ahead.",["Pick a date and venue"]],
+  ["Hospital bag & plan","34w–36w6d",238,258,"🧳","Pack your bag, choose your delivery facility and plan transport while you still have energy.",["Pack ID and health records","Plan transport","Save emergency numbers"]],
+  ["ANC visit 4","36w+",252,280,"📋","Final minimum check-up: confirm where you will deliver, how you will get there and which danger signs need immediate care.",["Confirm the delivery facility","Arrange transport"]],
+  ["Term (37w+)","37w–40w",259,280,"🎉","From 37 completed weeks a baby is considered term. Due dates are estimates, so keep your bag ready and watch for labour signs.",["Know the signs of labour"]]
+];
+
 const MS=[0,35,63,98,126,161,196,224,252];
 const LBL={0:"LMP",98:"T2",196:"T3",259:"Term",280:"EDD"};
 let lmp,edd,sel,view,imp=st.g("bloom-unit")==="imp";
+let lastBabyW=-1,popTimer=null,popOpen=false;
+
 const U=d=>new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));
 const today=()=>{const n=new Date();return new Date(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate()))};
 const add=(d,n)=>{const x=U(d);x.setUTCDate(x.getUTCDate()+n);return x};
@@ -211,46 +582,159 @@ const parse=s=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(s||""))return null;const[y,m,d]=s
 const iso=d=>d.toISOString().slice(0,10);
 const fmt=(d,o={month:"short",day:"numeric",year:"numeric"})=>new Intl.DateTimeFormat(undefined,{...o,timeZone:"UTC"}).format(d);
 const inW=d=>d>=lmp&&d<=edd;
-function info(d){const s=Math.max(0,Math.min(280,diff(lmp,d)));let m=0;for(let i=8;i>=0;i--)if(s>=MS[i]){m=i;break}
-return{s,w:Math.floor(s/7),d:s%7,m,tri:s<98?1:s<196?2:3}}
+
+function info(d){
+  const s=Math.max(0,Math.min(280,diff(lmp,d)));
+  let m=0;for(let i=8;i>=0;i--)if(s>=MS[i]){m=i;break}
+  return{s,w:Math.floor(s/7),d:s%7,m,tri:s<98?1:s<196?2:3};
+}
+
 // theme
 const dark=()=>{const t=document.documentElement.dataset.theme;return t?t==="dark":matchMedia("(prefers-color-scheme:dark)").matches};
 const th=()=>{$("thm").textContent=dark()?"☀️":"🌙"};
-if(["dark","light"].includes(st.g("bloom-theme")))document.documentElement.dataset.theme=st.g("bloom-theme");th();
+if(["dark","light"].includes(st.g("bloom-theme")))document.documentElement.dataset.theme=st.g("bloom-theme");
+th();
 $("thm").onclick=()=>{const n=dark()?"light":"dark";document.documentElement.dataset.theme=n;st.s("bloom-theme",n);th()};
-$("unit").onclick=()=>{imp=!imp;st.s("bloom-unit",imp?"imp":"met");baby(info(sel).w)};
-// bounds
+$("unit").onclick=()=>{imp=!imp;st.s("bloom-unit",imp?"imp":"met");baby(info(sel).w,true)};
+
 const t0=today();$("lmp").max=iso(t0);$("lmp").min=iso(add(t0,-294));
 
-function baby(w){
+function baby(w,force){
   const[n,e,l,g]=R[w];
   $("unit").textContent=imp?"in / lb":"cm / g";
-  $("bn").textContent=n;$("bw").textContent="Week "+w;$("dev").textContent="✨ "+DEV[w];
+  $("bn").textContent=n;
+  $("bw").textContent=w<4?"Early stage":"Size of a "+n.toLowerCase();
+  $("dev").textContent=DEV[w];
   $("lenL").textContent=w>=20?"Height":"Length";
   $("len").textContent=w<4?"—":imp?(l/2.54).toFixed(1)+" in":l.toFixed(1)+" cm";
   const oz=g*.03527396;
   $("wt").textContent=w<4?"—":imp?(oz<16?oz.toFixed(oz<1?2:1)+" oz":Math.floor(oz/16)+" lb "+Math.round(oz%16)+" oz"):g<1000?(g<10?g.toFixed(1):Math.round(g))+" g":(g/1000).toFixed(2)+" kg";
-  const f=$("fruit");f.innerHTML=G[n]?svgFruit(n):e;f.classList.add("pop");setTimeout(()=>f.classList.remove("pop"),260);
+
+  if(w!==lastBabyW||force){
+    lastBabyW=w;
+    const f=$("fruit");
+    if(SVG_FRUITS[n]){
+      f.innerHTML=SVG_FRUITS[n];
+    }else{
+      const sc=EMOJI_SCALE[e]||1;
+      f.innerHTML=`<span style="--sc:${sc}">${e}</span>`;
+    }
+    if(!force){
+      clearTimeout(popTimer);
+      f.classList.remove("pop");
+      void f.offsetWidth;
+      f.classList.add("pop");
+      popTimer=setTimeout(()=>f.classList.remove("pop"),240);
+    }
+  }
 }
-function render(){
-  const x=info(sel),t=today();
+
+function setPopPreview(w){
+  const[n,e]=R[w];
+  $("wpEm").textContent=e||"🌸";
+  $("wpTxt").innerHTML=`Week ${w} <small>· ${n}</small>`;
+}
+
+function openWkPop(){
+  if(popOpen)return;
+  popOpen=true;
+  const w=info(sel).w;
+  setPopPreview(w);
+  $("wkPop").hidden=false;
+  $("wkToggle").setAttribute("aria-expanded","true");
+  requestAnimationFrame(()=>$("wkPop").classList.add("open"));
+}
+function closeWkPop(){
+  if(!popOpen)return;
+  popOpen=false;
+  $("wkPop").classList.remove("open");
+  $("wkToggle").setAttribute("aria-expanded","false");
+  setTimeout(()=>{if(!popOpen)$("wkPop").hidden=true},200);
+}
+
+function centerMon(activeMonthIdx,instant){
+  const mon=$("mon");
+  const btns=mon.querySelectorAll("button");
+  let activeBtn=null;
+  btns.forEach(b=>{
+    const on=+b.dataset.m===activeMonthIdx;
+    b.classList.toggle("on",on);
+    if(on)activeBtn=b;
+  });
+  if(!activeBtn)return;
+  requestAnimationFrame(()=>{
+    const maxScroll=mon.scrollWidth-mon.clientWidth;
+    if(maxScroll<=0)return;
+    const mr=mon.getBoundingClientRect();
+    const br=activeBtn.getBoundingClientRect();
+    if(!mr.width)return;
+    const delta=(br.left+br.width/2)-(mr.left+mr.width/2);
+    const target=Math.max(0,Math.min(maxScroll,mon.scrollLeft+delta));
+    mon.scrollTo({left:target,behavior:instant?"auto":"smooth"});
+  });
+}
+
+function displayMonthIdx(){
+  if(sel.getUTCFullYear()===view.getUTCFullYear()&&sel.getUTCMonth()===view.getUTCMonth()){
+    return info(sel).m;
+  }
+  const mid=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth(),15));
+  const clamped=mid<lmp?lmp:mid>edd?edd:mid;
+  return info(clamped).m;
+}
+
+function render(opts={}){
+  const x=info(sel),t=today(),pct=Math.round(x.s/280*100);
+
+  $("wkTitle").textContent="Week "+x.w;
+  $("wkTri").textContent="T"+x.tri;
+  $("wkPrev").disabled=x.w<=0;
+  $("wkNext").disabled=x.w>=40;
+
+  document.querySelectorAll("#wkPopBody .wkp").forEach(b=>{
+    b.classList.toggle("on",+b.dataset.w===x.w);
+  });
+  if(popOpen)setPopPreview(x.w);
+
+  const hasToday=inW(t),todayW=hasToday?info(t).w:null;
+  const wkToday=$("wkToday");
+  if(hasToday&&x.w!==todayW){
+    wkToday.hidden=false;
+    wkToday.textContent=`↩ Back to Week ${todayW} (Today)`;
+  }else{
+    wkToday.hidden=true;
+  }
+
+  $("pctLbl").textContent=pct+"% complete";
+  $("fill").style.width=(x.s/280*100)+"%";
+  $("rfg").style.strokeDashoffset=578.05*(1-x.s/280);
+  const sn=$("scrubNow");
+  if(hasToday){sn.hidden=false;sn.style.left=(info(t).s/280*100)+"%"}else{sn.hidden=true}
+  document.querySelectorAll("#scrubMarks button").forEach(b=>{
+    const mw=+b.dataset.w;
+    const active=(mw===0&&x.w<14)||(mw===14&&x.w>=14&&x.w<28)||(mw===28&&x.w>=28&&x.w<40)||(mw===40&&x.w===40);
+    b.classList.toggle("on",active);
+  });
+
   $("age").innerHTML=`<b>${x.w}w ${x.d}d</b><span>${fmt(sel,{weekday:"short",month:"short",day:"numeric"})}</span>`;
   const late=x.s===280&&t>edd,left=280-x.s;
   $("chips").innerHTML=`<span class="chip">Trimester ${x.tri}</span><span class="chip m">Month ${x.m+1}</span><span class="chip d">${late?diff(edd,t)+" days past due":x.s===280?"Due date":left+" days to go"}</span>`;
-  $("fill").style.width=x.s/280*100+"%";$("rfg").style.strokeDashoffset=578.05*(1-x.s/280);
-  
-  baby(x.w);
-  document.querySelectorAll(".wk").forEach(b=>{const on=+b.dataset.w===x.w;b.classList.toggle("on",on);if(on)$("weeks").scrollTo({left:b.offsetLeft-$("weeks").clientWidth/2+23})});
-  document.querySelectorAll("#mon button").forEach(b=>{const on=+b.dataset.m===x.m;b.classList.toggle("on",on);if(on)$("mon").scrollTo({left:b.offsetLeft-$("mon").clientWidth/2+b.offsetWidth/2})});
-  cal();
+
+  baby(x.w,false);
+  cal(!!opts.instantMon);
 }
-function cal(){
-  const t=today();$("ct").textContent=fmt(view,{month:"long",year:"numeric"});$("back").hidden=!inW(t)||(same(sel,t)&&view.getUTCMonth()===t.getUTCMonth()&&view.getUTCFullYear()===t.getUTCFullYear());
-  const g=$("days");g.innerHTML="";const st0=add(view,-view.getUTCDay());
+
+function cal(instantMon=false){
+  const t=today();
+  $("ct").textContent=fmt(view,{month:"long",year:"numeric"});
+  $("back").hidden=!inW(t)||(same(sel,t)&&view.getUTCMonth()===t.getUTCMonth()&&view.getUTCFullYear()===t.getUTCFullYear());
+  const g=$("days");g.innerHTML="";
+  const st0=add(view,-view.getUTCDay());
   for(let i=0;i<42;i++){
     const c=add(st0,i),b=document.createElement("button");b.type="button";
     if(!inW(c)){b.className="day out";b.innerHTML=`<b>${c.getUTCDate()}</b>`;b.disabled=true}
-    else{const x=info(c);
+    else{
+      const x=info(c);
       b.className=`day t${x.tri}`+(same(c,sel)?" sel":"")+(same(c,t)?" today":"");
       b.innerHTML=`<b>${c.getUTCDate()}</b>${x.s%7===0&&x.s<280?`<small>${x.w}w</small>`:""}${LBL[x.s]?`<em>${LBL[x.s]}</em>`:""}${CARE.some(r=>r[2]===x.s&&r[2]!==r[3])?"<i></i>":""}`;
       b.setAttribute("aria-label",`${fmt(c)}, ${x.w} weeks ${x.d} days`);
@@ -258,43 +742,111 @@ function cal(){
     }
     g.appendChild(b);
   }
+  centerMon(displayMonthIdx(),instantMon);
 }
-function go(d){if(!inW(d))d=d<lmp?lmp:edd;sel=U(d);view=new Date(Date.UTC(sel.getUTCFullYear(),sel.getUTCMonth(),1));render()}
+
+function go(d,opts={}){
+  if(!inW(d))d=d<lmp?lmp:edd;
+  sel=U(d);
+  view=new Date(Date.UTC(sel.getUTCFullYear(),sel.getUTCMonth(),1));
+  render(opts);
+}
+
+function goWeek(w,opts={}){
+  const clamped=Math.max(0,Math.min(40,w));
+  go(add(lmp,clamped*7),opts);
+}
+
 function build(){
   const t=today();
   $("edd").textContent=fmt(edd,{month:"short",day:"numeric",year:"numeric"});
-  
-  
-  $("weeks").innerHTML="";
-  for(let w=0;w<=40;w++){const b=document.createElement("button");b.className="wk p"+(w<14?1:w<28?2:3);b.dataset.w=w;b.innerHTML=`<small>Wk</small><b>${w}</b>`;
-    if(inW(t)&&info(t).w===w)b.classList.add("now");b.onclick=()=>go(add(lmp,w*7));$("weeks").appendChild(b)}
+
+  const wb=$("wkPopBody");wb.innerHTML="";
+  const todayW=inW(t)?info(t).w:-1;
+  const groups=[
+    {cls:"t1",p:"p1",title:"Trimester 1",range:"Weeks 0–13",s:0,e:13},
+    {cls:"t2",p:"p2",title:"Trimester 2",range:"Weeks 14–27",s:14,e:27},
+    {cls:"t3",p:"p3",title:"Trimester 3",range:"Weeks 28–40",s:28,e:40}
+  ];
+  groups.forEach(gr=>{
+    const sec=document.createElement("div");
+    sec.innerHTML=`<div class="wkg-lbl ${gr.cls}"><b>${gr.title}</b><span>${gr.range}</span></div>`;
+    const grid=document.createElement("div");
+    grid.className="wkg-grid";
+    for(let w=gr.s;w<=gr.e;w++){
+      const b=document.createElement("button");
+      b.type="button";
+      b.className=`wkp ${gr.p}`+(w===todayW?" now":"");
+      b.dataset.w=w;
+      b.textContent=w;
+      b.setAttribute("aria-label",`Week ${w}, ${R[w][0]}${w===todayW?" (Today)":""}`);
+      b.onmouseenter=()=>setPopPreview(w);
+      b.onfocus=()=>setPopPreview(w);
+      b.onclick=()=>{goWeek(w);closeWkPop()};
+      grid.appendChild(b);
+    }
+    sec.appendChild(grid);
+    wb.appendChild(sec);
+  });
+
   $("mon").innerHTML="";
-  for(let m=0;m<9;m++){const b=document.createElement("button");b.dataset.m=m;b.textContent="Month "+(m+1);b.onclick=()=>go(add(lmp,MS[m]));$("mon").appendChild(b)}
+  for(let m=0;m<9;m++){
+    const b=document.createElement("button");
+    b.type="button";
+    b.dataset.m=m;b.textContent="Month "+(m+1);
+    b.onclick=()=>go(add(lmp,MS[m]));
+    $("mon").appendChild(b);
+  }
+
   $("tl").innerHTML="";
-  CARE.forEach((c,i)=>{const[n,w,s,e,ic]=c,ds=add(lmp,s),de=add(lmp,e),b=document.createElement("button");b.className="it";
+  CARE.forEach((c,i)=>{
+    const[n,w,s,e,ic]=c,ds=add(lmp,s),de=add(lmp,e),b=document.createElement("button");
+    b.className="it";
     const{tag,cl}=stat(c);
-    
     if(cl)b.classList.add(cl);
-    b.innerHTML=`<i class="ic">${ic}</i><div><b>${n}</b><span>${w} · ${rng(ds,de)}</span></div><u>${tag}</u>`;
-    b.onclick=()=>openSheet(i);const li=document.createElement("li");li.appendChild(b);$("tl").appendChild(li)});
+    b.innerHTML=`<i class="ic" aria-hidden="true">${ic}</i><div><b>${n}</b><span>${w} · ${rng(ds,de)}</span></div><u>${tag}</u>`;
+    b.onclick=()=>openSheet(i);
+    const li=document.createElement("li");li.appendChild(b);$("tl").appendChild(li);
+  });
 }
+
 const rng=(a,b)=>same(a,b)?fmt(a):fmt(a,{month:"short",day:"numeric"})+" – "+fmt(b,{month:"short",day:"numeric"});
-function stat(c){const t=today(),ds=add(lmp,c[2]),de=add(lmp,c[3]);if(t>de)return{tag:"Done",cl:"done",txt:"Completed"};if(t>=ds)return{tag:"Now",cl:"now",txt:"Active now"};const a=diff(t,ds);return{tag:a<=60?a+"d":fmt(ds,{month:"short",year:"numeric"}),cl:"",txt:"Starts in "+a+" days"}}
+function stat(c){
+  const t=today(),ds=add(lmp,c[2]),de=add(lmp,c[3]);
+  if(t>de)return{tag:"Done",cl:"done",txt:"Completed"};
+  if(t>=ds)return{tag:"Now",cl:"now",txt:"Active now"};
+  const a=diff(t,ds);
+  return{tag:a<=60?a+"d":fmt(ds,{month:"short",year:"numeric"}),cl:"",txt:"Starts in "+a+" days"};
+}
+
 let cur=0,lastF=null;
-function openSheet(i){cur=i;lastF=document.activeElement;
-const c=CARE[i],[n,w,s,e,ic,about,tips]=c,ds=add(lmp,s),de=add(lmp,e),x=stat(c),len=diff(ds,de)+1,t=today();
-const pct=x.cl==="now"?Math.round((diff(ds,t)+1)/len*100):x.cl==="done"?100:0;
-const ymd=d=>iso(d).replace(/-/g,"");
-const url="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Bloom: "+n)+"&dates="+ymd(ds)+"/"+ymd(add(de,1))+"&details="+encodeURIComponent(about);
-$("pn").innerHTML=`<div class="ph"><i>${ic}</i><button class="x" id="x" aria-label="Close">✕</button><small class="sc ${x.cl}">${x.txt}</small><h4>${n}</h4><span>${w} · ${rng(ds,de)}</span></div><div class="pb"><div class="pr"><i style="width:${pct}%"></i></div><p>${about}</p>${tips.length?`<h5>Prepare</h5><ul>${tips.map(k=>`<li><button type="button" class="ck"><i></i>${k}</button></li>`).join("")}</ul>`:""}<div class="pa"><a class="go" href="${url}" target="_blank" rel="noopener">＋ Add to calendar</a><button class="pill" id="sc">Show on calendar</button></div></div>`;
-$("sheet").hidden=false;document.body.style.overflow="hidden";void $("pn").offsetWidth;$("sheet").classList.add("open");$("x").focus()}
-function closeSheet(){$("sheet").classList.remove("open");document.body.style.overflow="";setTimeout(()=>{if(!$("sheet").classList.contains("open"))$("sheet").hidden=true},260);lastF&&lastF.focus&&lastF.focus()}
+function openSheet(i){
+  cur=i;lastF=document.activeElement;
+  const c=CARE[i],[n,w,s,e,ic,about,tips]=c,ds=add(lmp,s),de=add(lmp,e),x=stat(c),len=diff(ds,de)+1,t=today();
+  const pct=x.cl==="now"?Math.round((diff(ds,t)+1)/len*100):x.cl==="done"?100:0;
+  const ymd=d=>iso(d).replace(/-/g,"");
+  const url="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Bloom: "+n)+"&dates="+ymd(ds)+"/"+ymd(add(de,1))+"&details="+encodeURIComponent(about);
+  $("pn").innerHTML=`<div class="ph"><i aria-hidden="true">${ic}</i><button class="x" id="x" aria-label="Close">✕</button><small class="sc ${x.cl}">${x.txt}</small><h4>${n}</h4><span>${w} · ${rng(ds,de)}</span></div><div class="pb"><div class="pr"><i style="width:${pct}%"></i></div><p>${about}</p>${tips.length?`<h5>Prepare</h5><ul>${tips.map(k=>`<li><button type="button" class="ck"><i></i>${k}</button></li>`).join("")}</ul>`:""}<div class="pa"><a class="go" href="${url}" target="_blank" rel="noopener">＋ Add to calendar</a><button class="pill" id="sc">Show on calendar</button></div></div>`;
+  $("sheet").hidden=false;document.body.style.overflow="hidden";
+  void $("pn").offsetWidth;$("sheet").classList.add("open");$("x").focus();
+}
+function closeSheet(){
+  $("sheet").classList.remove("open");document.body.style.overflow="";
+  setTimeout(()=>{if(!$("sheet").classList.contains("open"))$("sheet").hidden=true},260);
+  lastF&&lastF.focus&&lastF.focus();
+}
+
 function begin(v,scroll){
   const p=parse(v);if(!p)return false;
-  lmp=p;edd=add(lmp,280);document.body.classList.add("has");$("app").hidden=false;$("chg").hidden=false;
-  build();const t=today();go(inW(t)?t:t<lmp?lmp:edd);
-  if(scroll)window.scrollTo({top:0,behavior:"smooth"});return true;
+  lmp=p;edd=add(lmp,280);lastBabyW=-1;
+  document.body.classList.add("has");$("app").hidden=false;$("chg").hidden=false;
+  build();
+  const t=today();
+  go(inW(t)?t:t<lmp?lmp:edd,{instantMon:true});
+  if(scroll)window.scrollTo({top:0,behavior:"smooth"});
+  return true;
 }
+
 $("go").onclick=()=>{
   const v=$("lmp").value,p=parse(v),e=$("err");
   if(!p){e.textContent="Enter a valid date.";return}
@@ -303,18 +855,47 @@ $("go").onclick=()=>{
   e.textContent="";st.s("bloom-lmp",v);begin(v,true);
 };
 $("lmp").onkeydown=e=>{if(e.key==="Enter")$("go").click()};
-$("prev").onclick=()=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()-1,1));cal()};
-$("next").onclick=()=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()+1,1));cal()};
+
+$("wkPrev").onclick=()=>{closeWkPop();goWeek(info(sel).w-1)};
+$("wkNext").onclick=()=>{closeWkPop();goWeek(info(sel).w+1)};
+$("wkToggle").onclick=()=>popOpen?closeWkPop():openWkPop();
+$("wkClose").onclick=closeWkPop;
+$("wkToday").onclick=()=>{closeWkPop();go(today())};
+
+$("scrubMarks").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-w]");
+  if(b)goWeek(+b.dataset.w);
+});
+
+document.addEventListener("click",e=>{
+  if(popOpen&&!$("wkWrap").contains(e.target))closeWkPop();
+});
+
+$("prev").onclick=()=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()-1,1));cal(false)};
+$("next").onclick=()=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()+1,1));cal(false)};
 $("back").onclick=()=>go(today());
-$("chg").onclick=()=>{document.body.classList.remove("has");$("app").hidden=true;$("chg").hidden=true;$("lmp").focus()};
+$("chg").onclick=()=>{closeWkPop();document.body.classList.remove("has");$("app").hidden=true;$("chg").hidden=true;$("lmp").focus()};
+
 let sx=0,sy=0;
 $("days").addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
 $("days").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.3)(dx<0?$("next"):$("prev")).click()},{passive:true});
 $("days").addEventListener("keydown",e=>{const s={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[e.key];if(!s)return;const n=add(sel,s);if(!inW(n))return;e.preventDefault();go(n);const b=$("days").querySelector(".sel");b&&b.focus()});
 $("bd").onclick=closeSheet;
-$("pn").addEventListener("click",e=>{const k=e.target.closest(".ck");if(k)k.classList.toggle("on");if(e.target.closest("#x"))closeSheet();if(e.target.closest("#sc")){closeSheet();go(add(lmp,CARE[cur][2]));document.querySelector(".cal").scrollIntoView({behavior:"smooth",block:"center"})}});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("sheet").hidden)closeSheet()});
-const sv=st.g("bloom-lmp");if(sv&&parse(sv)){$("lmp").value=sv;begin(sv,false)}
+$("pn").addEventListener("click",e=>{
+  const k=e.target.closest(".ck");if(k)k.classList.toggle("on");
+  if(e.target.closest("#x"))closeSheet();
+  if(e.target.closest("#sc")){closeSheet();go(add(lmp,CARE[cur][2]));document.querySelector(".cal").scrollIntoView({behavior:"smooth",block:"center"})}
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    if(!$("sheet").hidden)closeSheet();
+    else if(popOpen)closeWkPop();
+  }
+});
+window.addEventListener("resize",()=>{if(lmp)centerMon(displayMonthIdx(),true)});
+
+const sv=st.g("bloom-lmp");
+if(sv&&parse(sv)){$("lmp").value=sv;begin(sv,false)}
 })();
 </script>
 </body>
