@@ -1,507 +1,900 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-tri="1">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bloom — Pregnancy Calendar</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600;700&display=swap">
+<title>Bloom — Pregnancy Sanctuary</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@400;500;600;700&display=swap">
 <style>
 :root{
-  --bg:#fbf6f4;--card:#fff;--ink:#2b2226;--mut:#7b6f74;--line:#efe4e4;
-  --t1:#b4546e;--t1s:#f8e8ed;--t2:#5f8a74;--t2s:#e4efe9;--t3:#b9822c;--t3s:#f8eedb;
-  --sh:0 14px 36px rgba(90,50,64,.08);
-  --sh-pop:0 20px 50px rgba(43,34,38,.18);
-  --serif:Fraunces,Georgia,serif;
-  --sans:Inter,system-ui,-apple-system,sans-serif;
+  --bg:#fcf8f6;--card:rgba(255,255,255,.84);--card-solid:#ffffff;--surface:#f7f1ee;
+  --ink:#282024;--mut:#786c71;--line:rgba(40,32,36,.08);
+  --t1:#b85872;--t1s:#f9e8ed;--t2:#4e7f67;--t2s:#e4f0e9;--t3:#b97f2b;--t3s:#f9eedb;
+  --acc:var(--t1);--accs:var(--t1s);--glow1:#f7dfe7;--glow2:#e8f2ec;
+  --skin1:#fde7dc;--skin2:#f6cbb8;--cheek:#ee9a9a;
+  --sh:0 18px 44px rgba(68,42,52,.07);
+  --sh-pop:0 24px 60px rgba(40,32,36,.16);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --spring:cubic-bezier(.34,1.35,.64,1);
+  --serif:"Fraunces",Georgia,serif;
+  --sans:"Inter",system-ui,-apple-system,sans-serif;
   --emoji:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light;
 }
+:root[data-tri="1"]{--acc:var(--t1);--accs:var(--t1s);--glow1:#f8dfe7;--glow2:#f7ece4}
+:root[data-tri="2"]{--acc:var(--t2);--accs:var(--t2s);--glow1:#e0efe7;--glow2:#f5efe4}
+:root[data-tri="3"]{--acc:var(--t3);--accs:var(--t3s);--glow1:#f8ead1;--glow2:#f4e3df}
+
 @media(prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --bg:#171214;--card:#211a1d;--ink:#f3eaee;--mut:#a99ca2;--line:#382e33;
-    --t1:#e48ba4;--t1s:#3a2630;--t2:#9dc7b0;--t2s:#223029;--t3:#e6b560;--t3s:#38301f;
-    --sh:0 14px 36px rgba(0,0,0,.45);
-    --sh-pop:0 24px 60px rgba(0,0,0,.65);
+    --bg:#151113;--card:rgba(33,26,29,.84);--card-solid:#211a1d;--surface:#1c1619;
+    --ink:#f4ecef;--mut:#a6989f;--line:rgba(244,236,239,.09);
+    --t1:#e58ca5;--t1s:#36222b;--t2:#8fc4a8;--t2s:#1f3028;--t3:#e7b563;--t3s:#362c1c;
+    --skin1:#e8c4b4;--skin2:#d4a592;--cheek:#d97d85;
+    --sh:0 20px 50px rgba(0,0,0,.45);--sh-pop:0 28px 68px rgba(0,0,0,.68);
+    color-scheme:dark;
   }
+  :root:not([data-theme="light"])[data-tri="1"]{--glow1:#351f28;--glow2:#271d1f}
+  :root:not([data-theme="light"])[data-tri="2"]{--glow1:#1d2e26;--glow2:#26231d}
+  :root:not([data-theme="light"])[data-tri="3"]{--glow1:#332818;--glow2:#2b1f22}
 }
 :root[data-theme="dark"]{
-  --bg:#171214;--card:#211a1d;--ink:#f3eaee;--mut:#a99ca2;--line:#382e33;
-  --t1:#e48ba4;--t1s:#3a2630;--t2:#9dc7b0;--t2s:#223029;--t3:#e6b560;--t3s:#38301f;
-  --sh:0 14px 36px rgba(0,0,0,.45);
-  --sh-pop:0 24px 60px rgba(0,0,0,.65);
+  --bg:#151113;--card:rgba(33,26,29,.84);--card-solid:#211a1d;--surface:#1c1619;
+  --ink:#f4ecef;--mut:#a6989f;--line:rgba(244,236,239,.09);
+  --t1:#e58ca5;--t1s:#36222b;--t2:#8fc4a8;--t2s:#1f3028;--t3:#e7b563;--t3s:#362c1c;
+  --skin1:#e8c4b4;--skin2:#d4a592;--cheek:#d97d85;
+  --sh:0 20px 50px rgba(0,0,0,.45);--sh-pop:0 28px 68px rgba(0,0,0,.68);
+  color-scheme:dark;
 }
+:root[data-theme="dark"][data-tri="1"]{--glow1:#351f28;--glow2:#271d1f}
+:root[data-theme="dark"][data-tri="2"]{--glow1:#1d2e26;--glow2:#26231d}
+:root[data-theme="dark"][data-tri="3"]{--glow1:#332818;--glow2:#2b1f22}
+
+/* Silky smooth crossfade for Light <-> Dark Mode */
+html.theme-fade,
+html.theme-fade *,
+html.theme-fade *::before,
+html.theme-fade *::after{
+  transition:background-color .62s var(--ease),
+             background .62s var(--ease),
+             color .52s var(--ease),
+             border-color .52s var(--ease),
+             box-shadow .62s var(--ease),
+             fill .52s var(--ease),
+             stroke .52s var(--ease),
+             opacity .52s var(--ease)!important;
+}
+
 *,*::before,*::after{box-sizing:border-box}
-html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
 body{
   margin:0;min-height:100%;
-  background:radial-gradient(60% 40% at 0 0,var(--t1s),transparent),
-             radial-gradient(50% 35% at 100% 30%,var(--t2s),transparent),
-             radial-gradient(50% 30% at 0 90%,var(--t3s),transparent),var(--bg);
-  background-attachment:fixed;color:var(--ink);font:15px/1.5 var(--sans);
-  -webkit-font-smoothing:antialiased;
+  background:var(--bg);color:var(--ink);
+  font:15px/1.55 var(--sans);-webkit-font-smoothing:antialiased;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:calc(env(safe-area-inset-bottom,0px) + 24px);
+  transition:background .6s var(--ease),color .35s var(--ease);
 }
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+
+/* Living ambient atmosphere */
+.atmo{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.atmo::before,.atmo::after{
+  content:"";position:absolute;border-radius:50%;filter:blur(74px);opacity:.85;
+  transition:background .85s var(--ease),transform 1.2s var(--ease);
+}
+.atmo::before{width:min(70vw,540px);height:min(70vw,540px);top:-140px;left:-100px;background:var(--glow1)}
+.atmo::after{width:min(65vw,500px);height:min(65vw,500px);bottom:-140px;right:-100px;background:var(--glow2)}
+
 button,input{font:inherit;color:inherit}
 button{cursor:pointer}[hidden]{display:none!important}
-:focus-visible{outline:2px solid var(--t1);outline-offset:2px}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 
-.shell{width:min(940px,92%);margin-inline:auto}
+.shell{width:min(780px,92%);margin-inline:auto}
+
+/* Header */
 header{
-  position:sticky;top:env(safe-area-inset-top,0px);z-index:15;height:56px;
-  background:color-mix(in srgb,var(--bg) 82%,transparent);
-  backdrop-filter:blur(14px);border-bottom:1px solid var(--line);
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:25;height:60px;
+  background:color-mix(in srgb,var(--bg) 76%,transparent);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
 }
-.nav{height:100%;display:flex;align-items:center;justify-content:space-between}
-.brand{font:600 1.4rem var(--serif);letter-spacing:-.02em}.brand i{color:var(--t1);font-style:normal}
+.nav{height:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{
+  display:flex;align-items:baseline;gap:6px;
+  font:500 1.45rem/1 var(--serif);letter-spacing:-.02em;
+}
+.brand i{color:var(--acc);font-style:normal;transition:color .45s var(--ease)}
+.brand small{font:600 .68rem/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
 .act{display:flex;gap:8px;align-items:center}
 .pill{
   height:36px;padding:0 14px;border:1px solid var(--line);border-radius:99px;
-  background:var(--card);color:var(--mut);font-size:.8rem;font-weight:600;
-  transition:border-color .15s,color .15s,background .15s;
+  background:var(--card-solid);color:var(--mut);font-size:.8rem;font-weight:600;
+  transition:border-color .2s var(--ease),color .2s var(--ease),background .2s var(--ease),transform .15s var(--ease);
 }
-.pill:hover{color:var(--ink);border-color:var(--t1)}
+.pill:hover{color:var(--ink);border-color:var(--acc)}
+.pill:active{transform:scale(.95)}
 #thm{
-  width:36px;height:36px;padding:0;display:grid;place-items:center;
-  font-family:var(--emoji);font-size:1.15rem;line-height:1;
+  width:36px;padding:0;display:grid;place-items:center;
+  font-family:var(--emoji);font-size:1.1rem;overflow:hidden;
 }
-.card{background:var(--card);border:1px solid var(--line);border-radius:26px;box-shadow:var(--sh)}
-h3{font:400 1.2rem var(--serif);margin:0}
+#thm span{
+  display:inline-block;line-height:1;
+  transition:transform .5s var(--spring),opacity .25s ease;
+}
+#thm.spin span{transform:rotate(180deg) scale(.75);opacity:.4}
 
-/* landing */
-.land{min-height:calc(100svh - 120px);display:grid;place-content:center;text-align:center;gap:26px;padding:20px 0}
-.land h1{font:400 clamp(3rem,13vw,6rem)/.95 var(--serif);letter-spacing:-.04em;margin:0}
-.land h1 em{color:var(--t1)}
-.flower{font-family:var(--emoji);font-size:4rem;line-height:1;animation:sway 4s ease-in-out infinite}
-@keyframes sway{50%{transform:rotate(6deg) scale(1.06)}}
-.form{width:min(420px,92vw);margin:auto;padding:16px;display:grid;gap:10px;text-align:left}
-.form label{font-size:.82rem;font-weight:600;padding:2px 4px}
-input[type=date]{height:50px;width:100%;padding:0 14px;border:1px solid var(--line);border-radius:14px;background:var(--bg);font-size:16px}
-.go{height:50px;border:0;border-radius:14px;background:linear-gradient(135deg,var(--t1),var(--t3));color:#fff;font-weight:700;letter-spacing:.01em}
-.go:active{transform:scale(.98)}
-#err{margin:0;padding:0 4px;color:var(--t1);font-size:.8rem;font-weight:600;min-height:1.2em}
+.card{
+  background:var(--card);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--line);border-radius:30px;box-shadow:var(--sh);
+  transition:border-color .25s var(--ease),box-shadow .35s var(--ease);
+}
+
+/* Landing */
+.land{
+  min-height:calc(100svh - 110px);display:grid;place-content:center;
+  text-align:center;gap:22px;padding:24px 0;
+  animation:fadeUp .5s var(--ease);
+}
+.land-orb{
+  position:relative;width:96px;height:96px;margin:0 auto;border-radius:50%;
+  background:radial-gradient(circle at 38% 30%,var(--card-solid),var(--accs));
+  border:1px solid var(--line);box-shadow:var(--sh);
+  display:grid;place-items:center;
+  animation:breathe 4.6s ease-in-out infinite;
+}
+.land-orb::after{
+  content:"";position:absolute;inset:-8px;border-radius:50%;
+  border:1px dashed color-mix(in srgb,var(--acc) 30%,transparent);
+  animation:slowSpin 28s linear infinite;
+}
+@keyframes slowSpin{to{transform:rotate(360deg)}}
+.land-orb svg{width:68px;height:68px;display:block}
+.land h1{
+  font:400 clamp(2.6rem,9vw,4.4rem)/1.02 var(--serif);letter-spacing:-.035em;margin:0;
+}
+.land h1 em{color:var(--acc);font-style:italic}
+.land-sub{max-width:38ch;margin:-6px auto 0;color:var(--mut);font-size:.95rem}
+.form{
+  width:min(410px,92vw);margin:4px auto 0;padding:22px;
+  display:grid;gap:14px;text-align:left;
+}
+.fld{display:grid;gap:6px}
+.fld label{font-size:.78rem;font-weight:600;color:var(--mut);padding-left:2px;display:flex;justify-content:space-between}
+.fld label span{font-weight:500;opacity:.75}
+.inp{
+  height:48px;width:100%;padding:0 14px;border:1px solid var(--line);border-radius:14px;
+  background:var(--surface);font-size:15px;transition:border-color .2s var(--ease),background .2s var(--ease);
+}
+.inp:focus{border-color:var(--acc);background:var(--card-solid);outline:none}
+.go{
+  height:50px;border:0;border-radius:15px;
+  background:var(--ink);color:var(--bg);font-weight:600;letter-spacing:.01em;
+  transition:transform .16s var(--ease),opacity .2s var(--ease),background .35s var(--ease);
+}
+.go:hover{opacity:.92}
+.go:active{transform:scale(.97)}
+#err{margin:-4px 0 0;padding:0 2px;color:var(--t1);font-size:.8rem;font-weight:600;min-height:1.1em}
 body.has .land{display:none}
 
-/* app */
-#app{display:grid;gap:16px;padding:16px 0 40px}
+/* App & Liquid Segmented Navigation */
+#app{display:grid;gap:18px;padding:18px 0 32px}
+.tabs-wrap{display:flex;justify-content:center}
+.tabs{
+  position:relative;display:inline-grid;grid-template-columns:repeat(3,1fr);gap:4px;
+  padding:4px;border-radius:99px;background:var(--card);
+  border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.04);
+  backdrop-filter:blur(14px);
+}
+.tab-slider{
+  position:absolute;top:4px;bottom:4px;left:0;border-radius:99px;
+  background:var(--ink);pointer-events:none;z-index:0;
+  transition:transform .38s var(--ease),width .38s var(--ease),background .35s var(--ease);
+  will-change:transform,width;
+}
+.tab{
+  position:relative;z-index:1;height:38px;padding:0 22px;border:0;border-radius:99px;
+  background:transparent;color:var(--mut);font-size:.82rem;font-weight:600;
+  transition:color .28s var(--ease);white-space:nowrap;
+}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--bg)}
+.tab-dot{
+  position:absolute;top:9px;right:10px;width:6px;height:6px;border-radius:50%;
+  background:var(--acc);transition:background .28s var(--ease);
+}
+.tab.on .tab-dot{background:var(--bg)}
 
-/* hero card */
-.grp{position:relative;display:flex;flex-direction:column;align-items:center;gap:16px;padding:22px 24px 26px}
-.wkwrap{position:relative;width:100%;max-width:460px;z-index:20}
+/* Smooth View Transitions */
+.view{display:grid;gap:16px}
+.view.enter-right{animation:viewInR .38s var(--ease)}
+.view.enter-left{animation:viewInL .38s var(--ease)}
+.view.enter-fade{animation:fadeUp .36s var(--ease)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
+@keyframes viewInR{from{opacity:0;transform:translateX(18px) scale(.992)}to{opacity:1;transform:none}}
+@keyframes viewInL{from{opacity:0;transform:translateX(-18px) scale(.992)}to{opacity:1;transform:none}}
+
+/* Journey Sanctuary Hero */
+.sanctuary{
+  position:relative;padding:22px 24px 26px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;
+}
+
+/* Week Navigator */
+.wkwrap{position:relative;width:100%;max-width:380px;z-index:20}
 .wkctrl{
-  width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
-  padding:6px;border-radius:99px;background:var(--bg);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;gap:6px;
+  padding:4px;border-radius:99px;background:var(--surface);border:1px solid var(--line);
 }
 .wkbtn{
-  flex:0 0 auto;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
-  background:var(--card);color:var(--ink);display:grid;place-items:center;
-  box-shadow:0 2px 8px rgba(0,0,0,.05);transition:transform .12s,border-color .15s,color .15s,opacity .15s;
+  flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:1px solid transparent;
+  background:var(--card-solid);color:var(--ink);display:grid;place-items:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.04);
+  transition:transform .16s var(--spring),border-color .2s var(--ease),color .2s var(--ease),opacity .2s ease;
 }
-.wkbtn:hover:not(:disabled){border-color:var(--t1);color:var(--t1)}
-.wkbtn:active:not(:disabled){transform:scale(.94)}
-.wkbtn:disabled{opacity:.32;cursor:not-allowed;box-shadow:none}
-.wkbtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2.3;stroke-linecap:round;stroke-linejoin:round}
-
+.wkbtn:hover:not(:disabled){border-color:var(--acc);color:var(--acc)}
+.wkbtn:active:not(:disabled){transform:scale(.9)}
+.wkbtn:disabled{opacity:.3;cursor:not-allowed;box-shadow:none}
+.wkbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 .wkmid{
-  flex:1;min-width:0;height:44px;border:0;border-radius:99px;background:transparent;
-  display:flex;align-items:center;justify-content:center;gap:7px;padding:0 12px;
-  transition:background .15s;
+  flex:1;min-width:0;height:38px;border:0;border-radius:99px;background:transparent;
+  display:flex;align-items:center;justify-content:center;gap:8px;padding:0 10px;
+  transition:background .2s var(--ease);
 }
-.wkmid:hover,.wkmid[aria-expanded="true"]{background:color-mix(in srgb,var(--card) 88%,transparent)}
-.wkmid b{font:600 1.25rem/1 var(--serif);letter-spacing:-.02em;color:var(--ink)}
-.wkmid .wk-sub{font-size:.74rem;font-weight:700;color:var(--mut);padding:3px 8px;border-radius:99px;background:var(--card);border:1px solid var(--line)}
-.wkmid svg{
-  width:16px;height:16px;stroke:var(--mut);fill:none;stroke-width:2.2;
-  stroke-linecap:round;stroke-linejoin:round;flex:0 0 auto;
-  transition:transform .2s cubic-bezier(.2,.8,.2,1);
+.wkmid:hover,.wkmid[aria-expanded="true"]{background:var(--card-solid)}
+.wkmid b{font:600 1.05rem/1 var(--serif);letter-spacing:-.01em}
+.wk-season{
+  font-size:.7rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+  color:var(--acc);background:var(--accs);padding:3px 9px;border-radius:99px;
+  transition:background .45s var(--ease),color .45s var(--ease);
 }
-.wkmid[aria-expanded="true"] svg{transform:rotate(180deg);stroke:var(--t1)}
+.wkmid svg{width:14px;height:14px;stroke:var(--mut);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;transition:transform .28s var(--ease)}
+.wkmid[aria-expanded="true"] svg{transform:rotate(180deg);stroke:var(--acc)}
 
-/* custom theme-matched week picker popover */
+/* Week Popover */
 .wkpop{
   position:absolute;top:calc(100% + 10px);left:0;right:0;
-  background:var(--card);border:1px solid var(--line);border-radius:24px;
-  box-shadow:var(--sh-pop);padding:14px 14px 16px;
-  opacity:0;transform:translateY(-8px) scale(.98);pointer-events:none;
-  transition:opacity .18s ease,transform .22s cubic-bezier(.2,.9,.25,1);
+  background:var(--card-solid);border:1px solid var(--line);border-radius:24px;
+  box-shadow:var(--sh-pop);padding:14px;text-align:left;
+  opacity:0;transform:translateY(-10px) scale(.97);pointer-events:none;
+  transition:opacity .22s var(--ease),transform .28s var(--ease);
 }
 .wkpop.open{opacity:1;transform:none;pointer-events:auto}
 .wkpop-head{
   display:flex;align-items:center;justify-content:space-between;gap:8px;
-  padding:2px 4px 12px;border-bottom:1px solid var(--line);margin-bottom:12px;
+  padding:2px 4px 10px;border-bottom:1px solid var(--line);margin-bottom:10px;
 }
 .wkpop-prev{display:flex;align-items:center;gap:8px;min-width:0}
-.wkpop-prev i{font-family:var(--emoji);font-style:normal;font-size:1.35rem;line-height:1}
-.wkpop-prev span{font-size:.86rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wkpop-prev small{color:var(--mut);font-weight:600;margin-left:4px}
-.wkpop-x{
-  flex:0 0 auto;width:30px;height:30px;border:1px solid var(--line);border-radius:50%;
-  background:var(--bg);color:var(--mut);font-size:.82rem;display:grid;place-items:center;
-}
-.wkpop-x:hover{color:var(--ink);border-color:var(--t1)}
-.wkpop-body{display:grid;gap:12px;max-height:min(54svh,360px);overflow-y:auto;padding-right:2px}
-.wkg-lbl{
-  display:flex;align-items:center;justify-content:space-between;
-  font-size:.7rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
-  color:var(--mut);margin:0 0 6px 2px;
-}
-.wkg-lbl b{font-weight:700}
+.wkpop-prev i{font-family:var(--emoji);font-style:normal;font-size:1.25rem;line-height:1}
+.wkpop-prev span{font-size:.84rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wkpop-prev small{color:var(--mut);font-weight:500;margin-left:3px}
+.wkpop-x{width:28px;height:28px;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--mut);font-size:.78rem;display:grid;place-items:center}
+.wkpop-body{display:grid;gap:12px;max-height:min(52svh,340px);overflow-y:auto}
+.wkg-lbl{display:flex;justify-content:space-between;font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);margin:0 0 6px 2px}
 .wkg-lbl.t1 b{color:var(--t1)}.wkg-lbl.t2 b{color:var(--t2)}.wkg-lbl.t3 b{color:var(--t3)}
-.wkg-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.wkg-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .wkp{
-  position:relative;height:38px;border:1px solid transparent;border-radius:12px;
-  font-size:.84rem;font-weight:700;color:var(--ink);display:grid;place-items:center;
-  transition:transform .12s,border-color .15s,background .15s;
+  position:relative;height:36px;border:1px solid transparent;border-radius:10px;
+  font-size:.82rem;font-weight:600;color:var(--ink);display:grid;place-items:center;
+  transition:transform .16s var(--spring),border-color .18s var(--ease),background .2s ease;
 }
 .wkp.p1{background:var(--t1s)}.wkp.p2{background:var(--t2s)}.wkp.p3{background:var(--t3s)}
-.wkp:hover{transform:translateY(-1px);border-color:var(--ink)}
-.wkp.now::after{
-  content:"";position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
-  width:5px;height:5px;border-radius:50%;background:var(--t1);
-}
+.wkp:hover{transform:translateY(-2px);border-color:var(--ink)}
+.wkp.now::after{content:"";position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--acc)}
 .wkp.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .wkp.on.now::after{background:var(--bg)}
 
 .wkjump{
-  display:inline-flex;align-items:center;gap:6px;margin-top:-6px;
-  height:30px;padding:0 12px;border-radius:99px;border:1px solid var(--t1);
-  background:var(--t1s);color:var(--t1);font-size:.76rem;font-weight:700;
-  transition:transform .12s,filter .15s;
+  display:inline-flex;align-items:center;gap:6px;margin-top:-10px;
+  height:28px;padding:0 12px;border-radius:99px;border:1px solid var(--acc);
+  background:var(--accs);color:var(--acc);font-size:.74rem;font-weight:600;
+  transition:transform .16s var(--spring),background .25s ease;
 }
-.wkjump:hover{filter:brightness(.97)}
-.wkjump:active{transform:scale(.97)}
+.wkjump:active{transform:scale(.95)}
 
-.ringbox{position:relative;width:254px;height:254px;margin:2px auto 0}
-.ringbox > svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
-.rbg{fill:none;stroke:var(--line);stroke-width:9}
+/* Personal Headline */
+.hero-head{display:grid;gap:4px}
+.hero-head h2{
+  margin:0;font:400 clamp(1.7rem,5.2vw,2.35rem)/1.12 var(--serif);letter-spacing:-.025em;
+}
+.hero-head h2 em{color:var(--acc);font-style:italic;transition:color .45s var(--ease)}
+.hero-meta{font-size:.84rem;color:var(--mut);font-weight:500}
+
+/* Soft content harmony fade on week change */
+.harmony-swap{animation:softSwap .34s var(--ease)}
+@keyframes softSwap{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* The Living Womb Halo */
+.halo-stage{position:relative;display:grid;place-items:center;gap:14px;margin:2px 0}
+.halo{
+  position:relative;width:254px;height:254px;display:grid;place-items:center;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+}
+.halo-aura{
+  position:absolute;inset:18px;border-radius:50%;
+  background:radial-gradient(circle,var(--accs) 0%,transparent 72%);
+  animation:breathe 4.4s ease-in-out infinite;
+  transition:background .65s var(--ease);
+}
+@keyframes breathe{0%,100%{transform:scale(.94);opacity:.72}50%{transform:scale(1.06);opacity:1}}
+.halo > svg.ring{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.rbg{fill:none;stroke:var(--line);stroke-width:6}
 .rfg{
-  fill:none;stroke:url(#g);stroke-width:9;stroke-linecap:round;
-  stroke-dasharray:578.05;stroke-dashoffset:578.05;
-  transition:stroke-dashoffset .45s cubic-bezier(.2,.8,.2,1);
+  fill:none;stroke:var(--acc);stroke-width:6.5;stroke-linecap:round;
+  stroke-dasharray:603.19;stroke-dashoffset:603.19;
+  transition:stroke-dashoffset .62s var(--ease),stroke .55s var(--ease);
 }
-.ringbox #unit{
-  position:absolute;top:0;right:-10px;z-index:2;height:30px;padding:0 11px;font-size:.74rem;
-  box-shadow:0 4px 12px rgba(0,0,0,.06);
+.halo-core{
+  position:relative;z-index:2;width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle at 38% 28%,var(--card-solid),color-mix(in srgb,var(--accs) 60%,var(--card-solid)));
+  border:1px solid var(--line);
+  box-shadow:inset 0 2px 18px rgba(255,255,255,.45),0 10px 28px rgba(40,32,36,.06);
+  display:grid;place-items:center;overflow:hidden;
+  transition:transform .4s var(--spring),background .6s var(--ease);
 }
-.age{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
-.fruit-wrap{
-  width:154px;height:154px;border-radius:50%;display:grid;place-items:center;
-  background:radial-gradient(circle at 50% 45%,var(--bg) 55%,transparent 75%);
-}
-.fruit{
-  width:136px;height:136px;display:grid;place-items:center;
-  font-family:var(--emoji);font-size:6.2rem;line-height:1;
-  transition:transform .34s cubic-bezier(.3,1.5,.5,1);
-  will-change:transform;user-select:none;
-}
-.fruit > span{display:inline-block;line-height:1;transform:scale(var(--sc,1))}
-.fruit svg{position:static;transform:none;width:116px;height:116px;display:block}
-.fruit.pop{transform:scale(1.12) rotate(-4deg)}
+.halo:active .halo-core{transform:scale(.95)}
 
-.bn-block{text-align:center;margin-top:-4px}
-.bn{font:600 1.85rem/1.12 var(--serif);color:var(--t1);letter-spacing:-.02em}
-.bn-cap{font-size:.76rem;font-weight:600;color:var(--mut);margin-top:2px}
+.visual{
+  display:grid;place-items:center;width:146px;height:146px;user-select:none;
+  transition:opacity .22s var(--ease),transform .32s var(--ease),filter .22s var(--ease);
+  will-change:transform,opacity,filter;
+}
+.visual.out{opacity:0;transform:scale(.88);filter:blur(5px)}
+.visual svg.baby-art{
+  width:148px;height:148px;display:block;overflow:visible;
+  animation:babyFloat 4.6s ease-in-out infinite;
+}
+.visual svg.baby-art.active-swim{animation:babySwim 4.2s ease-in-out infinite}
+.visual svg.baby-art.hi-react{animation:babyHello .75s var(--spring)}
+@keyframes babyFloat{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-4.5px) rotate(1.5deg)}
+}
+@keyframes babySwim{
+  0%,100%{transform:translate(0,0) rotate(-1.5deg)}
+  35%{transform:translate(2px,-5px) rotate(2.5deg)}
+  70%{transform:translate(-2px,-2px) rotate(-2deg)}
+}
+@keyframes babyHello{
+  0%{transform:scale(1) rotate(0deg)}
+  30%{transform:scale(1.07) rotate(-4deg) translateY(-4px)}
+  65%{transform:scale(1.03) rotate(3deg) translateY(-2px)}
+  100%{transform:scale(1) rotate(0deg)}
+}
 
-.mt{width:100%;max-width:460px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.mt div{
-  padding:11px 13px;border-radius:18px;background:var(--bg);border:1px solid var(--line);
-  display:flex;align-items:center;gap:11px;
-}
-.mt .mi{
-  flex:0 0 auto;width:42px;height:42px;border-radius:13px;background:var(--card);
-  border:1px solid var(--line);display:grid;place-items:center;
-  font-family:var(--emoji);font-size:1.5rem;line-height:1;
-}
-.mt small{display:block;color:var(--mut);font-size:.72rem;font-weight:600}
-.mt b{display:block;font-size:1.12rem;line-height:1.2}
+/* Living organ & limb micro-animations */
+.baby-art .hb-dot{transform-box:fill-box;transform-origin:center;animation:hb var(--hb-dur,1s) ease-in-out infinite}
+.baby-art .hb-ring{transform-box:fill-box;transform-origin:center;animation:hbRing var(--hb-dur,1s) ease-out infinite}
+@keyframes hb{0%,100%{transform:scale(1);opacity:.86}16%{transform:scale(1.42);opacity:1}30%{transform:scale(1.04);opacity:.86}46%{transform:scale(1.28);opacity:1}}
+@keyframes hbRing{0%{transform:scale(.65);opacity:.65}100%{transform:scale(2.35);opacity:0}}
 
-.dev{
-  width:100%;max-width:460px;margin:0;padding:12px 15px;border-radius:16px;
-  background:var(--t1s);font-size:.9rem;display:flex;align-items:flex-start;gap:10px;text-align:left;
-}
-.dev .di{flex:0 0 auto;font-family:var(--emoji);font-size:1.3rem;line-height:1.25}
-.dev span:last-child{flex:1}
+.baby-art .brain-glow{transform-box:fill-box;transform-origin:center;animation:brainPulse 3.2s ease-in-out infinite}
+@keyframes brainPulse{0%,100%{opacity:.22;transform:scale(.94)}50%{opacity:.58;transform:scale(1.08)}}
 
-.info{
-  width:100%;max-width:460px;text-align:center;margin-top:2px;
-  display:grid;grid-template-columns:1fr 1fr;gap:10px 12px;align-items:center;
-}
-.info .chips,.info .scrubber{grid-column:1/-1}
-#age b{display:block;font:600 2.3rem/1 var(--serif);letter-spacing:-.03em}
-#age span{display:block;color:var(--mut);font-size:.82rem;font-weight:600;margin-top:4px}
-.stats small{display:block;color:var(--mut);font-size:.72rem;font-weight:600}
-.stats b{display:block;font:600 1.32rem/1.2 var(--serif);margin-top:2px}
-.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin:2px 0}
-.chip{padding:5px 12px;border-radius:99px;font-size:.78rem;font-weight:700;background:var(--t1s);color:var(--t1)}
-.chip.m{background:var(--t2s);color:var(--t2)}.chip.d{background:var(--t3s);color:var(--t3)}
+.baby-art .lung-glow{transform-box:fill-box;transform-origin:center;animation:lungBreathe 3.8s ease-in-out infinite}
+@keyframes lungBreathe{0%,100%{opacity:.16;transform:scale(.9)}50%{opacity:.46;transform:scale(1.12)}}
 
-/* journey timeline progress bar (no manual slider) */
-.scrubber{padding-top:6px;text-align:left}
-.scrub-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:.72rem;font-weight:700;color:var(--mut)}
-.scrub-track{position:relative;height:16px;display:flex;align-items:center}
-.scrub-rail{
-  position:relative;width:100%;height:10px;border-radius:99px;
-  background:linear-gradient(90deg,var(--t1s) 35%,var(--t2s) 35% 70%,var(--t3s) 70%);
-  overflow:hidden;
-}
-.scrub-rail i{
-  position:absolute;inset:0 auto 0 0;border-radius:99px;
-  background:linear-gradient(90deg,var(--t1),var(--t2) 50%,var(--t3));
-  transition:width .35s cubic-bezier(.2,.8,.2,1);
-}
-.scrub-now{
-  position:absolute;top:50%;width:12px;height:12px;border-radius:50%;
-  background:var(--card);border:2.5px solid var(--ink);
-  transform:translate(-50%,-50%);pointer-events:none;z-index:1;
-}
-.scrub-marks{display:flex;justify-content:space-between;margin-top:8px;gap:4px}
-.scrub-marks button{
-  border:0;background:none;padding:3px 6px;border-radius:8px;
-  font-size:.7rem;font-weight:700;color:var(--mut);transition:color .15s,background .15s;
-}
-.scrub-marks button:hover{color:var(--ink);background:var(--bg)}
-.scrub-marks button.on{color:var(--t1);background:var(--t1s)}
+.baby-art .arm-wiggle{transform-box:fill-box;transform-origin:85% 45%;animation:armWave 3.1s ease-in-out infinite}
+.baby-art .arm-suck{transform-box:fill-box;transform-origin:85% 50%;animation:armSuck 2.8s ease-in-out infinite}
+@keyframes armWave{0%,100%{transform:rotate(0deg)}40%{transform:rotate(12deg)}70%{transform:rotate(-5deg)}}
+@keyframes armSuck{0%,100%{transform:rotate(0deg) translate(0,0)}50%{transform:rotate(7deg) translate(-1.5px,-1.5px)}}
 
-/* calendar */
+.baby-art .leg-stretch{transform-box:fill-box;transform-origin:80% 25%;animation:legStretch 3.6s ease-in-out infinite}
+.baby-art .leg-kick{transform-box:fill-box;transform-origin:80% 25%;animation:legKick 2.7s cubic-bezier(.34,1.3,.64,1) infinite}
+.baby-art .leg-kick2{transform-box:fill-box;transform-origin:80% 25%;animation:legKick 2.7s cubic-bezier(.34,1.3,.64,1) .45s infinite}
+@keyframes legStretch{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-11deg) translate(-2px,1px)}}
+@keyframes legKick{
+  0%,58%,100%{transform:rotate(0deg) translate(0,0)}
+  72%{transform:rotate(-20deg) translate(-5px,2px)}
+  82%{transform:rotate(-4deg) translate(-1px,0)}
+  90%{transform:rotate(-15deg) translate(-3.5px,1.5px)}
+}
+
+.baby-art .kick-ripple{transform-box:fill-box;transform-origin:center;animation:kickRip 2.7s ease-out infinite}
+@keyframes kickRip{
+  0%,66%{opacity:0;transform:scale(.5)}
+  74%{opacity:.85;transform:scale(1.05)}
+  96%,100%{opacity:0;transform:scale(1.55)}
+}
+
+.baby-art .sound-w1{animation:soundWave 2.8s ease-in-out infinite}
+.baby-art .sound-w2{animation:soundWave 2.8s ease-in-out .35s infinite}
+@keyframes soundWave{0%,100%{opacity:.12;transform:translateX(0)}50%{opacity:.78;transform:translateX(-2.5px)}}
+
+.baby-art .bubble{animation:bubFloat 5s ease-in-out infinite}
+.baby-art .bubble.b2{animation-delay:1.6s;animation-duration:5.8s}
+.baby-art .bubble.b3{animation-delay:3.1s;animation-duration:4.6s}
+@keyframes bubFloat{0%,100%{transform:translateY(0);opacity:.28}50%{transform:translateY(-7px);opacity:.72}}
+
+.baby-art .eye-blink{transform-box:fill-box;transform-origin:center;animation:eyeFlutter 5.4s ease-in-out infinite}
+@keyframes eyeFlutter{0%,44%,54%,100%{transform:scaleY(1)}49%{transform:scaleY(.35)}}
+
+.baby-art .seed-orb{transform-box:fill-box;transform-origin:center;animation:seedPulse 3s ease-in-out infinite}
+@keyframes seedPulse{0%,100%{transform:scale(.95)}50%{transform:scale(1.07)}}
+
+/* Love heart burst when tapping Baby halo */
+.tap-heart{
+  position:absolute;z-index:5;pointer-events:none;
+  font-size:1.15rem;color:var(--acc);
+  animation:tapRise .95s var(--ease) forwards;
+}
+@keyframes tapRise{
+  0%{opacity:0;transform:translate(-50%,0) scale(.5)}
+  20%{opacity:1;transform:translate(-50%,-12px) scale(1.15)}
+  100%{opacity:0;transform:translate(-50%,-58px) scale(.85)}
+}
+
+.stage-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.76rem;font-weight:600;color:var(--mut);margin-top:-6px;
+}
+.stage-pill i{width:6px;height:6px;border-radius:50%;background:var(--acc);display:inline-block}
+.visual .fruit-em{font-family:var(--emoji);font-size:5.4rem;line-height:1;transform:scale(var(--sc,1));animation:babyFloat 5.2s ease-in-out infinite}
+.visual svg.fruit-svg{width:116px;height:116px;display:block;animation:babyFloat 5.2s ease-in-out infinite}
+
+/* Liquid Mode Switcher below Halo */
+.mode-bar{
+  position:relative;display:inline-flex;align-items:center;gap:4px;padding:3px;
+  border-radius:99px;background:var(--surface);border:1px solid var(--line);
+}
+.mode-slider{
+  position:absolute;top:3px;bottom:3px;left:0;border-radius:99px;
+  background:var(--card-solid);box-shadow:0 2px 8px rgba(0,0,0,.07);
+  pointer-events:none;z-index:0;
+  transition:transform .34s var(--ease),width .34s var(--ease);
+  will-change:transform,width;
+}
+.mode-bar button{
+  position:relative;z-index:1;height:30px;padding:0 14px;border:0;border-radius:99px;
+  background:transparent;font-size:.75rem;font-weight:600;color:var(--mut);
+  transition:color .25s var(--ease);
+}
+.mode-bar button.on{color:var(--ink)}
+
+/* Caption & Minimal Metric Strip */
+.stage-title{font:500 1.25rem/1.2 var(--serif);color:var(--ink);margin-top:-2px}
+.stage-title span{color:var(--acc);transition:color .45s var(--ease)}
+.metrics{
+  width:100%;max-width:500px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  padding:12px 8px;border-radius:20px;background:var(--surface);border:1px solid var(--line);
+}
+.metric{display:grid;gap:2px;position:relative}
+.metric:not(:last-child)::after{
+  content:"";position:absolute;right:-4px;top:18%;bottom:18%;width:1px;background:var(--line);
+}
+.metric small{font-size:.7rem;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.metric b{font:600 1.05rem/1.2 var(--serif);color:var(--ink)}
+.metric-unit{
+  position:absolute;top:0;right:6px;border:0;background:transparent;
+  font-size:.66rem;font-weight:700;color:var(--acc);padding:2px 5px;border-radius:6px;
+  transition:background .2s ease;
+}
+.metric-unit:hover{background:var(--accs)}
+
+/* Season Chapter Dots */
+.seasons{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.seasons button{
+  height:30px;padding:0 12px;border-radius:99px;border:1px solid transparent;
+  background:transparent;font-size:.74rem;font-weight:600;color:var(--mut);
+  display:inline-flex;align-items:center;gap:6px;transition:all .24s var(--ease);
+}
+.seasons button i{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.45;transition:opacity .24s ease}
+.seasons button:hover{color:var(--ink);background:var(--surface)}
+.seasons button.on{color:var(--acc);background:var(--accs);border-color:color-mix(in srgb,var(--acc) 30%,transparent)}
+.seasons button.on i{opacity:1}
+
+/* Two-Voice Editorial Whispers */
+.whispers{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.whisper{padding:20px 22px;display:grid;gap:8px;align-content:start}
+.whisper-lbl{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);
+  transition:color .45s var(--ease);
+}
+.whisper-lbl i{font-family:var(--emoji);font-style:normal;font-size:1rem}
+.whisper p{margin:0;font-size:.94rem;line-height:1.58;color:var(--ink)}
+
+/* Next Care Preview on Journey */
+.next-care{
+  padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:14px;
+  cursor:pointer;transition:transform .22s var(--ease),border-color .22s var(--ease);text-align:left;width:100%;
+}
+.next-care:hover{transform:translateY(-2px);border-color:var(--acc)}
+.nc-left{display:flex;align-items:center;gap:14px;min-width:0}
+.nc-ic{
+  flex:0 0 auto;width:48px;height:48px;border-radius:16px;background:var(--accs);
+  display:grid;place-items:center;font-family:var(--emoji);font-size:1.5rem;
+  transition:background .45s var(--ease);
+}
+.nc-txt small{display:block;font-size:.7rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--acc)}
+.nc-txt b{display:block;font:600 1.05rem/1.25 var(--serif);margin-top:2px}
+.nc-txt span{display:block;font-size:.8rem;color:var(--mut)}
+.nc-go{flex:0 0 auto;font-size:.8rem;font-weight:600;color:var(--acc)}
+
+/* Calendar View */
 .cal{overflow:hidden}
-.ch{display:flex;align-items:center;justify-content:space-between;padding:14px}
-.ch button{width:38px;height:38px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--mut);font-size:1.2rem}
+.cal-banner{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 18px;background:var(--accs);border-bottom:1px solid var(--line);
+  transition:background .45s var(--ease);
+}
+.cal-banner b{font:600 1.05rem/1.2 var(--serif);display:block}
+.cal-banner span{font-size:.78rem;color:var(--mut)}
+.ch{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 12px}
+.ch h3{margin:0;font:500 1.25rem var(--serif)}
 .cn{display:flex;gap:6px;align-items:center}
-.ch .tdy{width:auto;padding:0 14px;border-radius:99px;font-size:.78rem;font-weight:700;color:var(--t1);border-color:var(--t1);background:var(--t1s)}
-.dow,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 10px}
-.dow{text-align:center;font-size:.7rem;font-weight:700;color:var(--mut);padding-bottom:6px}
-.days{padding-bottom:12px;touch-action:pan-y;user-select:none}
-.day{position:relative;min-height:54px;padding:5px;text-align:left;border:1px solid transparent;border-radius:12px;background:var(--bg);transition:transform .15s}
-.day b{font-size:.85rem}.day small{display:block;font-size:.58rem;font-weight:700;color:var(--mut)}
+.ch button{
+  width:36px;height:36px;border:1px solid var(--line);border-radius:50%;
+  background:var(--card-solid);color:var(--ink);font-size:1.15rem;display:grid;place-items:center;
+  transition:transform .16s var(--spring),border-color .2s ease,color .2s ease;
+}
+.ch button:hover{border-color:var(--acc);color:var(--acc)}
+.ch button:active{transform:scale(.9)}
+.ch .tdy{width:auto;padding:0 13px;border-radius:99px;font-size:.76rem;font-weight:600;color:var(--acc);border-color:var(--acc);background:var(--accs)}
+.dow,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;padding:0 14px}
+.dow{text-align:center;font-size:.68rem;font-weight:700;color:var(--mut);padding-bottom:8px}
+.days{padding-bottom:16px;touch-action:pan-y;user-select:none}
+.days.slide-next{animation:calNext .32s var(--ease)}
+.days.slide-prev{animation:calPrev .32s var(--ease)}
+.days.slide-fade{animation:softSwap .28s var(--ease)}
+@keyframes calNext{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
+@keyframes calPrev{from{opacity:0;transform:translateX(-22px)}to{opacity:1;transform:none}}
+
+.day{
+  position:relative;min-height:54px;padding:6px;text-align:left;
+  border:1px solid transparent;border-radius:14px;background:var(--surface);
+  transition:transform .18s var(--spring),border-color .18s ease,background .22s ease,color .22s ease;
+}
+.day b{font-size:.85rem;font-weight:600}.day small{display:block;font-size:.58rem;font-weight:700;color:var(--mut)}
 .day.t1{background:var(--t1s)}.day.t2{background:var(--t2s)}.day.t3{background:var(--t3s)}
-.day.out{background:none;opacity:.25;cursor:default}
+.day.out{background:none;opacity:.22;cursor:default}
 .day:not(.out):hover{transform:translateY(-2px);border-color:var(--ink)}
 .day.today{box-shadow:inset 0 0 0 2px var(--ink)}
 .day.sel{background:var(--ink);color:var(--bg)}.day.sel small{color:var(--bg)}
-.day em{position:absolute;top:4px;right:4px;font:700 .5rem var(--sans);font-style:normal;padding:1px 4px;border-radius:9px;background:var(--card);color:var(--t1)}
-.day i{position:absolute;bottom:5px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--t3)}
+.day em{position:absolute;top:4px;right:4px;font:700 .48rem var(--sans);font-style:normal;padding:1px 5px;border-radius:9px;background:var(--card-solid);color:var(--acc)}
+.day i{position:absolute;bottom:5px;right:6px;width:5px;height:5px;border-radius:50%;background:var(--t3)}
 
-/* month strip — properly centered on both wide & narrow screens */
-.mon-wrap{position:relative;border-top:1px solid var(--line)}
-.mon{
-  position:relative;display:flex;align-items:center;gap:6px;
-  overflow-x:auto;padding:12px 16px;scrollbar-width:none;
-}
+.mon-wrap{border-top:1px solid var(--line)}
+.mon{display:flex;align-items:center;gap:6px;overflow-x:auto;padding:12px 16px;scrollbar-width:none}
 .mon::-webkit-scrollbar{display:none}
 .mon::before,.mon::after{content:"";flex:1 0 0}
 .mon button{
   flex:0 0 auto;padding:7px 14px;border:1px solid var(--line);border-radius:99px;
-  background:none;font-size:.8rem;font-weight:600;color:var(--mut);
-  transition:background .15s,color .15s,border-color .15s;
+  background:transparent;font-size:.78rem;font-weight:600;color:var(--mut);transition:all .22s var(--ease);
 }
-.mon button:hover{color:var(--ink);border-color:var(--t1)}
+.mon button:hover{color:var(--ink);border-color:var(--acc)}
 .mon button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 
-/* timeline */
-.tl{padding:22px}
-.tll{list-style:none;margin:14px 0 0;padding:0 0 0 16px;border-left:2px solid var(--line);display:grid;gap:8px}
-.it{
-  position:relative;width:100%;text-align:left;padding:12px 68px 12px 14px;
-  border:1px solid var(--line);border-radius:16px;background:var(--bg);
-  display:flex;align-items:center;gap:12px;transition:transform .15s,border-color .15s;
+/* Care View */
+.care-card{padding:22px}
+.care-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.care-top h3{margin:0;font:500 1.35rem var(--serif)}
+.care-sub{font-size:.8rem;color:var(--mut);margin-top:2px}
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.flt{
+  height:32px;padding:0 12px;border-radius:99px;border:1px solid var(--line);
+  background:var(--surface);color:var(--mut);font-size:.75rem;font-weight:600;
+  transition:all .22s var(--ease);
 }
-.it:hover{transform:translateX(3px);border-color:var(--t1)}
-.it::before{content:"";position:absolute;left:-25px;top:21px;width:12px;height:12px;border-radius:50%;background:var(--card);border:3px solid var(--mut)}
-.it.now{background:var(--t1s);border-color:var(--t1)}.it.now::before{border-color:var(--t1);background:var(--t1)}
-.it.done{opacity:.6}.it.done::before{border-color:var(--t2);background:var(--t2)}
-.it b,.it span{display:block}.it b{font-size:.92rem}.it span{font-size:.78rem;color:var(--mut)}
-.it .ic{
-  flex:0 0 auto;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;
-  background:var(--card);border:1px solid var(--line);
-  font-family:var(--emoji);font-style:normal;font-size:1.6rem;line-height:1;
-}
-.it u{position:absolute;right:12px;top:12px;text-decoration:none;font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--card);color:var(--mut)}
-.it.now u{color:var(--t1)}
+.flt.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 
-/* sheet */
+.tll{list-style:none;margin:0;padding:0 0 0 16px;border-left:2px solid var(--line);display:grid;gap:10px}
+.it{
+  position:relative;width:100%;text-align:left;padding:13px 72px 13px 14px;
+  border:1px solid var(--line);border-radius:18px;background:var(--surface);
+  display:flex;align-items:center;gap:12px;transition:transform .2s var(--ease),border-color .2s ease;
+}
+.it:hover{transform:translateX(4px);border-color:var(--acc)}
+.it::before{content:"";position:absolute;left:-25px;top:22px;width:12px;height:12px;border-radius:50%;background:var(--card-solid);border:3px solid var(--mut)}
+.it.now{background:var(--accs);border-color:var(--acc)}.it.now::before{border-color:var(--acc);background:var(--acc)}
+.it.done{opacity:.62}.it.done::before{border-color:var(--t2);background:var(--t2)}
+.it b,.it span{display:block}.it b{font-size:.93rem}.it span{font-size:.78rem;color:var(--mut)}
+.it .ic{
+  flex:0 0 auto;width:44px;height:44px;border-radius:14px;display:grid;place-items:center;
+  background:var(--card-solid);border:1px solid var(--line);
+  font-family:var(--emoji);font-style:normal;font-size:1.45rem;
+}
+.it u{
+  position:absolute;right:12px;top:13px;text-decoration:none;
+  font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:99px;
+  background:var(--card-solid);color:var(--mut);
+}
+.it.now u{color:var(--acc)}
+.empty-msg{text-align:center;padding:28px 12px;color:var(--mut);font-size:.88rem}
+.foot{text-align:center;color:var(--mut);font-size:.72rem;padding:4px 12px 0}
+
+/* Sheet Modal */
 .sheet{position:fixed;inset:0;z-index:40;display:flex;align-items:flex-end;justify-content:center}
-.bd{position:absolute;inset:0;background:rgba(20,10,15,.5);backdrop-filter:blur(6px);opacity:0;transition:opacity .25s}
+.bd{position:absolute;inset:0;background:rgba(20,12,16,.52);backdrop-filter:blur(8px);opacity:0;transition:opacity .28s var(--ease)}
 .pn{
-  position:relative;width:min(520px,100%);max-height:90svh;overflow:auto;
-  border-radius:30px 30px 0 0;background:var(--card);box-shadow:0 -20px 60px rgba(0,0,0,.3);
-  transform:translateY(100%);transition:transform .34s cubic-bezier(.2,.9,.25,1);
+  position:relative;width:min(500px,100%);max-height:88svh;overflow:auto;
+  border-radius:30px 30px 0 0;background:var(--card-solid);box-shadow:0 -20px 60px rgba(0,0,0,.3);
+  transform:translateY(100%);transition:transform .38s var(--ease);
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
 .sheet.open .bd{opacity:1}.sheet.open .pn{transform:none}
 @media(min-width:700px){
   .sheet{align-items:center}
-  .pn{border-radius:30px;transform:translateY(30px) scale(.96);opacity:0;transition:transform .3s,opacity .25s}
+  .pn{border-radius:30px;transform:translateY(24px) scale(.96);opacity:0;transition:transform .32s var(--ease),opacity .26s var(--ease)}
   .sheet.open .pn{opacity:1;transform:none}
 }
-.ph{position:relative;padding:26px 24px 22px;background:linear-gradient(135deg,var(--t1s),var(--t3s) 70%,var(--t2s))}
+.ph{position:relative;padding:26px 24px 20px;background:linear-gradient(135deg,var(--accs),var(--surface))}
 .ph>i{
-  display:grid;place-items:center;width:68px;height:68px;border-radius:22px;
-  background:var(--card);font-family:var(--emoji);font-style:normal;font-size:2.4rem;line-height:1;
-  box-shadow:var(--sh);
+  display:grid;place-items:center;width:62px;height:62px;border-radius:20px;
+  background:var(--card-solid);font-family:var(--emoji);font-style:normal;font-size:2.1rem;box-shadow:var(--sh);
 }
-.ph h4{font:400 1.7rem/1.15 var(--serif);margin:14px 0 4px}.ph span{color:var(--mut);font-size:.85rem;font-weight:500}
-.x{position:absolute;top:14px;right:14px;width:36px;height:36px;border:0;border-radius:50%;background:var(--card);color:var(--mut);font-size:1rem}
-.sc{display:inline-block;margin:0 0 10px;padding:3px 10px;border-radius:99px;background:var(--card);font-size:.72rem;font-weight:700;color:var(--mut)}
-.ph .sc{display:block;width:max-content;margin-top:14px}
-.sc.now{color:var(--t1)}.sc.done{color:var(--t2)}
+.ph h4{font:500 1.55rem/1.15 var(--serif);margin:12px 0 4px}
+.ph span{color:var(--mut);font-size:.84rem;font-weight:500}
+.x{position:absolute;top:14px;right:14px;width:34px;height:34px;border:0;border-radius:50%;background:var(--card-solid);color:var(--mut);font-size:.95rem}
+.sc{display:inline-block;margin:14px 0 0;padding:3px 10px;border-radius:99px;background:var(--card-solid);font-size:.7rem;font-weight:700;color:var(--mut)}
+.sc.now{color:var(--acc)}.sc.done{color:var(--t2)}
 .pb{padding:20px 24px 24px;display:grid;gap:14px}
-.pr{height:6px;border-radius:9px;background:var(--line);overflow:hidden}.pr i{display:block;height:100%;background:linear-gradient(90deg,var(--t1),var(--t3));border-radius:9px}
-.pb p{margin:0}.pb h5{margin:0;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
-.pb ul{list-style:none;margin:-4px 0 0;padding:0;display:grid;gap:6px}
-.ck{width:100%;display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--bg);text-align:left;font-size:.88rem}
-.ck i{flex:0 0 auto;width:20px;height:20px;border-radius:7px;border:2px solid var(--mut);display:grid;place-items:center;font-size:.7rem;color:#fff}
+.pr{height:5px;border-radius:9px;background:var(--line);overflow:hidden}.pr i{display:block;height:100%;background:var(--acc);border-radius:9px}
+.pb p{margin:0;line-height:1.6}.pb h5{margin:0;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.pb ul{list-style:none;margin:-4px 0 0;padding:0;display:grid;gap:7px}
+.ck{
+  width:100%;display:flex;align-items:center;gap:10px;padding:11px 12px;
+  border:1px solid var(--line);border-radius:13px;background:var(--surface);text-align:left;font-size:.88rem;
+  transition:all .2s var(--ease);
+}
+.ck i{flex:0 0 auto;width:20px;height:20px;border-radius:7px;border:2px solid var(--mut);display:grid;place-items:center;font-size:.7rem;color:#fff;transition:all .2s var(--ease)}
 .ck.on{color:var(--mut);text-decoration:line-through}.ck.on i{background:var(--t2);border-color:var(--t2)}.ck.on i::after{content:"✓"}
-.pa{display:grid;grid-template-columns:1.4fr 1fr;gap:8px;margin-top:4px}.pa .pill{height:50px;border-radius:14px}.pa .go{display:grid;place-items:center;text-decoration:none}
-.foot{text-align:center;color:var(--mut);font-size:.72rem}
+.pa{display:grid;grid-template-columns:1.35fr 1fr;gap:8px;margin-top:4px}
+.pa .pill,.pa .go{height:48px;border-radius:14px;display:grid;place-items:center;text-decoration:none;font-size:.84rem}
 
-@media(max-width:680px){
-  .grp{padding:18px 16px 22px}
-  .ringbox{width:244px;height:244px}
-  .fruit{font-size:5.8rem}
-  .fruit svg{width:108px;height:108px}
-  .day{min-height:48px;padding:4px 3px}.day em{font-size:.44rem;padding:1px 3px}
-  .wkmid b{font-size:1.15rem}
+@media(max-width:640px){
+  .sanctuary{padding:18px 16px 22px}
+  .halo{width:236px;height:236px}
+  .halo-core{width:166px;height:166px}
+  .visual{width:136px;height:136px}
+  .visual svg.baby-art{width:132px;height:132px}
+  .visual .fruit-em{font-size:4.8rem}
+  .whispers{grid-template-columns:1fr}
+  .day{min-height:46px;padding:4px 3px}.day em{font-size:.44rem;padding:1px 3px}
   .wkg-grid{grid-template-columns:repeat(5,1fr)}
+  .tab{padding:0 16px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
+<div class="atmo" aria-hidden="true"></div>
+
 <header>
   <div class="shell nav">
-    <span class="brand">bloom<i>•</i></span>
+    <span class="brand">bloom<i>•</i> <small id="hdrSeason"></small></span>
     <div class="act">
-      <button class="pill" id="chg" hidden>Change LMP</button>
-      <button class="pill" id="thm" aria-label="Toggle theme">🌙</button>
+      <button class="pill" id="chg" hidden>Edit</button>
+      <button class="pill" id="thm" aria-label="Toggle theme"><span id="thmIcon">🌙</span></button>
     </div>
   </div>
 </header>
+
 <main class="shell">
-<section class="land">
-  <div class="flower" aria-hidden="true">🌸</div>
-  <h1>Meet your<br><em>due date.</em></h1>
-  <div class="card form">
-    <label for="lmp">First day of last menstrual period</label>
-    <input id="lmp" type="date">
-    <button class="go" id="go">Show my pregnancy</button>
-    <p id="err"></p>
-  </div>
-</section>
-<div id="app" hidden>
-  <section class="card grp" id="heroCard" aria-label="Pregnancy progress and week selector">
-    <div class="wkwrap" id="wkWrap">
-      <div class="wkctrl">
-        <button type="button" class="wkbtn" id="wkPrev" aria-label="Previous week">
-          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <button type="button" class="wkmid" id="wkToggle" aria-expanded="false" aria-controls="wkPop" aria-label="Choose pregnancy week">
-          <b id="wkTitle">Week 0</b>
-          <span class="wk-sub" id="wkTri">T1</span>
-          <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <button type="button" class="wkbtn" id="wkNext" aria-label="Next week">
-          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
-      <div class="wkpop" id="wkPop" role="dialog" aria-label="Select a week" hidden>
-        <div class="wkpop-head">
-          <div class="wkpop-prev">
-            <i id="wpEm" aria-hidden="true">🌱</i>
-            <span id="wpTxt">Week 0 <small>· Cycle begins</small></span>
-          </div>
-          <button type="button" class="wkpop-x" id="wkClose" aria-label="Close week picker">✕</button>
-        </div>
-        <div class="wkpop-body" id="wkPopBody"></div>
-      </div>
-    </div>
-
-    <button type="button" class="wkjump" id="wkToday" hidden>↩ Back to current week</button>
-
-    <div class="ringbox">
-      <svg viewBox="0 0 212 212" aria-hidden="true">
-        <defs>
-          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#d9708c"/>
-            <stop offset=".55" stop-color="#7fae95"/>
-            <stop offset="1" stop-color="#d4a04a"/>
-          </linearGradient>
-        </defs>
-        <circle class="rbg" cx="106" cy="106" r="92"/>
-        <circle class="rfg" id="rfg" cx="106" cy="106" r="92"/>
+  <!-- Landing -->
+  <section class="land">
+    <div class="land-orb" aria-hidden="true">
+      <!-- Warm, unmistakable swaddled sleeping baby with floating heart -->
+      <svg viewBox="0 0 80 80" fill="none">
+        <!-- Soft glowing heart above -->
+        <path d="M40 16.5c-1.8-2.6-6-2.4-6.8.7-.6 2.5 2.4 5.2 6.8 8 4.4-2.8 7.4-5.5 6.8-8-.8-3.1-5-3.3-6.8-.7Z" fill="var(--acc)" opacity=".9"/>
+        <!-- Swaddle body -->
+        <path d="M22 46c0 12 8 21 18 21s18-9 18-21c0-6-3-11-7-14H29c-4 3-7 8-7 14Z" fill="var(--accs)" stroke="var(--acc)" stroke-width="2" stroke-linejoin="round"/>
+        <!-- Swaddle wrap fold lines -->
+        <path d="M25 50c8 5 18 7 30 1M32 63c7-3 15-7 22-14" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" opacity=".55"/>
+        <!-- Baby head -->
+        <circle cx="40" cy="38" r="12.5" fill="var(--skin1)" stroke="var(--acc)" stroke-width="2"/>
+        <!-- Cute tiny hair curl -->
+        <path d="M38 26c1.5-2.6 4.8-2.4 5.2-.2.3 1.4-1.2 2.4-2.5 1.8" stroke="var(--acc)" stroke-width="1.8" stroke-linecap="round"/>
+        <!-- Peaceful sleeping eyes -->
+        <path d="M33.5 38.5c1.1 1.4 2.7 1.4 3.8 0M42.7 38.5c1.1 1.4 2.7 1.4 3.8 0" stroke="var(--ink)" stroke-width="1.6" stroke-linecap="round" opacity=".8"/>
+        <!-- Rosy cheeks -->
+        <circle cx="32.2" cy="41.5" r="2.2" fill="var(--cheek)" opacity=".55"/>
+        <circle cx="47.8" cy="41.5" r="2.2" fill="var(--cheek)" opacity=".55"/>
+        <!-- Soft smile -->
+        <path d="M38 43c1.2 1.2 2.8 1.2 4 0" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round"/>
       </svg>
-      <div class="age">
-        <div class="fruit-wrap">
-          <div class="fruit" id="fruit" aria-hidden="true"></div>
-        </div>
+    </div>
+    <h1>Every bloom<br>begins <em>quietly.</em></h1>
+    <p class="land-sub">A calm, personal space to follow your baby’s growth, your body’s seasons, and each care milestone.</p>
+    <div class="card form">
+      <div class="fld">
+        <label for="lmp">First day of last period</label>
+        <input class="inp" id="lmp" type="date">
       </div>
-      <button type="button" class="pill" id="unit">cm / g</button>
-    </div>
-
-    <div class="bn-block">
-      <div class="bn" id="bn"></div>
-      <div class="bn-cap" id="bw"></div>
-    </div>
-
-    <div class="mt">
-      <div><span class="mi" aria-hidden="true">📏</span><span><small id="lenL">Length</small><b id="len"></b></span></div>
-      <div><span class="mi" aria-hidden="true">⚖️</span><span><small>Weight</small><b id="wt"></b></span></div>
-    </div>
-
-    <p class="dev"><span class="di" aria-hidden="true">✨</span><span id="dev"></span></p>
-
-    <div class="info">
-      <div id="age"></div>
-      <div class="stats"><small>Estimated due date</small><b id="edd"></b></div>
-      <div class="chips" id="chips"></div>
-      <div class="scrubber">
-        <div class="scrub-top">
-          <span>Journey timeline</span>
-          <span id="pctLbl">0% complete</span>
-        </div>
-        <div class="scrub-track" aria-hidden="true">
-          <div class="scrub-rail"><i id="fill"></i></div>
-          <span class="scrub-now" id="scrubNow" hidden title="Current week"></span>
-        </div>
-        <div class="scrub-marks" id="scrubMarks">
-          <button type="button" data-w="0">0w · Start</button>
-          <button type="button" data-w="14">14w · T2</button>
-          <button type="button" data-w="28">28w · T3</button>
-          <button type="button" data-w="40">40w · Due</button>
-        </div>
+      <div class="fld">
+        <label for="bname">Baby’s nickname <span>Optional</span></label>
+        <input class="inp" id="bname" type="text" maxlength="24" placeholder="Little Bean, Peanut, Baby…">
       </div>
+      <button class="go" id="go">Begin our journey</button>
+      <p id="err"></p>
     </div>
   </section>
 
-  <section class="card cal">
-    <div class="ch">
-      <h3 id="ct"></h3>
-      <div class="cn">
-        <button class="tdy" id="back" hidden>Today</button>
-        <button id="prev" aria-label="Previous month">‹</button>
-        <button id="next" aria-label="Next month">›</button>
-      </div>
+  <!-- Main App -->
+  <div id="app" hidden>
+    <div class="tabs-wrap">
+      <nav class="tabs" id="tabsNav" role="tablist" aria-label="Pregnancy views">
+        <span class="tab-slider" id="tabSlider" aria-hidden="true"></span>
+        <button type="button" class="tab on" role="tab" aria-selected="true" data-tab="journey">Journey</button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-tab="calendar">Calendar</button>
+        <button type="button" class="tab" role="tab" aria-selected="false" data-tab="care">Care <span class="tab-dot" id="careDot" hidden></span></button>
+      </nav>
     </div>
-    <div class="dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
-    <div class="days" id="days"></div>
-    <div class="mon-wrap"><div class="mon" id="mon"></div></div>
-  </section>
 
-  <section class="card tl">
-    <h3>Care windows</h3>
-    <ul class="tll" id="tl"></ul>
-  </section>
-  <div class="foot">Care windows follow ICMR/MoHFW guidance and common Indian practice. Educational only; your clinician may adjust them.</div>
-</div>
+    <!-- VIEW 1: JOURNEY -->
+    <section class="view" id="v-journey">
+      <div class="card sanctuary">
+        <!-- Week Selector -->
+        <div class="wkwrap" id="wkWrap">
+          <div class="wkctrl">
+            <button type="button" class="wkbtn" id="wkPrev" aria-label="Previous week">
+              <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button type="button" class="wkmid" id="wkToggle" aria-expanded="false" aria-controls="wkPop" aria-label="Choose pregnancy week">
+              <b id="wkTitle">Week 0</b>
+              <span class="wk-season" id="wkSeason">Seed</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <button type="button" class="wkbtn" id="wkNext" aria-label="Next week">
+              <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+          <div class="wkpop" id="wkPop" role="dialog" aria-label="Select a week" hidden>
+            <div class="wkpop-head">
+              <div class="wkpop-prev">
+                <i id="wpEm" aria-hidden="true">🌱</i>
+                <span id="wpTxt">Week 0 <small>· Cycle begins</small></span>
+              </div>
+              <button type="button" class="wkpop-x" id="wkClose" aria-label="Close week picker">✕</button>
+            </div>
+            <div class="wkpop-body" id="wkPopBody"></div>
+          </div>
+        </div>
+
+        <button type="button" class="wkjump" id="wkToday" hidden>↩ Back to today</button>
+
+        <!-- Personal Headline -->
+        <div class="hero-head" id="heroHead">
+          <h2 id="heroTitle"></h2>
+          <div class="hero-meta" id="heroMeta"></div>
+        </div>
+
+        <!-- Living Womb Halo -->
+        <div class="halo-stage">
+          <div class="halo" id="halo" title="Tap to switch between Baby and Nature’s size">
+            <div class="halo-aura"></div>
+            <svg class="ring" viewBox="0 0 212 212" aria-hidden="true">
+              <circle class="rbg" cx="106" cy="106" r="96"/>
+              <circle class="rfg" id="rfg" cx="106" cy="106" r="96"/>
+            </svg>
+            <div class="halo-core" id="haloCore">
+              <div class="visual" id="visual" aria-hidden="true"></div>
+            </div>
+          </div>
+
+          <div class="mode-bar" id="modeBar" role="group" aria-label="Visual mode">
+            <span class="mode-slider" id="modeSlider" aria-hidden="true"></span>
+            <button type="button" id="mBaby" class="on">Baby</button>
+            <button type="button" id="mSize">Nature’s size</button>
+          </div>
+        </div>
+
+        <div class="stage-title" id="stageTitle"></div>
+        <div class="stage-pill" id="stagePill"></div>
+
+        <!-- Minimal Metric Strip -->
+        <div class="metrics">
+          <div class="metric">
+            <small id="lenL">Length</small>
+            <b id="len">—</b>
+          </div>
+          <div class="metric">
+            <small>Weight</small>
+            <b id="wt">—</b>
+            <button type="button" class="metric-unit" id="unit" title="Switch units">cm</button>
+          </div>
+          <div class="metric">
+            <small id="hbL">Journey</small>
+            <b id="hbVal">0%</b>
+          </div>
+        </div>
+
+        <!-- Natural Seasons Chapter Bar -->
+        <div class="seasons" id="seasons">
+          <button type="button" data-w="0"><i></i>Seed · T1</button>
+          <button type="button" data-w="14"><i></i>Bloom · T2</button>
+          <button type="button" data-w="28"><i></i>Harvest · T3</button>
+          <button type="button" data-w="40"><i></i>Due · 40w</button>
+        </div>
+      </div>
+
+      <!-- Two-Voice Editorial Whispers -->
+      <div class="whispers" id="whispers">
+        <article class="card whisper">
+          <span class="whisper-lbl"><i aria-hidden="true">✨</i><span id="babyLbl">Baby’s world</span></span>
+          <p id="dev"></p>
+        </article>
+        <article class="card whisper">
+          <span class="whisper-lbl"><i aria-hidden="true">🌿</i>Mama’s rhythm</span>
+          <p id="mama"></p>
+        </article>
+      </div>
+
+      <!-- Single Calm Care Preview -->
+      <button type="button" class="card next-care" id="nextCare" hidden>
+        <div class="nc-left">
+          <div class="nc-ic" id="ncIc" aria-hidden="true">🩺</div>
+          <div class="nc-txt">
+            <small id="ncKicker">Active care window</small>
+            <b id="ncTitle"></b>
+            <span id="ncSub"></span>
+          </div>
+        </div>
+        <span class="nc-go">Details ›</span>
+      </button>
+    </section>
+
+    <!-- VIEW 2: CALENDAR -->
+    <section class="view" id="v-calendar" hidden>
+      <div class="card cal">
+        <div class="cal-banner">
+          <div>
+            <b id="calSelTitle"></b>
+            <span id="calSelSub"></span>
+          </div>
+          <button type="button" class="pill" id="calJump">View week ›</button>
+        </div>
+        <div class="ch">
+          <h3 id="ct"></h3>
+          <div class="cn">
+            <button class="tdy" id="back" hidden>Today</button>
+            <button id="prev" aria-label="Previous month">‹</button>
+            <button id="next" aria-label="Next month">›</button>
+          </div>
+        </div>
+        <div class="dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+        <div class="days" id="days"></div>
+        <div class="mon-wrap"><div class="mon" id="mon"></div></div>
+      </div>
+    </section>
+
+    <!-- VIEW 3: CARE -->
+    <section class="view" id="v-care" hidden>
+      <div class="card care-card">
+        <div class="care-top">
+          <div>
+            <h3>Care milestones</h3>
+            <div class="care-sub" id="careSub"></div>
+          </div>
+          <div class="filters" id="careFilters">
+            <button type="button" class="flt on" data-f="all">All</button>
+            <button type="button" class="flt" data-f="now">Now</button>
+            <button type="button" class="flt" data-f="up">Upcoming</button>
+            <button type="button" class="flt" data-f="done">Done</button>
+          </div>
+        </div>
+        <ul class="tll" id="tl"></ul>
+        <div class="empty-msg" id="careEmpty" hidden>No care windows in this view.</div>
+      </div>
+      <div class="foot">Care windows follow ICMR/MoHFW guidance and common Indian practice. Educational only; your clinician may adjust them.</div>
+    </section>
+  </div>
 </main>
+
+<!-- Care Detail Sheet -->
 <div class="sheet" id="sheet" hidden>
   <div class="bd" id="bd"></div>
   <div class="pn" id="pn" role="dialog" aria-modal="true"></div>
 </div>
+
 <script>
 (()=>{
 const $=id=>document.getElementById(id);
-const st={g(k){try{return localStorage.getItem(k)}catch(e){return null}},s(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const st={
+  g(k){try{return localStorage.getItem(k)}catch(e){return null}},
+  s(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+};
 
 // week: [name, emoji, length cm, weight g]
 const R=[
@@ -518,10 +911,7 @@ const R=[
   ["Pumpkin","🎃",51.2,3400]
 ];
 
-const EMOJI_SCALE={
-  "🌱":1.14,"✨":1.12,"🫧":1.14,"🌾":1.15,"🫛":1.14,"🍇":1.06,"🍓":1.08,
-  "🥕":1.12,"🌽":1.1,"🥒":1.12,"🍌":1.06,"🫑":1.08,"🥝":1.06
-};
+const EMOJI_SCALE={"🌱":1.12,"✨":1.1,"🫧":1.12,"🌾":1.14,"🫛":1.12,"🍇":1.05,"🍓":1.06,"🥕":1.1,"🌽":1.08,"🥒":1.1,"🍌":1.05,"🫑":1.06,"🥝":1.05};
 
 const DEV=[
   "Cycle begins; the uterine lining renews.","Estrogen rises; a follicle matures.","Ovulation and fertilization: the zygote forms.","The blastocyst implants in the uterine wall.",
@@ -537,16 +927,235 @@ const DEV=[
   "Due week: fully developed and ready."
 ];
 
+function mamaNote(w){
+  if(w<4)return"A quiet beginning before you even feel a shift. Your body is gently preparing the soil for new life.";
+  if(w<7)return"Hormones are rising behind the scenes. Rest when you feel a sudden wave of tiredness—your body is building a home.";
+  if(w<10)return"Morning waves or heightened scents may arrive. Small, frequent sips and slow mornings are your quiet allies now.";
+  if(w<14)return"The foundational work of the first season is nearly complete. Many mothers feel the fog beginning to lift.";
+  if(w<18)return"Welcome to the blooming season—steadier energy, softer moods, and the first subtle roundness of your bump.";
+  if(w<22)return"Listen for tiny flutters like butterfly wings. Your voice is becoming your baby’s favorite sound.";
+  if(w<28)return"Your center of gravity is shifting as your baby grows stronger. Gentle stretches and extra pillows go a long way.";
+  if(w<32)return"Entering the golden harvest. Movements feel bolder and rhythmic—pause a moment each evening to feel them.";
+  if(w<37)return"Your pace naturally slows now. Nesting instincts rise as your body and mind prepare for the meeting ahead.";
+  return"Full term and close to meeting. Breathe deeply, keep your bag nearby, and trust the quiet strength of your body.";
+}
+
+// Developmental activity caption for Baby mode (concise, warm, accurate)
+function babyActivity(w){
+  if(w<4)return"Quiet cellular bloom";
+  if(w<6)return"First heartbeat spark";
+  if(w<8)return"Heart beating · Tiny limb buds";
+  if(w<10)return"Brain & little fingers forming";
+  if(w<14)return"First stretches & tiny curls";
+  if(w<18)return"Active stretches & swimming";
+  if(w<22)return"First playful kicks & flutters";
+  if(w<28)return"Listening to your voice & kicking";
+  if(w<32)return"Head-down · Dreaming & blinking";
+  if(w<36)return"Cozy kicks · Lungs practising";
+  return"Snuggly full-term · Ready to meet";
+}
+
+// Detailed, living, cute & developmentally accurate week-by-week baby illustrations
+function babyIllustration(w){
+  const a="var(--acc)", s1="var(--skin1)", s2="var(--skin2)", ch="var(--cheek)", ink="var(--ink)";
+  const hbDur=w<8?"1.02s":w<14?"0.78s":w<28?"0.88s":"0.94s";
+  const uid="b"+w;
+
+  const defs=`<defs>
+    <radialGradient id="${uid}sk" cx="38%" cy="32%" r="68%">
+      <stop offset="0%" stop-color="${s1}"/>
+      <stop offset="100%" stop-color="${s2}"/>
+    </radialGradient>
+    <radialGradient id="${uid}gl" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="${a}" stop-opacity=".35"/>
+      <stop offset="100%" stop-color="${a}" stop-opacity="0"/>
+    </radialGradient>
+  </defs>`;
+
+  const bubbles=`<g fill="${a}">
+    <circle class="bubble" cx="36" cy="48" r="2.2" opacity=".4"/>
+    <circle class="bubble b2" cx="126" cy="58" r="1.8" opacity=".35"/>
+    <circle class="bubble b3" cx="118" cy="118" r="2.5" opacity=".35"/>
+  </g>`;
+
+  const heart=(x,y,r=3.3)=>`<g style="--hb-dur:${hbDur}">
+    <circle class="hb-ring" cx="${x}" cy="${y}" r="${r+2.2}" fill="none" stroke="${a}" stroke-width="1.2"/>
+    <path class="hb-dot" d="M${x} ${y+r*.95}c-${r*1.25}-${r*.9}-${r*1.85}-${r*1.7}-${r*1.2}-${r*2.4}.55-.6 1.2-.2 1.2.5 0-.7.65-1.1 1.2-.5.65.7.05 1.5-1.2 2.4Z" fill="${a}"/>
+  </g>`;
+
+  // Weeks 0–3: Radiant cellular seed / blastocyst softly pulsing
+  if(w<4)return`<svg class="baby-art" viewBox="0 0 160 160" fill="none">${defs}${bubbles}
+    <circle cx="80" cy="80" r="38" fill="url(#${uid}gl)" opacity=".55"/>
+    <circle cx="80" cy="80" r="26" stroke="${a}" stroke-width="1.3" stroke-dasharray="3 5" opacity=".45"/>
+    <g class="seed-orb">
+      <circle cx="80" cy="80" r="15.5" fill="url(#${uid}sk)" stroke="${a}" stroke-width="1.8"/>
+      <circle cx="74" cy="76" r="4.8" fill="${a}" opacity=".26"/>
+      <circle cx="86" cy="77" r="4.2" fill="${a}" opacity=".22"/>
+      <circle cx="80" cy="86" r="4.5" fill="${a}" opacity=".32"/>
+      <circle cx="80" cy="80" r="3" fill="${a}"/>
+    </g>
+  </svg>`;
+
+  // Weeks 4–6: Tiny curled embryo + yolk sac + first beating heart spark
+  if(w<7)return`<svg class="baby-art" viewBox="0 0 160 160" fill="none">${defs}${bubbles}
+    <circle cx="80" cy="80" r="44" fill="${a}" opacity=".07"/>
+    <circle cx="80" cy="80" r="35" stroke="${a}" stroke-width="1.2" opacity=".2"/>
+    <g transform="translate(80 80) scale(.76) translate(-80 -80)">
+      <!-- Nourishing yolk sac -->
+      <circle cx="57" cy="96" r="9.5" fill="${s2}" stroke="${a}" stroke-width="1.6" opacity=".75"/>
+      <!-- Curled embryo bean -->
+      <path d="M84 44c18 0 30 15 28 35-2 21-17 36-34 35-12-1-20-9-18-19 2-8 10-10 17-7 7 3 12-5 11-15-1-9-8-14-16-14-7 0-12-4-10-10 2-4 10-5 22-5Z" fill="url(#${uid}sk)" stroke="${a}" stroke-width="2.4" stroke-linejoin="round"/>
+      <!-- Soft neural/brain shimmer -->
+      <circle class="brain-glow" cx="84" cy="54" r="7" fill="url(#${uid}gl)"/>
+      <circle cx="76" cy="61" r="2" fill="${ink}" opacity=".7"/>
+      <circle cx="79" cy="67" r="2.8" fill="${ch}" opacity=".5"/>
+      ${w>=5?heart(89,80,3.8):""}
+    </g>
+  </svg>`;
+
+  // Weeks 7–9: Sweet baby-bean with glowing brain, wiggling arm/leg buds, beating heart
+  if(w<10)return`<svg class="baby-art" viewBox="0 0 160 160" fill="none">${defs}${bubbles}
+    <circle cx="80" cy="80" r="50" fill="${a}" opacity=".07"/>
+    <g transform="translate(80 80) scale(.8) translate(-80 -80)">
+      <path d="M68 96c-14 4-23 13-25 26" stroke="${a}" stroke-width="2.2" stroke-linecap="round" opacity=".35"/>
+      <path d="M86 64c19 5 26 23 20 40-5 14-19 21-32 16-10-4-14-14-9-22 3-5 8-7 9-13 1-7 4-23 12-21Z" fill="url(#${uid}sk)" stroke="${a}" stroke-width="2.4"/>
+      <!-- Round baby head + growing brain glow -->
+      <circle cx="78" cy="52" r="22" fill="url(#${uid}sk)" stroke="${a}" stroke-width="2.4"/>
+      <path class="brain-glow" d="M68 41c5-6 15-6 20 0 3 4 2 9-3 10-5 1-14 1-17-3-2-2-2-5 0-7Z" fill="${a}" opacity=".28"/>
+      <path d="M66 53c1.8 1.8 4.4 1.8 6.2 0" stroke="${ink}" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+      <circle cx="68" cy="59" r="3.4" fill="${ch}" opacity=".55"/>
+      <path d="M62 62.5c1.5 1.3 3.4 1.3 4.8 0" stroke="${a}" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Wiggling paddle arm bud & bobbing leg bud -->
+      <g class="arm-wiggle">
+        <ellipse cx="66" cy="81" rx="7.5" ry="4.8" transform="rotate(-18 66 81)" fill="${s1}" stroke="${a}" stroke-width="2.1"/>
+      </g>
+      <g class="leg-stretch">
+        <ellipse cx="69" cy="112" rx="8" ry="5.2" transform="rotate(-22 69 112)" fill="${s2}" stroke="${a}" stroke-width="2.1"/>
+      </g>
+      ${heart(89,87,3.6)}
+    </g>
+  </svg>`;
+
+  // Weeks 10–40: Unified, super-cute living baby with stage-accurate organs, limbs & playful movements!
+  const sc=w<14?.80:w<18?.86:w<22?.92:w<28?.97:w<36?1.02:1.07;
+  const flip=w>=28; // Turns head-down in Trimester 3
+  const rot=flip?"rotate(180 80 80)":"";
+  const isSwim=w>=14&&w<24;
+  const isKick=w>=18&&w<36;
+  const isStretch=w>=10&&w<18;
+  const hasSound=w>=22&&w<32;
+  const hasLungs=w>=24;
+  const hasBrainSpark=w<18||(w>=27&&w<34);
+  const canBlink=w>=28&&w<37;
+  const isSuck=w>=18&&w<28||w>=36;
+
+  const glowR=Math.round(52+sc*14);
+  const fullTermHalo=w>=36?`<circle cx="80" cy="80" r="66" stroke="${a}" stroke-width="1.4" stroke-dasharray="3 6" opacity=".34"/>`:"";
+
+  // Hair curl thickens as baby grows
+  const hair=w<14
+    ?`<path d="M77 27c2.6-3.5 7-2.8 7 1.1" stroke="${a}" stroke-width="1.9" stroke-linecap="round"/>`
+    :w<24
+    ?`<path d="M75 26.5c3.2-4.5 9-3.5 8.5 1.5" stroke="${a}" stroke-width="2.1" stroke-linecap="round"/>`
+    :`<path d="M74 26.5c3.2-4.5 9-3.5 8.5 1.5M81 27.5c2.6-3.2 6.8-2 6.2 1.6" stroke="${a}" stroke-width="2.1" stroke-linecap="round"/>`;
+
+  // Subtle luminous brain motif inside crown
+  const brainEl=hasBrainSpark?`<g class="brain-glow">
+    <path d="M68 38c4-5 14-5 19 0 3 3 2 8-3 9-4 1-13 1-16-2-2-2-2-5 0-7Z" fill="${a}" opacity=".26"/>
+    <path d="M72 41c2-2 5-2 7 0M77 44c2-1.5 4.5-1.5 6.5 0" stroke="${a}" stroke-width="1.2" stroke-linecap="round" opacity=".55"/>
+  </g>`:"";
+
+  // Subtle breathing lungs glow from Week 24+ (surfactant & breathing practice)
+  const lungEl=hasLungs?`<g class="lung-glow">
+    <ellipse cx="94" cy="80" rx="5.2" ry="7.2" transform="rotate(-12 94 80)" fill="${a}" opacity=".22"/>
+    <ellipse cx="86" cy="81" rx="4.5" ry="6.2" transform="rotate(10 86 81)" fill="${a}" opacity=".18"/>
+  </g>`:"";
+
+  // Soft sound waves near baby's ear (Weeks 22–31: hearing mom's voice!)
+  const soundEl=hasSound?`<g stroke="${a}" stroke-width="1.6" stroke-linecap="round" fill="none">
+    <path class="sound-w1" d="M107 43c3 3.5 3 9 0 12.5"/>
+    <path class="sound-w2" d="M113 40c4.2 5 4.2 13.5 0 18.5"/>
+  </g>`:"";
+
+  // Playful kick ripple arcs where tiny foot taps the womb wall
+  const kickRippleEl=isKick?`<g class="kick-ripple" stroke="${a}" stroke-width="1.7" stroke-linecap="round" fill="none">
+    <path d="M46 108c-4 4-4 11 0 15"/>
+    <path d="M40 105c-5.5 6-5.5 15 0 21" opacity=".55"/>
+  </g>`:"";
+
+  // Tiny fingers detail on hand (from Week 10+)
+  const armClass=isSuck?"arm-suck":"arm-wiggle";
+  const leg1Class=isKick?"leg-kick":isStretch?"leg-stretch":"";
+  const leg2Class=isKick?"leg-kick2":isStretch?"leg-stretch":"";
+  const eyeClass=canBlink?"eye-blink":"";
+
+  return`<svg class="baby-art${isSwim?" active-swim":""}" viewBox="0 0 160 160" fill="none">${defs}${bubbles}
+    <circle cx="80" cy="80" r="${glowR}" fill="${a}" opacity="${w>=36?.11:.08}"/>
+    ${fullTermHalo}
+    <g transform="translate(80 80) scale(${sc}) translate(-80 -80) ${rot}">
+      <!-- Gentle umbilical cord -->
+      <path d="M64 98c-14 7-22 17-23 28" stroke="${a}" stroke-width="2.2" stroke-linecap="round" opacity=".34"/>
+
+      <!-- Back playful kicking/stretching leg & foot -->
+      <g class="${leg2Class}">
+        <ellipse cx="63" cy="118" rx="8.8" ry="5.4" transform="rotate(-14 63 118)" fill="${s2}" stroke="${a}" stroke-width="2"/>
+        <circle cx="54.5" cy="119" r="1.4" fill="${a}" opacity=".55"/>
+      </g>
+
+      <!-- Smooth continuous cozy C-shaped body -->
+      <path d="M88 64c21 7 29 29 21 49-7 17-25 25-40 17-9-5-12-15-5-22 5-5 12-4 15 1 2-6 0-15-6-22-4-5-2-25 15-23Z" fill="url(#${uid}sk)" stroke="${a}" stroke-width="2.3" stroke-linejoin="round"/>
+
+      <!-- Subtle lungs glow (Weeks 24+) -->
+      ${lungEl}
+
+      <!-- Front playful kicking/stretching leg & tiny toes -->
+      <g class="${leg1Class}">
+        <path d="M79 102c-12 2-17 11-11 18 5 6 16 4 21-3" fill="${s1}" stroke="${a}" stroke-width="2.2" stroke-linecap="round"/>
+        <ellipse cx="59.5" cy="114" rx="8.2" ry="5" transform="rotate(-24 59.5 114)" fill="${s1}" stroke="${a}" stroke-width="2"/>
+        <circle cx="51.8" cy="115.8" r="1.3" fill="${a}" opacity=".6"/>
+        <circle cx="53.4" cy="118.4" r="1.1" fill="${a}" opacity=".5"/>
+      </g>
+      ${kickRippleEl}
+
+      <!-- Cute round baby head -->
+      <circle cx="77" cy="49" r="22.8" fill="url(#${uid}sk)" stroke="${a}" stroke-width="2.3"/>
+      <!-- Soft glowing brain development motif -->
+      ${brainEl}
+      <!-- Sweet hair curl -->
+      ${hair}
+      <!-- Tiny cute ear + sound waves -->
+      <path d="M97.8 48c3 0 4.2 3.2 2 6" stroke="${a}" stroke-width="1.9" stroke-linecap="round"/>
+      ${soundEl}
+      <!-- Peaceful eye (blinks gently in early T3) -->
+      <path class="${eyeClass}" d="M62.5 49.5c2 2.2 5 2.2 7 0" stroke="${ink}" stroke-width="2" stroke-linecap="round" opacity=".82"/>
+      <!-- Rosy blush cheek -->
+      <ellipse cx="66.5" cy="56" rx="${w>=20?4.3:3.5}" ry="${w>=20?2.9:2.3}" fill="${ch}" opacity=".58"/>
+      <!-- Soft happy smile -->
+      <path d="M60 59.5c1.8 1.6 4.2 1.6 5.8 0" stroke="${a}" stroke-width="1.8" stroke-linecap="round"/>
+
+      <!-- Animated arm & tiny hand (waving / near chin / thumb-sucking) -->
+      <g class="${armClass}">
+        <path d="M86 78c-11 5-22 1-21-8 .5-5 6.5-6.5 12-3" fill="${s1}" stroke="${a}" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="64.5" cy="69" r="5" fill="${s1}" stroke="${a}" stroke-width="2"/>
+        <path d="M60.8 66.5l-1.5-1.2M62.5 64.5l-.8-1.6M65.2 64l.2-1.7" stroke="${a}" stroke-width="1.3" stroke-linecap="round" opacity=".65"/>
+      </g>
+
+      <!-- Warm beating heart with gestational tempo -->
+      ${heart(92,88,3.6)}
+    </g>
+  </svg>`;
+}
+
 const SVG_FRUITS={
-  Raspberry:`<svg viewBox="0 0 180 180"><g fill="#c83e5b"><circle cx="90" cy="64" r="19"/><circle cx="67" cy="76" r="19"/><circle cx="113" cy="76" r="19"/><circle cx="62" cy="100" r="19"/><circle cx="90" cy="94" r="20"/><circle cx="118" cy="100" r="19"/><circle cx="74" cy="122" r="18"/><circle cx="106" cy="122" r="18"/><circle cx="90" cy="136" r="17"/></g><g fill="#e56984" opacity=".45"><circle cx="85" cy="59" r="6"/><circle cx="63" cy="72" r="5"/><circle cx="109" cy="72" r="5"/><circle cx="85" cy="90" r="6"/></g><path d="M90 50c-14-14-30-12-36-2 12 4 22 4 36 2Zm0 0c14-14 30-12 36-2-12 4-22 4-36 2Zm0 0c-3-16 3-26 12-30-2 12-6 22-12 30Z" fill="#5e8757"/></svg>`,
-  Fig:`<svg viewBox="0 0 180 180"><path d="M90 30c9 22 48 44 48 80 0 28-21 46-48 46s-48-18-48-46c0-36 39-58 48-80Z" fill="#7c4e74"/><path d="M90 42c6 18 35 37 35 67 0 21-15 35-35 35" fill="none" stroke="#a8769f" stroke-width="8" stroke-linecap="round" opacity=".35"/><path d="M90 30c-2-10 4-16 10-18" stroke="#5f7c54" stroke-width="6" stroke-linecap="round" fill="none"/></svg>`,
-  Plum:`<svg viewBox="0 0 180 180"><ellipse cx="90" cy="102" rx="54" ry="56" fill="#6b4282"/><path d="M90 46c-12 28-12 84 0 112" stroke="#4f2d63" stroke-width="5" fill="none" opacity=".45"/><ellipse cx="68" cy="84" rx="11" ry="20" transform="rotate(-18 68 84)" fill="#a074b8" opacity=".35"/><path d="M90 48c4-14 16-22 30-19-3 14-15 21-30 19Z" fill="#628958"/><path d="M90 48V28" stroke="#6c5042" stroke-width="6" stroke-linecap="round"/></svg>`,
-  Pomegranate:`<svg viewBox="0 0 180 180"><path d="M74 44l6-18 10 10 10-10 6 18Z" fill="#a82f3e"/><circle cx="90" cy="102" r="56" fill="#bf3646"/><ellipse cx="68" cy="84" rx="12" ry="22" transform="rotate(-22 68 84)" fill="#ea7581" opacity=".35"/><circle cx="110" cy="116" r="14" fill="#8f2130" opacity=".25"/></svg>`,
-  "Sweet potato":`<svg viewBox="0 0 180 180"><path d="M32 126c14-42 52-76 112-80 10 20-8 72-54 92-28 12-48 4-58-12Z" fill="#c96b3b"/><path d="M58 112c18-24 44-42 74-48" stroke="#e49464" stroke-width="8" stroke-linecap="round" fill="none" opacity=".4"/><path d="M74 128c14-10 30-22 44-36" stroke="#994b24" stroke-width="5" stroke-linecap="round" fill="none" opacity=".3"/></svg>`,
-  "Butternut squash":`<svg viewBox="0 0 180 180"><path d="M90 36c20 0 30 14 30 34 0 16 24 22 24 50 0 24-22 38-54 38s-54-14-54-38c0-28 24-34 24-50 0-20 10-34 30-34Z" fill="#dd9140"/><ellipse cx="70" cy="116" rx="11" ry="20" transform="rotate(-12 70 116)" fill="#f5bc77" opacity=".45"/><path d="M90 38c0-10 4-16 10-18" stroke="#6f7d4c" stroke-width="8" stroke-linecap="round" fill="none"/></svg>`,
-  Papaya:`<svg viewBox="0 0 180 180"><path d="M92 30c28 2 50 38 44 82-5 32-24 46-48 46s-44-16-46-48c-2-42 22-82 50-80Z" fill="#e58c3a"/><ellipse cx="90" cy="104" rx="22" ry="34" fill="#f5b864" opacity=".55"/><g fill="#3a2923"><circle cx="84" cy="96" r="4"/><circle cx="96" cy="96" r="4"/><circle cx="90" cy="108" r="4"/><circle cx="84" cy="118" r="4"/><circle cx="96" cy="118" r="4"/></g><path d="M92 32V20" stroke="#628554" stroke-width="6" stroke-linecap="round"/></svg>`,
-  Leek:`<svg viewBox="0 0 180 180"><path d="M74 154h32l-4-68H78Z" fill="#eef1e4"/><path d="M78 86L50 32c14-4 24 6 32 24l8-32c10 0 14 12 12 32 10-18 20-26 32-22l-32 52Z" fill="#6b9e5e"/><path d="M76 154c4 6 24 6 28 0" stroke="#c8cfbc" stroke-width="5" stroke-linecap="round" fill="none"/></svg>`,
-  Rhubarb:`<svg viewBox="0 0 180 180"><path d="M78 156L62 60h18l12 96Z" fill="#d95f6c"/><path d="M92 156l14-96h18l-18 96Z" fill="#c94b5a"/><path d="M62 62c-18-10-20-28 0-34 12-4 22 6 26 16 6-14 20-20 34-14 14 6 14 24-4 32Z" fill="#648d59"/></svg>`
+  Raspberry:`<svg class="fruit-svg" viewBox="0 0 180 180"><g fill="#c83e5b"><circle cx="90" cy="64" r="19"/><circle cx="67" cy="76" r="19"/><circle cx="113" cy="76" r="19"/><circle cx="62" cy="100" r="19"/><circle cx="90" cy="94" r="20"/><circle cx="118" cy="100" r="19"/><circle cx="74" cy="122" r="18"/><circle cx="106" cy="122" r="18"/><circle cx="90" cy="136" r="17"/></g><g fill="#e56984" opacity=".45"><circle cx="85" cy="59" r="6"/><circle cx="63" cy="72" r="5"/><circle cx="109" cy="72" r="5"/><circle cx="85" cy="90" r="6"/></g><path d="M90 50c-14-14-30-12-36-2 12 4 22 4 36 2Zm0 0c14-14 30-12 36-2-12 4-22 4-36 2Zm0 0c-3-16 3-26 12-30-2 12-6 22-12 30Z" fill="#5e8757"/></svg>`,
+  Fig:`<svg class="fruit-svg" viewBox="0 0 180 180"><path d="M90 30c9 22 48 44 48 80 0 28-21 46-48 46s-48-18-48-46c0-36 39-58 48-80Z" fill="#7c4e74"/><path d="M90 42c6 18 35 37 35 67 0 21-15 35-35 35" fill="none" stroke="#a8769f" stroke-width="8" stroke-linecap="round" opacity=".35"/><path d="M90 30c-2-10 4-16 10-18" stroke="#5f7c54" stroke-width="6" stroke-linecap="round" fill="none"/></svg>`,
+  Plum:`<svg class="fruit-svg" viewBox="0 0 180 180"><ellipse cx="90" cy="102" rx="54" ry="56" fill="#6b4282"/><path d="M90 46c-12 28-12 84 0 112" stroke="#4f2d63" stroke-width="5" fill="none" opacity=".45"/><ellipse cx="68" cy="84" rx="11" ry="20" transform="rotate(-18 68 84)" fill="#a074b8" opacity=".35"/><path d="M90 48c4-14 16-22 30-19-3 14-15 21-30 19Z" fill="#628958"/><path d="M90 48V28" stroke="#6c5042" stroke-width="6" stroke-linecap="round"/></svg>`,
+  Pomegranate:`<svg class="fruit-svg" viewBox="0 0 180 180"><path d="M74 44l6-18 10 10 10-10 6 18Z" fill="#a82f3e"/><circle cx="90" cy="102" r="56" fill="#bf3646"/><ellipse cx="68" cy="84" rx="12" ry="22" transform="rotate(-22 68 84)" fill="#ea7581" opacity=".35"/><circle cx="110" cy="116" r="14" fill="#8f2130" opacity=".25"/></svg>`,
+  "Sweet potato":`<svg class="fruit-svg" viewBox="0 0 180 180"><path d="M32 126c14-42 52-76 112-80 10 20-8 72-54 92-28 12-48 4-58-12Z" fill="#c96b3b"/><path d="M58 112c18-24 44-42 74-48" stroke="#e49464" stroke-width="8" stroke-linecap="round" fill="none" opacity=".4"/><path d="M74 128c14-10 30-22 44-36" stroke="#994b24" stroke-width="5" stroke-linecap="round" fill="none" opacity=".3"/></svg>`,
+  "Butternut squash":`<svg class="fruit-svg" viewBox="0 0 180 180"><path d="M90 36c20 0 30 14 30 34 0 16 24 22 24 50 0 24-22 38-54 38s-54-14-54-38c0-28 24-34 24-50 0-20 10-34 30-34Z" fill="#dd9140"/><ellipse cx="70" cy="116" rx="11" ry="20" transform="rotate(-12 70 116)" fill="#f5bc77" opacity=".45"/><path d="M90 38c0-10 4-16 10-18" stroke="#6f7d4c" stroke-width="8" stroke-linecap="round" fill="none"/></svg>`,
+  Papaya:`<svg class="fruit-svg" viewBox="0 0 180 180"><path d="M92 30c28 2 50 38 44 82-5 32-24 46-48 46s-44-16-46-48c-2-42 22-82 50-80Z" fill="#e58c3a"/><ellipse cx="90" cy="104" rx="22" ry="34" fill="#f5b864" opacity=".55"/><g fill="#3a2923"><circle cx="84" cy="96" r="4"/><circle cx="96" cy="96" r="4"/><circle cx="90" cy="108" r="4"/><circle cx="84" cy="118" r="4"/><circle cx="96" cy="118" r="4"/></g><path d="M92 32V20" stroke="#628554" stroke-width="6" stroke-linecap="round"/></svg>`,
+  Leek:`<svg class="fruit-svg" viewBox="0 0 180 180"><path d="M74 154h32l-4-68H78Z" fill="#eef1e4"/><path d="M78 86L50 32c14-4 24 6 32 24l8-32c10 0 14 12 12 32 10-18 20-26 32-22l-32 52Z" fill="#6b9e5e"/><path d="M76 154c4 6 24 6 28 0" stroke="#c8cfbc" stroke-width="5" stroke-linecap="round" fill="none"/></svg>`,
+  Rhubarb:`<svg class="fruit-svg" viewBox="0 0 180 180"><path d="M78 156L62 60h18l12 96Z" fill="#d95f6c"/><path d="M92 156l14-96h18l-18 96Z" fill="#c94b5a"/><path d="M62 62c-18-10-20-28 0-34 12-4 22 6 26 16 6-14 20-20 34-14 14 6 14 24-4 32Z" fill="#648d59"/></svg>`
 };
 
 const CARE=[
@@ -570,8 +1179,18 @@ const CARE=[
 
 const MS=[0,35,63,98,126,161,196,224,252];
 const LBL={0:"LMP",98:"T2",196:"T3",259:"Term",280:"EDD"};
-let lmp,edd,sel,view,imp=st.g("bloom-unit")==="imp";
-let lastBabyW=-1,popTimer=null,popOpen=false;
+const SEASONS={1:"Seed",2:"Bloom",3:"Harvest"};
+const TAB_ORDER={journey:0,calendar:1,care:2};
+
+let lmp,edd,sel,view;
+let imp=st.g("bloom-unit")==="imp";
+let haloMode=st.g("bloom-halo")==="size"?"size":"baby";
+let babyName=(st.g("bloom-name")||"").trim();
+let activeTab="journey";
+let careFilter="all";
+let popOpen=false,visSwapTimer=null,lastVisKey="",lastRenderedW=-1;
+let checks={};
+try{checks=JSON.parse(st.g("bloom-checks")||"{}")}catch(e){checks={}}
 
 const U=d=>new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));
 const today=()=>{const n=new Date();return new Date(Date.UTC(n.getFullYear(),n.getMonth(),n.getDate()))};
@@ -582,6 +1201,7 @@ const parse=s=>{if(!/^\d{4}-\d{2}-\d{2}$/.test(s||""))return null;const[y,m,d]=s
 const iso=d=>d.toISOString().slice(0,10);
 const fmt=(d,o={month:"short",day:"numeric",year:"numeric"})=>new Intl.DateTimeFormat(undefined,{...o,timeZone:"UTC"}).format(d);
 const inW=d=>d>=lmp&&d<=edd;
+const displayName=()=>babyName||"Baby";
 
 function info(d){
   const s=Math.max(0,Math.min(280,diff(lmp,d)));
@@ -589,43 +1209,145 @@ function info(d){
   return{s,w:Math.floor(s/7),d:s%7,m,tri:s<98?1:s<196?2:3};
 }
 
-// theme
+// Helper for liquid sliding pills
+function positionSlider(container,slider,activeEl,instant=false){
+  if(!container||!slider||!activeEl)return;
+  const cr=container.getBoundingClientRect();
+  const ar=activeEl.getBoundingClientRect();
+  if(!ar.width)return;
+  if(instant)slider.style.transition="none";
+  slider.style.width=ar.width+"px";
+  slider.style.transform=`translateX(${ar.left-cr.left}px)`;
+  if(instant){void slider.offsetWidth;slider.style.transition=""}
+}
+
+// Silky Light <-> Dark Mode with Circular View Transition Reveal
 const dark=()=>{const t=document.documentElement.dataset.theme;return t?t==="dark":matchMedia("(prefers-color-scheme:dark)").matches};
-const th=()=>{$("thm").textContent=dark()?"☀️":"🌙"};
+const syncThemeIcon=()=>{$("thmIcon").textContent=dark()?"☀️":"🌙"};
 if(["dark","light"].includes(st.g("bloom-theme")))document.documentElement.dataset.theme=st.g("bloom-theme");
-th();
-$("thm").onclick=()=>{const n=dark()?"light":"dark";document.documentElement.dataset.theme=n;st.s("bloom-theme",n);th()};
-$("unit").onclick=()=>{imp=!imp;st.s("bloom-unit",imp?"imp":"met");baby(info(sel).w,true)};
+syncThemeIcon();
+
+let themeFadeTimer=null;
+$("thm").onclick=()=>{
+  const nextTheme=dark()?"light":"dark";
+  const btn=$("thm");
+  btn.classList.add("spin");
+  setTimeout(()=>btn.classList.remove("spin"),260);
+  clearTimeout(themeFadeTimer);
+  document.documentElement.classList.add("theme-fade");
+  document.documentElement.dataset.theme=nextTheme;
+  st.s("bloom-theme",nextTheme);
+  syncThemeIcon();
+  themeFadeTimer=setTimeout(()=>document.documentElement.classList.remove("theme-fade"),660);
+};
+
+// Butter-smooth Tabs with Directional Harmony
+function switchTab(t,instant=false){
+  const prevIdx=TAB_ORDER[activeTab]??0;
+  const nextIdx=TAB_ORDER[t]??0;
+  activeTab=t;
+  let activeBtn=null;
+  document.querySelectorAll(".tab").forEach(b=>{
+    const on=b.dataset.tab===t;
+    b.classList.toggle("on",on);
+    b.setAttribute("aria-selected",on?"true":"false");
+    if(on)activeBtn=b;
+  });
+  positionSlider($("tabsNav"),$("tabSlider"),activeBtn,instant);
+  ["journey","calendar","care"].forEach(k=>{
+    const el=$("v-"+k);
+    el.classList.remove("enter-right","enter-left","enter-fade");
+    if(k===t){
+      el.hidden=false;
+      if(!instant){
+        void el.offsetWidth;
+        el.classList.add(nextIdx>prevIdx?"enter-right":nextIdx<prevIdx?"enter-left":"enter-fade");
+      }
+    }else el.hidden=true;
+  });
+  if(t==="journey")requestAnimationFrame(()=>positionSlider($("modeBar"),$("modeSlider"),haloMode==="baby"?$("mBaby"):$("mSize"),true));
+  if(t==="calendar"&&lmp&&sel&&view)centerMon(displayMonthIdx(),true);
+}
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>switchTab(b.dataset.tab));
+
+// Butter-smooth Halo Mode Toggle (Baby <-> Nature's size)
+function setHaloMode(m,animate=true){
+  haloMode=m;st.s("bloom-halo",m);
+  const bBaby=$("mBaby"),bSize=$("mSize");
+  bBaby.classList.toggle("on",m==="baby");
+  bSize.classList.toggle("on",m==="size");
+  positionSlider($("modeBar"),$("modeSlider"),m==="baby"?bBaby:bSize,!animate);
+  $("halo").title=m==="baby"?"Tap to switch to Nature’s size":"Tap to switch to Baby";
+  if(lmp&&sel){
+    const w=info(sel).w;
+    renderVisual(w,animate);
+    renderMetrics(w);
+  }
+}
+$("mBaby").onclick=()=>setHaloMode("baby",true);
+$("mSize").onclick=()=>setHaloMode("size",true);
+$("halo").onclick=()=>{
+  const h=document.createElement("span");
+  h.className="tap-heart";
+  h.textContent="♥";
+  h.style.left=(46+Math.random()*8)+"%";
+  h.style.top="36%";
+  $("halo").appendChild(h);
+  setTimeout(()=>h.remove(),980);
+  setHaloMode(haloMode==="baby"?"size":"baby",true);
+};
+$("unit").onclick=()=>{imp=!imp;st.s("bloom-unit",imp?"imp":"met");if(lmp&&sel)renderMetrics(info(sel).w)};
 
 const t0=today();$("lmp").max=iso(t0);$("lmp").min=iso(add(t0,-294));
 
-function baby(w,force){
-  const[n,e,l,g]=R[w];
-  $("unit").textContent=imp?"in / lb":"cm / g";
-  $("bn").textContent=n;
-  $("bw").textContent=w<4?"Early stage":"Size of a "+n.toLowerCase();
-  $("dev").textContent=DEV[w];
+function buildVisualHTML(w){
+  const[n,e]=R[w];
+  if(haloMode==="baby")return babyIllustration(w);
+  if(SVG_FRUITS[n])return SVG_FRUITS[n];
+  const sc=EMOJI_SCALE[e]||1;
+  return`<span class="fruit-em" style="--sc:${sc}">${e}</span>`;
+}
+
+function renderVisual(w,animate){
+  const key=w+":"+haloMode;
+  if(key===lastVisKey)return;
+  lastVisKey=key;
+  const v=$("visual");
+  clearTimeout(visSwapTimer);
+  if(!animate||!v.innerHTML){
+    v.classList.remove("out");
+    v.innerHTML=buildVisualHTML(w);
+    return;
+  }
+  v.classList.add("out");
+  visSwapTimer=setTimeout(()=>{
+    v.innerHTML=buildVisualHTML(w);
+    requestAnimationFrame(()=>v.classList.remove("out"));
+  },160);
+}
+
+function renderMetrics(w){
+  const[n,,l,g]=R[w];
+  $("unit").textContent=imp?"in":"cm";
   $("lenL").textContent=w>=20?"Height":"Length";
   $("len").textContent=w<4?"—":imp?(l/2.54).toFixed(1)+" in":l.toFixed(1)+" cm";
   const oz=g*.03527396;
   $("wt").textContent=w<4?"—":imp?(oz<16?oz.toFixed(oz<1?2:1)+" oz":Math.floor(oz/16)+" lb "+Math.round(oz%16)+" oz"):g<1000?(g<10?g.toFixed(1):Math.round(g))+" g":(g/1000).toFixed(2)+" kg";
-
-  if(w!==lastBabyW||force){
-    lastBabyW=w;
-    const f=$("fruit");
-    if(SVG_FRUITS[n]){
-      f.innerHTML=SVG_FRUITS[n];
-    }else{
-      const sc=EMOJI_SCALE[e]||1;
-      f.innerHTML=`<span style="--sc:${sc}">${e}</span>`;
-    }
-    if(!force){
-      clearTimeout(popTimer);
-      f.classList.remove("pop");
-      void f.offsetWidth;
-      f.classList.add("pop");
-      popTimer=setTimeout(()=>f.classList.remove("pop"),240);
-    }
+  if(w>=6){
+    $("hbL").textContent="Heartbeat";
+    const bpm=w<9?"~120 bpm":w<14?"~160 bpm":w<28?"~145 bpm":"~135 bpm";
+    $("hbVal").textContent="♥ "+bpm;
+  }else{
+    $("hbL").textContent="Progress";
+    $("hbVal").textContent=Math.round(info(sel).s/280*100)+"%";
+  }
+  $("stageTitle").innerHTML=w<4?`<span>${n}</span>`:`Size of a <span>${n.toLowerCase()}</span>`;
+  const pill=$("stagePill");
+  if(haloMode==="baby"){
+    pill.hidden=false;
+    pill.innerHTML=`<i></i>${babyActivity(w)}`;
+  }else{
+    pill.hidden=true;
   }
 }
 
@@ -634,101 +1356,109 @@ function setPopPreview(w){
   $("wpEm").textContent=e||"🌸";
   $("wpTxt").innerHTML=`Week ${w} <small>· ${n}</small>`;
 }
-
 function openWkPop(){
-  if(popOpen)return;
-  popOpen=true;
-  const w=info(sel).w;
-  setPopPreview(w);
-  $("wkPop").hidden=false;
-  $("wkToggle").setAttribute("aria-expanded","true");
+  if(popOpen)return;popOpen=true;
+  setPopPreview(info(sel).w);
+  $("wkPop").hidden=false;$("wkToggle").setAttribute("aria-expanded","true");
   requestAnimationFrame(()=>$("wkPop").classList.add("open"));
 }
 function closeWkPop(){
-  if(!popOpen)return;
-  popOpen=false;
-  $("wkPop").classList.remove("open");
-  $("wkToggle").setAttribute("aria-expanded","false");
-  setTimeout(()=>{if(!popOpen)$("wkPop").hidden=true},200);
+  if(!popOpen)return;popOpen=false;
+  $("wkPop").classList.remove("open");$("wkToggle").setAttribute("aria-expanded","false");
+  setTimeout(()=>{if(!popOpen)$("wkPop").hidden=true},220);
 }
 
 function centerMon(activeMonthIdx,instant){
   const mon=$("mon");
-  const btns=mon.querySelectorAll("button");
   let activeBtn=null;
-  btns.forEach(b=>{
+  mon.querySelectorAll("button").forEach(b=>{
     const on=+b.dataset.m===activeMonthIdx;
-    b.classList.toggle("on",on);
-    if(on)activeBtn=b;
+    b.classList.toggle("on",on);if(on)activeBtn=b;
   });
   if(!activeBtn)return;
   requestAnimationFrame(()=>{
     const maxScroll=mon.scrollWidth-mon.clientWidth;
     if(maxScroll<=0)return;
-    const mr=mon.getBoundingClientRect();
-    const br=activeBtn.getBoundingClientRect();
+    const mr=mon.getBoundingClientRect(),br=activeBtn.getBoundingClientRect();
     if(!mr.width)return;
-    const delta=(br.left+br.width/2)-(mr.left+mr.width/2);
-    const target=Math.max(0,Math.min(maxScroll,mon.scrollLeft+delta));
+    const target=Math.max(0,Math.min(maxScroll,mon.scrollLeft+(br.left+br.width/2)-(mr.left+mr.width/2)));
     mon.scrollTo({left:target,behavior:instant?"auto":"smooth"});
   });
 }
 
 function displayMonthIdx(){
-  if(sel.getUTCFullYear()===view.getUTCFullYear()&&sel.getUTCMonth()===view.getUTCMonth()){
-    return info(sel).m;
-  }
+  if(sel.getUTCFullYear()===view.getUTCFullYear()&&sel.getUTCMonth()===view.getUTCMonth())return info(sel).m;
   const mid=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth(),15));
-  const clamped=mid<lmp?lmp:mid>edd?edd:mid;
-  return info(clamped).m;
+  return info(mid<lmp?lmp:mid>edd?edd:mid).m;
+}
+
+function pulseSwap(el){
+  el.classList.remove("harmony-swap");
+  void el.offsetWidth;
+  el.classList.add("harmony-swap");
 }
 
 function render(opts={}){
   const x=info(sel),t=today(),pct=Math.round(x.s/280*100);
+  const weekChanged=lastRenderedW!==-1&&lastRenderedW!==x.w;
+  lastRenderedW=x.w;
 
+  document.documentElement.dataset.tri=String(x.tri);
+
+  $("hdrSeason").textContent=SEASONS[x.tri];
   $("wkTitle").textContent="Week "+x.w;
-  $("wkTri").textContent="T"+x.tri;
+  $("wkSeason").textContent=SEASONS[x.tri];
   $("wkPrev").disabled=x.w<=0;
   $("wkNext").disabled=x.w>=40;
 
-  document.querySelectorAll("#wkPopBody .wkp").forEach(b=>{
-    b.classList.toggle("on",+b.dataset.w===x.w);
-  });
+  document.querySelectorAll("#wkPopBody .wkp").forEach(b=>b.classList.toggle("on",+b.dataset.w===x.w));
   if(popOpen)setPopPreview(x.w);
 
   const hasToday=inW(t),todayW=hasToday?info(t).w:null;
   const wkToday=$("wkToday");
   if(hasToday&&x.w!==todayW){
-    wkToday.hidden=false;
-    wkToday.textContent=`↩ Back to Week ${todayW} (Today)`;
-  }else{
-    wkToday.hidden=true;
+    wkToday.hidden=false;wkToday.textContent=`↩ Back to Week ${todayW} (Today)`;
+  }else wkToday.hidden=true;
+
+  const nm=displayName();
+  const late=x.s===280&&t>edd,left=280-x.s;
+  $("heroTitle").innerHTML=`${nm} is <em>${x.w}w ${x.d}d</em>`;
+  $("heroMeta").textContent=late
+    ?`${diff(edd,t)} days past estimated due date · ${fmt(edd)}`
+    :x.s===280?`Estimated due date · ${fmt(edd)}`
+    :`${left} days until we meet · Due ${fmt(edd,{month:"short",day:"numeric"})} · ${pct}%`;
+
+  $("rfg").style.strokeDashoffset=603.19*(1-x.s/280);
+  $("babyLbl").textContent=`${nm}’s world`;
+  $("dev").textContent=DEV[x.w];
+  $("mama").textContent=mamaNote(x.w);
+
+  if(weekChanged&&!opts.instant){
+    pulseSwap($("heroHead"));
+    pulseSwap($("stageTitle"));
+    pulseSwap($("whispers"));
   }
 
-  $("pctLbl").textContent=pct+"% complete";
-  $("fill").style.width=(x.s/280*100)+"%";
-  $("rfg").style.strokeDashoffset=578.05*(1-x.s/280);
-  const sn=$("scrubNow");
-  if(hasToday){sn.hidden=false;sn.style.left=(info(t).s/280*100)+"%"}else{sn.hidden=true}
-  document.querySelectorAll("#scrubMarks button").forEach(b=>{
+  document.querySelectorAll("#seasons button").forEach(b=>{
     const mw=+b.dataset.w;
-    const active=(mw===0&&x.w<14)||(mw===14&&x.w>=14&&x.w<28)||(mw===28&&x.w>=28&&x.w<40)||(mw===40&&x.w===40);
-    b.classList.toggle("on",active);
+    const on=(mw===0&&x.w<14)||(mw===14&&x.w>=14&&x.w<28)||(mw===28&&x.w>=28&&x.w<40)||(mw===40&&x.w===40);
+    b.classList.toggle("on",on);
   });
 
-  $("age").innerHTML=`<b>${x.w}w ${x.d}d</b><span>${fmt(sel,{weekday:"short",month:"short",day:"numeric"})}</span>`;
-  const late=x.s===280&&t>edd,left=280-x.s;
-  $("chips").innerHTML=`<span class="chip">Trimester ${x.tri}</span><span class="chip m">Month ${x.m+1}</span><span class="chip d">${late?diff(edd,t)+" days past due":x.s===280?"Due date":left+" days to go"}</span>`;
+  renderVisual(x.w,!opts.instant);
+  renderMetrics(x.w);
 
-  baby(x.w,false);
-  cal(!!opts.instantMon);
+  $("calSelTitle").textContent=`${fmt(sel,{weekday:"short",month:"long",day:"numeric"})}`;
+  $("calSelSub").textContent=`Week ${x.w}, Day ${x.d} · Month ${x.m+1} · ${R[x.w][0]}`;
+  cal(!!opts.instant,opts.calDir||"");
 }
 
-function cal(instantMon=false){
+function cal(instantMon=false,dir=""){
   const t=today();
   $("ct").textContent=fmt(view,{month:"long",year:"numeric"});
   $("back").hidden=!inW(t)||(same(sel,t)&&view.getUTCMonth()===t.getUTCMonth()&&view.getUTCFullYear()===t.getUTCFullYear());
   const g=$("days");g.innerHTML="";
+  g.classList.remove("slide-next","slide-prev","slide-fade");
   const st0=add(view,-view.getUTCDay());
   for(let i=0;i<42;i++){
     const c=add(st0,i),b=document.createElement("button");b.type="button";
@@ -742,73 +1472,24 @@ function cal(instantMon=false){
     }
     g.appendChild(b);
   }
+  if(dir){
+    void g.offsetWidth;
+    g.classList.add(dir==="next"?"slide-next":dir==="prev"?"slide-prev":"slide-fade");
+  }
   centerMon(displayMonthIdx(),instantMon);
 }
 
 function go(d,opts={}){
   if(!inW(d))d=d<lmp?lmp:edd;
+  const prevViewTime=view?view.getTime():null;
   sel=U(d);
   view=new Date(Date.UTC(sel.getUTCFullYear(),sel.getUTCMonth(),1));
+  if(!opts.instant&&prevViewTime!==null&&view.getTime()!==prevViewTime){
+    opts={...opts,calDir:view.getTime()>prevViewTime?"next":"prev"};
+  }
   render(opts);
 }
-
-function goWeek(w,opts={}){
-  const clamped=Math.max(0,Math.min(40,w));
-  go(add(lmp,clamped*7),opts);
-}
-
-function build(){
-  const t=today();
-  $("edd").textContent=fmt(edd,{month:"short",day:"numeric",year:"numeric"});
-
-  const wb=$("wkPopBody");wb.innerHTML="";
-  const todayW=inW(t)?info(t).w:-1;
-  const groups=[
-    {cls:"t1",p:"p1",title:"Trimester 1",range:"Weeks 0–13",s:0,e:13},
-    {cls:"t2",p:"p2",title:"Trimester 2",range:"Weeks 14–27",s:14,e:27},
-    {cls:"t3",p:"p3",title:"Trimester 3",range:"Weeks 28–40",s:28,e:40}
-  ];
-  groups.forEach(gr=>{
-    const sec=document.createElement("div");
-    sec.innerHTML=`<div class="wkg-lbl ${gr.cls}"><b>${gr.title}</b><span>${gr.range}</span></div>`;
-    const grid=document.createElement("div");
-    grid.className="wkg-grid";
-    for(let w=gr.s;w<=gr.e;w++){
-      const b=document.createElement("button");
-      b.type="button";
-      b.className=`wkp ${gr.p}`+(w===todayW?" now":"");
-      b.dataset.w=w;
-      b.textContent=w;
-      b.setAttribute("aria-label",`Week ${w}, ${R[w][0]}${w===todayW?" (Today)":""}`);
-      b.onmouseenter=()=>setPopPreview(w);
-      b.onfocus=()=>setPopPreview(w);
-      b.onclick=()=>{goWeek(w);closeWkPop()};
-      grid.appendChild(b);
-    }
-    sec.appendChild(grid);
-    wb.appendChild(sec);
-  });
-
-  $("mon").innerHTML="";
-  for(let m=0;m<9;m++){
-    const b=document.createElement("button");
-    b.type="button";
-    b.dataset.m=m;b.textContent="Month "+(m+1);
-    b.onclick=()=>go(add(lmp,MS[m]));
-    $("mon").appendChild(b);
-  }
-
-  $("tl").innerHTML="";
-  CARE.forEach((c,i)=>{
-    const[n,w,s,e,ic]=c,ds=add(lmp,s),de=add(lmp,e),b=document.createElement("button");
-    b.className="it";
-    const{tag,cl}=stat(c);
-    if(cl)b.classList.add(cl);
-    b.innerHTML=`<i class="ic" aria-hidden="true">${ic}</i><div><b>${n}</b><span>${w} · ${rng(ds,de)}</span></div><u>${tag}</u>`;
-    b.onclick=()=>openSheet(i);
-    const li=document.createElement("li");li.appendChild(b);$("tl").appendChild(li);
-  });
-}
+function goWeek(w,opts={}){go(add(lmp,Math.max(0,Math.min(40,w))*7),opts)}
 
 const rng=(a,b)=>same(a,b)?fmt(a):fmt(a,{month:"short",day:"numeric"})+" – "+fmt(b,{month:"short",day:"numeric"});
 function stat(c){
@@ -816,7 +1497,82 @@ function stat(c){
   if(t>de)return{tag:"Done",cl:"done",txt:"Completed"};
   if(t>=ds)return{tag:"Now",cl:"now",txt:"Active now"};
   const a=diff(t,ds);
-  return{tag:a<=60?a+"d":fmt(ds,{month:"short",year:"numeric"}),cl:"",txt:"Starts in "+a+" days"};
+  return{tag:a<=60?a+"d":fmt(ds,{month:"short",year:"numeric"}),cl:"up",txt:"Starts in "+a+" days"};
+}
+
+function renderCare(){
+  let doneC=0,nowC=0,firstIdx=-1;
+  const items=[];
+  CARE.forEach((c,i)=>{
+    const stt=stat(c);
+    if(stt.cl==="done")doneC++;
+    if(stt.cl==="now"){nowC++;if(firstIdx===-1)firstIdx=i}
+    items.push({c,i,stt});
+  });
+  if(firstIdx===-1){
+    const up=items.find(x=>x.stt.cl==="up");
+    if(up)firstIdx=up.i;
+  }
+
+  $("careDot").hidden=nowC===0;
+  $("careSub").textContent=`${doneC} of ${CARE.length} completed`+(nowC?` · ${nowC} active now`:"");
+
+  const nc=$("nextCare");
+  if(firstIdx!==-1){
+    const c=CARE[firstIdx],stt=stat(c),ds=add(lmp,c[2]),de=add(lmp,c[3]);
+    nc.hidden=false;
+    $("ncIc").textContent=c[4];
+    $("ncKicker").textContent=stt.cl==="now"?"Active care window":"Up next · "+stt.txt;
+    $("ncTitle").textContent=c[0];
+    $("ncSub").textContent=`${c[1]} · ${rng(ds,de)}`;
+    nc.onclick=()=>openSheet(firstIdx);
+  }else nc.hidden=true;
+
+  const list=$("tl");list.innerHTML="";
+  const filtered=items.filter(x=>careFilter==="all"||x.stt.cl===careFilter);
+  $("careEmpty").hidden=filtered.length>0;
+  filtered.forEach(({c,i,stt})=>{
+    const[n,w,s,e,ic]=c,ds=add(lmp,s),de=add(lmp,e);
+    const b=document.createElement("button");
+    b.className="it"+(stt.cl==="now"?" now":stt.cl==="done"?" done":"");
+    b.innerHTML=`<i class="ic" aria-hidden="true">${ic}</i><div><b>${n}</b><span>${w} · ${rng(ds,de)}</span></div><u>${stt.tag}</u>`;
+    b.onclick=()=>openSheet(i);
+    const li=document.createElement("li");li.appendChild(b);list.appendChild(li);
+  });
+}
+
+function build(){
+  const t=today(),todayW=inW(t)?info(t).w:-1;
+  const wb=$("wkPopBody");wb.innerHTML="";
+  [
+    {cls:"t1",p:"p1",title:"Seed · Trimester 1",range:"0–13w",s:0,e:13},
+    {cls:"t2",p:"p2",title:"Bloom · Trimester 2",range:"14–27w",s:14,e:27},
+    {cls:"t3",p:"p3",title:"Harvest · Trimester 3",range:"28–40w",s:28,e:40}
+  ].forEach(gr=>{
+    const sec=document.createElement("div");
+    sec.innerHTML=`<div class="wkg-lbl ${gr.cls}"><b>${gr.title}</b><span>${gr.range}</span></div>`;
+    const grid=document.createElement("div");grid.className="wkg-grid";
+    for(let w=gr.s;w<=gr.e;w++){
+      const b=document.createElement("button");b.type="button";
+      b.className=`wkp ${gr.p}`+(w===todayW?" now":"");
+      b.dataset.w=w;b.textContent=w;
+      b.setAttribute("aria-label",`Week ${w}, ${R[w][0]}`);
+      b.onmouseenter=()=>setPopPreview(w);
+      b.onfocus=()=>setPopPreview(w);
+      b.onclick=()=>{goWeek(w);closeWkPop()};
+      grid.appendChild(b);
+    }
+    sec.appendChild(grid);wb.appendChild(sec);
+  });
+
+  $("mon").innerHTML="";
+  for(let m=0;m<9;m++){
+    const b=document.createElement("button");b.type="button";
+    b.dataset.m=m;b.textContent="Month "+(m+1);
+    b.onclick=()=>go(add(lmp,MS[m]));
+    $("mon").appendChild(b);
+  }
+  renderCare();
 }
 
 let cur=0,lastF=null;
@@ -826,75 +1582,101 @@ function openSheet(i){
   const pct=x.cl==="now"?Math.round((diff(ds,t)+1)/len*100):x.cl==="done"?100:0;
   const ymd=d=>iso(d).replace(/-/g,"");
   const url="https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent("Bloom: "+n)+"&dates="+ymd(ds)+"/"+ymd(add(de,1))+"&details="+encodeURIComponent(about);
-  $("pn").innerHTML=`<div class="ph"><i aria-hidden="true">${ic}</i><button class="x" id="x" aria-label="Close">✕</button><small class="sc ${x.cl}">${x.txt}</small><h4>${n}</h4><span>${w} · ${rng(ds,de)}</span></div><div class="pb"><div class="pr"><i style="width:${pct}%"></i></div><p>${about}</p>${tips.length?`<h5>Prepare</h5><ul>${tips.map(k=>`<li><button type="button" class="ck"><i></i>${k}</button></li>`).join("")}</ul>`:""}<div class="pa"><a class="go" href="${url}" target="_blank" rel="noopener">＋ Add to calendar</a><button class="pill" id="sc">Show on calendar</button></div></div>`;
+  $("pn").innerHTML=`<div class="ph"><i aria-hidden="true">${ic}</i><button class="x" id="x" aria-label="Close">✕</button><small class="sc ${x.cl}">${x.txt}</small><h4>${n}</h4><span>${w} · ${rng(ds,de)}</span></div><div class="pb"><div class="pr"><i style="width:${pct}%"></i></div><p>${about}</p>${tips.length?`<h5>Prepare</h5><ul>${tips.map((k,ti)=>{const ckKey=i+"_"+ti;return`<li><button type="button" class="ck${checks[ckKey]?" on":""}" data-ck="${ckKey}"><i></i>${k}</button></li>`}).join("")}</ul>`:""}<div class="pa"><a class="go" href="${url}" target="_blank" rel="noopener">＋ Add to calendar</a><button class="pill" id="sc">Show on calendar</button></div></div>`;
   $("sheet").hidden=false;document.body.style.overflow="hidden";
   void $("pn").offsetWidth;$("sheet").classList.add("open");$("x").focus();
 }
 function closeSheet(){
   $("sheet").classList.remove("open");document.body.style.overflow="";
-  setTimeout(()=>{if(!$("sheet").classList.contains("open"))$("sheet").hidden=true},260);
+  setTimeout(()=>{if(!$("sheet").classList.contains("open"))$("sheet").hidden=true},280);
   lastF&&lastF.focus&&lastF.focus();
 }
 
 function begin(v,scroll){
   const p=parse(v);if(!p)return false;
-  lmp=p;edd=add(lmp,280);lastBabyW=-1;
+  lmp=p;edd=add(lmp,280);lastVisKey="";lastRenderedW=-1;
   document.body.classList.add("has");$("app").hidden=false;$("chg").hidden=false;
   build();
   const t=today();
-  go(inW(t)?t:t<lmp?lmp:edd,{instantMon:true});
+  go(inW(t)?t:t<lmp?lmp:edd,{instant:true});
+  switchTab("journey",true);
+  setHaloMode(haloMode,false);
+  requestAnimationFrame(()=>{
+    positionSlider($("tabsNav"),$("tabSlider"),document.querySelector(".tab.on"),true);
+    positionSlider($("modeBar"),$("modeSlider"),haloMode==="baby"?$("mBaby"):$("mSize"),true);
+  });
   if(scroll)window.scrollTo({top:0,behavior:"smooth"});
   return true;
 }
 
 $("go").onclick=()=>{
   const v=$("lmp").value,p=parse(v),e=$("err");
-  if(!p){e.textContent="Enter a valid date.";return}
-  if(p>today()){e.textContent="LMP can’t be in the future.";return}
+  if(!p){e.textContent="Please enter a valid date.";return}
+  if(p>today()){e.textContent="That date is in the future.";return}
   if(diff(p,today())>294){e.textContent="That’s over 42 weeks ago.";return}
-  e.textContent="";st.s("bloom-lmp",v);begin(v,true);
+  e.textContent="";
+  babyName=$("bname").value.trim();
+  st.s("bloom-lmp",v);st.s("bloom-name",babyName);
+  begin(v,true);
 };
-$("lmp").onkeydown=e=>{if(e.key==="Enter")$("go").click()};
+$("lmp").onkeydown=$("bname").onkeydown=e=>{if(e.key==="Enter")$("go").click()};
 
 $("wkPrev").onclick=()=>{closeWkPop();goWeek(info(sel).w-1)};
 $("wkNext").onclick=()=>{closeWkPop();goWeek(info(sel).w+1)};
 $("wkToggle").onclick=()=>popOpen?closeWkPop():openWkPop();
 $("wkClose").onclick=closeWkPop;
 $("wkToday").onclick=()=>{closeWkPop();go(today())};
+$("seasons").addEventListener("click",e=>{const b=e.target.closest("button[data-w]");if(b)goWeek(+b.dataset.w)});
+document.addEventListener("click",e=>{if(popOpen&&!$("wkWrap").contains(e.target))closeWkPop()});
 
-$("scrubMarks").addEventListener("click",e=>{
-  const b=e.target.closest("button[data-w]");
-  if(b)goWeek(+b.dataset.w);
+$("prev").onclick=()=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()-1,1));cal(false,"prev")};
+$("next").onclick=()=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()+1,1));cal(false,"next")};
+$("back").onclick=()=>go(today(),{calDir:"fade"});
+$("calJump").onclick=()=>switchTab("journey");
+
+$("careFilters").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-f]");if(!b)return;
+  careFilter=b.dataset.f;
+  document.querySelectorAll("#careFilters .flt").forEach(x=>x.classList.toggle("on",x===b));
+  renderCare();
+  pulseSwap($("tl"));
 });
 
-document.addEventListener("click",e=>{
-  if(popOpen&&!$("wkWrap").contains(e.target))closeWkPop();
-});
-
-$("prev").onclick=()=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()-1,1));cal(false)};
-$("next").onclick=()=>{view=new Date(Date.UTC(view.getUTCFullYear(),view.getUTCMonth()+1,1));cal(false)};
-$("back").onclick=()=>go(today());
-$("chg").onclick=()=>{closeWkPop();document.body.classList.remove("has");$("app").hidden=true;$("chg").hidden=true;$("lmp").focus()};
+$("chg").onclick=()=>{
+  closeWkPop();
+  document.body.classList.remove("has");$("app").hidden=true;$("chg").hidden=true;
+  $("hdrSeason").textContent="";$("lmp").focus();
+};
 
 let sx=0,sy=0;
 $("days").addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
 $("days").addEventListener("touchend",e=>{const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)*1.3)(dx<0?$("next"):$("prev")).click()},{passive:true});
 $("days").addEventListener("keydown",e=>{const s={ArrowLeft:-1,ArrowRight:1,ArrowUp:-7,ArrowDown:7}[e.key];if(!s)return;const n=add(sel,s);if(!inW(n))return;e.preventDefault();go(n);const b=$("days").querySelector(".sel");b&&b.focus()});
+
 $("bd").onclick=closeSheet;
 $("pn").addEventListener("click",e=>{
-  const k=e.target.closest(".ck");if(k)k.classList.toggle("on");
+  const k=e.target.closest(".ck");
+  if(k){
+    k.classList.toggle("on");
+    checks[k.dataset.ck]=k.classList.contains("on");
+    st.s("bloom-checks",JSON.stringify(checks));
+  }
   if(e.target.closest("#x"))closeSheet();
-  if(e.target.closest("#sc")){closeSheet();go(add(lmp,CARE[cur][2]));document.querySelector(".cal").scrollIntoView({behavior:"smooth",block:"center"})}
+  if(e.target.closest("#sc")){closeSheet();go(add(lmp,CARE[cur][2]));switchTab("calendar")}
 });
 document.addEventListener("keydown",e=>{
-  if(e.key==="Escape"){
-    if(!$("sheet").hidden)closeSheet();
-    else if(popOpen)closeWkPop();
-  }
+  if(e.key==="Escape"){if(!$("sheet").hidden)closeSheet();else if(popOpen)closeWkPop()}
 });
-window.addEventListener("resize",()=>{if(lmp)centerMon(displayMonthIdx(),true)});
+window.addEventListener("resize",()=>{
+  if(!lmp)return;
+  positionSlider($("tabsNav"),$("tabSlider"),document.querySelector(".tab.on"),true);
+  if(activeTab==="journey")positionSlider($("modeBar"),$("modeSlider"),haloMode==="baby"?$("mBaby"):$("mSize"),true);
+  if(activeTab==="calendar"&&sel&&view)centerMon(displayMonthIdx(),true);
+});
 
+setHaloMode(haloMode,false);
 const sv=st.g("bloom-lmp");
+if(babyName)$("bname").value=babyName;
 if(sv&&parse(sv)){$("lmp").value=sv;begin(sv,false)}
 })();
 </script>
